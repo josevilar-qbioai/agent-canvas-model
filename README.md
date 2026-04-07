@@ -121,7 +121,7 @@ El repositorio incluye un **skill instalable** (`agent-canvas-model.skill`) para
 
 ## Stack tecnologico soportado
 
-El framework es agnostico de plataforma, pero incluye guias especificas para:
+El framework no es especifico de una plataforma, pero incluye guias especificas para:
 
 - **Microsoft Copilot Studio + Power Platform** — entornos Microsoft 365 con gobernanza corporativa
 - **LangChain / LangGraph** — equipos tecnicos que necesitan control total
@@ -153,6 +153,4 @@ Framework desarrollado por **Jose Antonio Vilar** — [QMetrika Labs](https://qm
 
 **Version**: 2.0 (2025)
 
----
 
-> *"No disenar tu agente es disenar su fracaso."*
