@@ -1,6 +1,6 @@
 # Agent Canvas Model
 
-**Framework de diseno de agentes IA** — Adaptacion del Business Model Canvas para planificar, disenar y desplegar agentes de inteligencia artificial en produccion.
+**Framework de diseño de agentes IA** — Adaptacion del Business Model Canvas para planificar, disenar y desplegar agentes de inteligencia artificial en produccion.
 
 ---
 
