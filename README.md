@@ -1,6 +1,8 @@
 # Agent Canvas Model
 
-**🌐 Language / Idioma:** &nbsp; **English** &nbsp;|&nbsp; [Español](#modelo-agent-canvas)
+**🌐 Language / Idioma:** &nbsp; **English** &nbsp;|&nbsp; [Español](README_ES.md)
+
+**AI Agent Design Framework** — An adaptation of the Business Model Canvas for planning, designing, and deploying AI agents in production.
 
 ---
 
@@ -46,16 +48,15 @@ The Agent Canvas is a visual 9-block framework that adapts the logic of the Busi
 
 ```
 agent-canvas-model/
-|-- README.md                              # This file (bilingual)
+|-- README.md                              # This file (English)
+|-- README_ES.md                           # Spanish version
 |-- LICENSE                                # MIT License
 |-- CONTRIBUTING.md                        # How to contribute
 |-- agent-canvas-model.skill               # Installable skill for Claude Desktop
 |-- plantillas/                            # Spanish templates
 |-- docs/                                  # Spanish docs
 |-- ejemplos/                              # Spanish examples
-|-- en/                                    # English version
-|   |-- README.md
-|   |-- CONTRIBUTING.md
+|-- en/                                    # English templates, docs & examples
 |   |-- plantillas/
 |   |-- docs/
 |   |-- ejemplos/
@@ -121,7 +122,7 @@ The repository includes an **installable skill** (`agent-canvas-model.skill`) fo
 
 ## Contributing
 
-Contributions are welcome. Read [en/CONTRIBUTING.md](en/CONTRIBUTING.md) to learn how to participate.
+Contributions are welcome. Read [CONTRIBUTING.md](en/CONTRIBUTING.md) to learn how to participate.
 
 ---
 
@@ -136,91 +137,3 @@ This project is licensed under the [MIT License](LICENSE). Share it, adapt it, i
 Framework developed by **Jose Antonio Vilar** — [QMetrika Labs](https://qmetrikalabs.com)
 
 **Version**: 2.0 (2025)
-
----
----
-
-# Modelo Agent Canvas
-
-**🌐 Language / Idioma:** &nbsp; [English](#agent-canvas-model) &nbsp;|&nbsp; **Español**
-
-**Framework de diseño de agentes IA** — Adaptación del Business Model Canvas para planificar, diseñar y desplegar agentes de inteligencia artificial en producción.
-
----
-
-## Qué es el Agent Canvas
-
-El Agent Canvas es un framework visual de 9 bloques que adapta la lógica del Business Model Canvas al diseño de agentes IA. Permite a equipos técnicos y de negocio alinear objetivos, definir capacidades y anticipar riesgos antes de escribir una sola línea de código.
-
-```
-+------------------+------------------+----------------------+------------------+------------------+
-| 8. SOCIOS /      | 7. ACTIVIDADES   | 2. PROPUESTA DE      | 4. RELACION /    | 1. SEGMENTO DE   |
-| INTEGRACIONES    | CLAVE            | VALOR                | PERSONALIDAD     | USUARIOS         |
-|                  |                  |                      |                  |                  |
-| Que sistemas,    | Que skills o     | Que problema         | Que rol tiene    | Para quien es    |
-| plataformas o    | capacidades      | resuelve?            | el agente?       | este agente?     |
-| APIs conecta?    | tiene?           |                      | Que tono usa?    |                  |
-|                  +------------------+                      +------------------+                  |
-|                  | 6. RECURSOS      |                      | 3. CANALES       |                  |
-|                  | CLAVE            |                      |                  |                  |
-|                  |                  |                      | Como interactuan |                  |
-|                  | Que conocimiento |                      | los usuarios?    |                  |
-|                  | o datos necesita?|                      |                  |                  |
-+------------------+------------------+----------------------+------------------+------------------+
-| 9. ESTRUCTURA DE COSTES Y RIESGOS              | 5. FUENTES DE VALOR (KPIs)                     |
-|                                                 |                                                |
-| Costes de desarrollo, licencias, mantenimiento  | Como medimos el exito?                         |
-| Riesgos tecnicos, de negocio, normativos        | Que metricas indican que el agente aporta?     |
-+-------------------------------------------------+------------------------------------------------+
-```
-
----
-
-## Por qué usarlo
-
-- **Evita el error más común**: construir agentes sin definir para quién ni por qué
-- **Alinea negocio y tecnología**: un lenguaje común entre equipos
-- **Reduce riesgos**: identifica costes, dependencias y riesgos antes de desarrollar
-- **Acelera el diseño**: orden sugerido de trabajo (1 a 9) basado en dónde la ambigüedad tiene más coste
-
----
-
-## Orden sugerido de trabajo
-
-| Paso | Bloque | Pregunta clave |
-|------|--------|----------------|
-| 1 | Segmento de Usuarios | ¿Para quién es este agente? |
-| 2 | Propuesta de Valor | ¿Qué problema resuelve? |
-| 3 | Canales | ¿Cómo llega al usuario? |
-| 4 | Relación / Personalidad | ¿Qué tono y personalidad tiene? |
-| 5 | KPIs | ¿Cómo medimos el éxito? |
-| 6 | Recursos Clave | ¿Qué conocimiento necesita? |
-| 7 | Actividades Clave | ¿Qué skills tiene? |
-| 8 | Socios / Integraciones | ¿Qué sistemas integra? |
-| 9 | Costes y Riesgos | ¿Qué cuesta y qué puede fallar? |
-
-> **Regla de oro**: si la Propuesta de Valor (bloque 2) no está clara, no sigas adelante.
-
----
-
-## Cómo empezar
-
-1. **Elige tu formato** de la carpeta `plantillas/`
-2. **Empieza por el bloque 1** (Segmento de Usuarios) y el **bloque 2** (Propuesta de Valor)
-3. **Valida con usuarios reales** antes de avanzar al resto de bloques
-4. **Revisa y actualiza** el canvas cada 2-3 semanas durante el desarrollo
-5. Lee la [guía de mejores prácticas](docs/guia-mejores-practicas.md) para llevar tu agente a producción
-
----
-
-## Licencia
-
-Este proyecto está bajo la [Licencia MIT](LICENSE). Compártelo, adáptalo, mejóralo.
-
----
-
-## Origen
-
-Framework desarrollado por **Jose Antonio Vilar** — [QMetrika Labs](https://qmetrikalabs.com)
-
-**Versión**: 2.0 (2025)
