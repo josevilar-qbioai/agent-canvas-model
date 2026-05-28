@@ -158,6 +158,6 @@ Este proyecto está bajo la [Licencia MIT](LICENSE). Compártelo, adáptalo, mej
 
 ## Origen
 
-Framework desarrollado por **Jose Antonio Vilar** — [QMetrika Labs](https://qmetrikalabs.com)
+Framework desarrollado por **Jose Antonio Vilar** — QMetrika Labs
 
 **Versión**: 3.0 (2026)

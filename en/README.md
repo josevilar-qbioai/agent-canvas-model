@@ -150,6 +150,6 @@ This project is licensed under the [MIT License](LICENSE). Share it, adapt it, i
 
 ## Origin
 
-Framework developed by **Jose Antonio Vilar** — [QMetrika Labs](https://qmetrikalabs.com)
+Framework developed by **Jose Antonio Vilar** — QMetrika Labs
 
 **Version**: 3.0 (2026)
