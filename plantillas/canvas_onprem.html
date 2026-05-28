@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Canvas v2 — On-Prem Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0D1117;
+    --bg2:     #161B22;
+    --bg3:     #1C2128;
+    --bg4:     #21262D;
+    --border:  #30363D;
+    --border2: #3D444D;
+    --green:   #3FB950;
+    --green-d: #14532D;
+    --green-b: #0A3020;
+    --green-h: #2EA043;
+    --teal:    #00C9A7;
+    --teal-d:  #0A5040;
+    --amber:   #D29922;
+    --amber-d: #3A2800;
+    --red:     #F85149;
+    --red-d:   #3C0A0A;
+    --blue:    #58A6FF;
+    --muted:   #8B949E;
+    --muted2:  #656D76;
+    --text:    #E6EDF3;
+    --text2:   #CDD9E5;
+    --mono:    'JetBrains Mono', monospace;
+    --sans:    'Space Grotesk', sans-serif;
+    --r:       6px;
+    --shadow:  0 0 0 1px rgba(255,255,255,.04), 0 4px 20px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    cursor: default;
+  }
+
+  /* ── SCANLINE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,.03) 2px,
+      rgba(0,0,0,.03) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER / TERMINAL BAR ── */
+  header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    position: relative;
+  }
+  .term-dots {
+    display: flex;
+    gap: 6px;
+    margin-right: 12px;
+  }
+  .term-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .term-dot.r { background: #FF5F57; }
+  .term-dot.y { background: #FFBD2E; }
+  .term-dot.g { background: #28C840; }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .term-path {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--muted);
+  }
+  .term-path .p1 { color: var(--green); }
+  .term-path .p2 { color: var(--blue); }
+  .term-path .p3 { color: var(--text); }
+  .term-path .cursor {
+    display: inline-block;
+    width: 8px; height: 13px;
+    background: var(--green);
+    vertical-align: middle;
+    margin-left: 3px;
+    animation: blink 1.2s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .badge-onprem {
+    font-family: var(--mono);
+    font-size: .62rem;
+    background: var(--green-b);
+    border: 1px solid var(--green-d);
+    color: var(--green);
+    padding: 3px 10px;
+    border-radius: var(--r);
+    letter-spacing: .06em;
+  }
+
+  .header-right { display: flex; gap: 8px; align-items: center; }
+
+  .btn-term {
+    font-family: var(--mono);
+    font-size: .7rem;
+    padding: 5px 14px;
+    border-radius: var(--r);
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: .04em;
+  }
+  .btn-term:hover { border-color: var(--green); color: var(--green); }
+  .btn-term.primary {
+    background: var(--green-b);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .btn-term.primary:hover { background: var(--green); color: var(--bg); }
+
+  /* ── HERO / BOOT SCREEN ── */
+  .boot {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .boot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 100% at 0% 50%, rgba(63,185,80,.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .boot-pre {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--green);
+    letter-spacing: .08em;
+    margin-bottom: .75rem;
+    opacity: .8;
+  }
+  .boot-pre span { color: var(--muted2); }
+  .boot h1 {
+    font-family: var(--sans);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: .5rem;
+  }
+  .boot h1 em { font-style: normal; color: var(--green); }
+  .boot-desc {
+    font-size: .9rem;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .boot-stats {
+    display: flex;
+    gap: 2rem;
+    font-family: var(--mono);
+    font-size: .75rem;
+  }
+  .boot-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .boot-stat .val { color: var(--green); font-size: 1.6rem; font-weight: 700; line-height: 1; }
+  .boot-stat .lbl { color: var(--muted2); font-size: .65rem; letter-spacing: .08em; }
+
+  /* GPU METER */
+  .hw-status {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .hw-chip {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: .4rem .9rem;
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hw-chip .hw-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .hw-chip .hw-val { color: var(--text2); font-weight: 700; }
+
+  /* ── CANVAS WRAP ── */
+  .canvas-wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .canvas-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .canvas-label {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--muted2);
+  }
+  .canvas-label strong { color: var(--green); }
+
+  .prog-wrap { display: flex; align-items: center; gap: 10px; }
+  .prog-text { font-family: var(--mono); font-size: .68rem; color: var(--muted2); }
+  .prog-bar {
+    width: 180px; height: 4px;
+    background: var(--bg4);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .prog-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--teal));
+    border-radius: 10px;
+    transition: width .5s ease;
+  }
+
+  /* ── GRID ── */
+  .canvas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.3fr 1fr 1.2fr;
+    gap: 8px;
+  }
+
+  /* ── BLOCK BASE ── */
+  .block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: .9rem 1rem;
+    box-shadow: var(--shadow);
+    transition: border-color .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn .35s ease both;
+  }
+  .block:hover { border-color: var(--border2); }
+  .block.focused { border-color: var(--green); box-shadow: 0 0 0 2px rgba(63,185,80,.15), var(--shadow); }
+
+  /* accent bar on left */
+  .block-accent {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    border-radius: var(--r) 0 0 var(--r);
+  }
+
+  .block-num {
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    margin-bottom: 4px;
+    opacity: .75;
+  }
+  .block-title {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: .65rem;
+    line-height: 1.3;
+  }
+
+  /* grid placements */
+  .b8 { grid-column: 1; grid-row: 1 / 3; }
+  .b7 { grid-column: 2; grid-row: 1 / 3; }
+  .b2 { grid-column: 3; grid-row: 1 / 4; }
+  .b4 { grid-column: 4; grid-row: 1; }
+  .b1 { grid-column: 5; grid-row: 1 / 4; }
+  .b3 { grid-column: 4; grid-row: 2; }
+  .b6a { grid-column: 1; grid-row: 3; }
+  .b6b { grid-column: 2; grid-row: 3; }
+  .b9  { grid-column: 1 / 4; grid-row: 4; }
+  .b5  { grid-column: 4 / 6; grid-row: 4; }
+  .b10 { grid-column: 1 / 6; grid-row: 5; }
+
+  /* colors */
+  .b8  .block-accent, .b7 .block-accent, .b6a .block-accent, .b6b .block-accent { background: #A371F7; }
+  .b8  .block-num, .b7 .block-num, .b6a .block-num, .b6b .block-num { color: #A371F7; }
+  .b2  .block-accent { background: var(--green); }
+  .b2  .block-num { color: var(--green); }
+  .b1  .block-accent { background: var(--amber); }
+  .b1  .block-num { color: var(--amber); }
+  .b4  .block-accent, .b3 .block-accent { background: var(--teal); }
+  .b4  .block-num, .b3 .block-num { color: var(--teal); }
+  .b9  .block-accent { background: var(--red); }
+  .b9  .block-num { color: var(--red); }
+  .b5  .block-accent { background: var(--teal); }
+  .b5  .block-num { color: var(--teal); }
+  .b10 .block-accent { background: var(--red); }
+  .b10 .block-num { color: var(--red); }
+
+  /* b2 special */
+  .b2 { background: #0A1628; border-color: #1E3A5F; }
+  .b2:hover { border-color: var(--green); }
+  .b1 { background: #151005; border-color: #3A2800; }
+  .b10 { background: #0F0808; border-color: #3C1A1A; }
+
+  /* ── FIELDS ── */
+  .field-group { margin-bottom: .5rem; }
+  .field-label {
+    font-family: var(--mono);
+    font-size: .58rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 3px;
+  }
+  .field-input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 5px 8px;
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--text2);
+    resize: none;
+    transition: border-color .15s;
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--green);
+    background: #0D1A0D;
+  }
+  .field-input::placeholder { color: var(--muted2); font-size: .68rem; }
+
+  select.field-input { cursor: pointer; }
+  select.field-input option { background: var(--bg3); }
+
+  /* checkboxes */
+  .check-grid { display: flex; flex-direction: column; gap: 3px; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .72rem;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--mono);
+  }
+  .check-item input[type=checkbox] { accent-color: var(--green); width: 12px; height: 12px; }
+  .check-item:has(input:checked) { color: var(--green); }
+
+  .divider { height: 1px; background: var(--border); margin: .55rem 0; }
+
+  /* hw meter */
+  .hw-meter {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: .45rem .6rem;
+    margin-bottom: .4rem;
+  }
+  .hw-meter-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: .65rem;
+    color: var(--muted2);
+    margin-bottom: 4px;
+  }
+  .hw-meter-top .hw-name { color: var(--text2); font-weight: 700; }
+  .meter-bar { height: 3px; background: var(--bg); border-radius: 10px; overflow: hidden; }
+  .meter-fill { height: 100%; border-radius: 10px; background: var(--green); transition: width .6s ease; }
+
+  /* gpu selector */
+  .gpu-chips { display: flex; gap: 4px; flex-wrap: wrap; }
+  .gpu-chip {
+    font-family: var(--mono);
+    font-size: .6rem;
+    padding: 2px 8px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .gpu-chip:hover { border-color: var(--green); color: var(--green); }
+  .gpu-chip.sel { background: var(--green-b); border-color: var(--green); color: var(--green); }
+
+  /* model selector */
+  .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .model-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: .35rem .5rem;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .model-card:hover { border-color: var(--green); }
+  .model-card.sel { background: var(--green-b); border-color: var(--green); }
+  .model-name { font-family: var(--mono); font-size: .65rem; color: var(--text2); font-weight: 700; }
+  .model-meta { font-family: var(--mono); font-size: .58rem; color: var(--muted2); }
+  .model-card.sel .model-name { color: var(--green); }
+
+  /* quant selector */
+  .quant-row { display: flex; gap: 4px; margin-top: 3px; }
+  .q-btn {
+    font-family: var(--mono);
+    font-size: .62rem;
+    padding: 2px 8px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .q-btn.sel { background: var(--teal-d); border-color: var(--teal); color: var(--teal); }
+
+  /* agencia */
+  .ag-row { display: flex; gap: 4px; flex-wrap: wrap; }
+  .ag-btn {
+    font-family: var(--mono);
+    font-size: .62rem;
+    padding: 3px 10px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .ag-btn.sel { background: var(--green-b); border-color: var(--green); color: var(--green); }
+
+  /* skill cards */
+  .skill-list { display: flex; flex-direction: column; gap: 5px; }
+  .skill-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 2px solid #A371F7;
+    border-radius: var(--r);
+    padding: .4rem .5rem;
+  }
+  .skill-card-title { font-family: var(--mono); font-size: .68rem; color: var(--text2); font-weight: 700; margin-bottom: 3px; }
+
+  /* seg cards */
+  .seg-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: .45rem .6rem;
+    margin-bottom: 5px;
+    position: relative;
+  }
+  .seg-name { font-family: var(--sans); font-size: .9rem; font-weight: 700; color: var(--text2); }
+  .seg-desc { font-family: var(--mono); font-size: .62rem; color: var(--muted2); margin-top: 2px; }
+  .seg-pill {
+    position: absolute; top: .5rem; right: .6rem;
+    font-family: var(--mono);
+    font-size: .55rem;
+    padding: 2px 7px;
+    border-radius: var(--r);
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+
+  /* risk row */
+  .risk-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: .5rem; }
+  .risk-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: .5rem .6rem;
+  }
+  .risk-title { font-family: var(--mono); font-size: .62rem; color: var(--amber); font-weight: 700; margin-bottom: 5px; }
+
+  /* kpi */
+  .kpi-list { display: flex; flex-direction: column; gap: 7px; margin-top: .4rem; }
+  .kpi-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: .65rem;
+    margin-bottom: 2px;
+  }
+  .kpi-head .kpi-lbl { color: var(--muted); }
+  .kpi-head .kpi-pct { color: var(--green); font-weight: 700; }
+  .kpi-bar-bg { height: 4px; background: var(--bg); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .kpi-bar { height: 100%; border-radius: 10px; transition: width .6s ease; }
+
+  /* guard row */
+  .guard-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-top: .5rem; }
+  .guard-card {
+    background: var(--bg3);
+    border: 1px solid #3C1A1A;
+    border-radius: var(--r);
+    padding: .55rem .65rem;
+  }
+  .guard-title { font-family: var(--mono); font-size: .65rem; color: var(--red); font-weight: 700; margin-bottom: 5px; }
+
+  /* tco breakdown */
+  .tco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: .5rem; }
+  .tco-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: .45rem .6rem;
+  }
+  .tco-title { font-family: var(--mono); font-size: .6rem; color: var(--amber); font-weight: 700; margin-bottom: 4px; }
+
+  /* export */
+  .export-panel {
+    background: var(--bg2);
+    border: 1px solid var(--green);
+    border-radius: var(--r);
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.25rem;
+    display: none;
+    font-family: var(--mono);
+  }
+  .export-panel.visible { display: block; }
+  .export-pre { font-size: .7rem; color: var(--green); margin-bottom: .4rem; }
+  .export-title { font-family: var(--sans); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+  .export-sub { font-size: .75rem; color: var(--muted); margin-bottom: 1rem; }
+  .export-actions { display: flex; gap: 8px; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .block:nth-child(1)  { animation-delay: .04s; }
+  .block:nth-child(2)  { animation-delay: .08s; }
+  .block:nth-child(3)  { animation-delay: .12s; }
+  .block:nth-child(4)  { animation-delay: .16s; }
+  .block:nth-child(5)  { animation-delay: .20s; }
+  .block:nth-child(6)  { animation-delay: .24s; }
+  .block:nth-child(7)  { animation-delay: .28s; }
+  .block:nth-child(8)  { animation-delay: .32s; }
+  .block:nth-child(9)  { animation-delay: .36s; }
+  .block:nth-child(10) { animation-delay: .40s; }
+  .block:nth-child(11) { animation-delay: .44s; }
+
+  @media (max-width: 960px) {
+    .canvas-grid { grid-template-columns: 1fr 1fr; }
+    .b8,.b7,.b2,.b4,.b1,.b3,.b6a,.b6b,.b9,.b5,.b10 { grid-column: auto; grid-row: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="term-dots">
+      <div class="term-dot r"></div>
+      <div class="term-dot y"></div>
+      <div class="term-dot g"></div>
+    </div>
+    <div class="term-path">
+      <span class="p1">user@qmetrikalabs</span><span class="p2">:</span><span class="p1">~</span><span class="p2">/</span><span class="p3">agent-canvas-v2</span><span class="cursor"></span>
+    </div>
+  </div>
+  <div class="badge-onprem">● ON-PREM · LOCAL MODELS · AIR-GAP READY</div>
+  <div class="header-right">
+    <button class="btn-term" onclick="resetAll()">$ reset</button>
+    <button class="btn-term" onclick="exportCanvas()">$ export --json</button>
+    <button class="btn-term primary" onclick="exportWord()">$ generate --doc</button>
+  </div>
+</header>
+
+<div class="boot">
+  <div class="boot-pre">
+    <span>#</span> Agent Canvas v2 — On-Prem Edition<br>
+    <span>#</span> Ollama · vLLM · TGI · Hardware dedicado · Sin datos al exterior
+  </div>
+  <h1>Agent Canvas <em>v2</em><br>On-Prem Edition</h1>
+  <p class="boot-desc">Framework de diseño para agentes IA con modelos locales. Soberanía total de datos. Sin dependencia de proveedor cloud. Completa los 10 bloques — empieza por ★.</p>
+  <div class="boot-stats">
+    <div class="boot-stat"><span class="val">10</span><span class="lbl">BLOQUES</span></div>
+    <div class="boot-stat"><span class="val">6a</span><span class="lbl">HARDWARE FIRST</span></div>
+    <div class="boot-stat"><span class="val">0kb</span><span class="lbl">DATOS AL EXTERIOR</span></div>
+    <div class="boot-stat"><span class="val">v2</span><span class="lbl">GUARDARRAÍLES</span></div>
+  </div>
+  <div class="hw-status" id="hwStatus">
+    <div class="hw-chip"><div class="hw-dot"></div> Serving: <span class="hw-val" id="hwModel">— sin seleccionar —</span></div>
+    <div class="hw-chip"><div class="hw-dot"></div> GPU: <span class="hw-val" id="hwGpu">— sin configurar —</span></div>
+    <div class="hw-chip"><div class="hw-dot"></div> Quant: <span class="hw-val" id="hwQuant">—</span></div>
+    <div class="hw-chip"><div class="hw-dot" style="background:var(--amber)"></div> Stack: <span class="hw-val" id="hwStack">— sin seleccionar —</span></div>
+  </div>
+</div>
+
+<div class="canvas-wrap">
+  <div class="canvas-bar">
+    <div class="canvas-label"><strong>canvas.json</strong> · modo edición · auto-save activado</div>
+    <div class="prog-wrap">
+      <div class="prog-text" id="progText">0/10 bloques</div>
+      <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid">
+
+    <!-- B8: INFRAESTRUCTURA -->
+    <div class="block b8">
+      <div class="block-accent"></div>
+      <div class="block-num">// 8 · INFRAESTRUCTURA & INTEGRACIONES ON-PREM</div>
+      <div class="block-title">Con qué sistemas locales conecta el agente</div>
+
+      <div class="field-group">
+        <div class="field-label">Serving stack</div>
+        <div class="gpu-chips" id="stackChips">
+          <div class="gpu-chip" onclick="selChip(this,'stackChips','hwStack')">Ollama</div>
+          <div class="gpu-chip" onclick="selChip(this,'stackChips','hwStack')">vLLM</div>
+          <div class="gpu-chip" onclick="selChip(this,'stackChips','hwStack')">TGI</div>
+          <div class="gpu-chip" onclick="selChip(this,'stackChips','hwStack')">Otro</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">Orquestación / Framework</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> LangChain / LangGraph</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> LlamaIndex</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Haystack</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Desarrollo propio</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> MCP (Model Context Protocol)</label>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">Fuentes de datos internas</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> NAS / File server</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> BBDD SQL local</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Directorio LDAP / AD</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> APIs internas (intranet)</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Red</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Air-gap (aislada totalmente)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Intranet / VPN</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> DMZ con proxy inverso</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Endpoint interno del modelo</div>
+        <input type="text" class="field-input" placeholder="http://___________:____" oninput="trackProgress()">
+      </div>
+    </div>
+
+    <!-- B7: ACTIVIDADES -->
+    <div class="block b7">
+      <div class="block-accent"></div>
+      <div class="block-num">// 7 · ACTIVIDADES CLAVE (SKILLS + AGENCIA)</div>
+      <div class="block-title">Qué capacidades tiene el agente local</div>
+
+      <div class="field-group">
+        <div class="field-label">Nivel de agencia</div>
+        <div class="ag-row">
+          <button class="ag-btn" onclick="selAg(this)">Informativo</button>
+          <button class="ag-btn" onclick="selAg(this)">Sugeridor</button>
+          <button class="ag-btn" onclick="selAg(this)">Supervisor</button>
+          <button class="ag-btn" onclick="selAg(this)">Autónomo</button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">Tipo de agencia</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> RAG local</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Tool-use</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Multi-step</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Multi-agente local</label>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">Patrón de Flujo de Control</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Secuencial (Pipeline rígido)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Enrutador (Router / Intent Classifier)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Agente Autónomo (ReAct / Loop)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Multi-agente (Orquestador-Trabajadores)</label>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">Skills</div>
+        <div class="skill-list">
+          <div class="skill-card">
+            <div class="skill-card-title">// Skill Informativa</div>
+            <textarea class="field-input" rows="2" placeholder="¿Qué responde este skill?" oninput="trackProgress()"></textarea>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-title">// Skill Transaccional</div>
+            <textarea class="field-input" rows="2" placeholder="Pasos y condiciones..." oninput="trackProgress()"></textarea>
+          </div>
+          <div class="skill-card" style="border-left-color:var(--teal)">
+            <div class="skill-card-title">// Skill Administrativa</div>
+            <textarea class="field-input" rows="2" placeholder="Operaciones sobre sistemas locales..." oninput="trackProgress()"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Estrategia contexto</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> RAG (retrieval augmented)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Chunking + summarization</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Full context (modelo grande)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- B2: PROPUESTA DE VALOR ★ -->
+    <div class="block b2">
+      <div class="block-accent"></div>
+      <div class="block-num">// ★ 2 · PROPUESTA DE VALOR — EMPIEZA AQUÍ</div>
+      <div class="block-title" style="color:var(--green)">¿Qué problema resuelve con datos que no pueden salir del perímetro?</div>
+
+      <div class="field-group">
+        <div class="field-label">Problema central</div>
+        <textarea class="field-input" rows="3" placeholder="¿Qué proceso manual, lento o inseguro existe hoy?" oninput="trackProgress()"></textarea>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Dato crítico que no puede salir del perímetro</div>
+        <textarea class="field-input" rows="2" placeholder="PII, secreto industrial, datos de defensa, salud..." oninput="trackProgress()"></textarea>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">¿Por qué on-prem y no cloud?</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Normativa (ENS, defensa, salud)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Privacidad total de datos</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Coste (volumen alto de inferencias)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Soberanía / independencia de proveedor</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Latencia (red interna < 50ms)</label>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">Beneficios clave on-prem</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Privacidad total — cero datos al exterior</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Ahorro vs. cloud en volumen alto</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Latencia controlada en red interna</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Autonomía operativa total</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Métrica de impacto principal</div>
+        <input type="text" class="field-input" placeholder="Ej: −50% carga manual, €X ahorro/año vs cloud" oninput="trackProgress()">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Alternativa actual (sin agente)</div>
+        <textarea class="field-input" rows="2" placeholder="¿Cómo lo hace el usuario hoy?" oninput="trackProgress()"></textarea>
+      </div>
+    </div>
+
+    <!-- B4: RELACIÓN -->
+    <div class="block b4">
+      <div class="block-accent"></div>
+      <div class="block-num">// 4 · RELACIÓN / PERSONALIDAD</div>
+      <div class="block-title">Experiencia del usuario en entorno local</div>
+      <div class="field-group">
+        <div class="field-label">Rol</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Asistente técnico</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Experto de dominio</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Operador</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Tono</div>
+        <input type="text" class="field-input" placeholder="profesional, técnico, basado en evidencia" oninput="trackProgress()">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Fallback / error</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Escala a humano</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Respuesta predefinida local</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Reintento automático</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Idiomas soportados</div>
+        <input type="text" class="field-input" placeholder="es, en, ..." oninput="trackProgress()">
+      </div>
+    </div>
+
+    <!-- B1: SEGMENTO ★ -->
+    <div class="block b1">
+      <div class="block-accent"></div>
+      <div class="block-num">// ★ 1 · SEGMENTO DE USUARIOS — EMPIEZA AQUÍ</div>
+      <div class="block-title" style="color:var(--amber)">¿Para quién es este agente local?</div>
+      <div class="seg-card">
+        <div class="seg-name" contenteditable="true" onblur="trackProgress()">Segmento primario</div>
+        <div class="seg-desc" contenteditable="true" onblur="trackProgress()">Define el usuario principal...</div>
+        <div class="seg-pill" style="background:var(--amber-d);color:var(--amber);border:1px solid var(--amber)">★ PRIMARIO</div>
+      </div>
+      <div class="seg-card">
+        <div class="seg-name" contenteditable="true" onblur="trackProgress()">Segmento secundario</div>
+        <div class="seg-desc" contenteditable="true" onblur="trackProgress()">Stakeholder o usuario secundario...</div>
+        <div class="seg-pill" style="background:var(--bg4);color:var(--muted);border:1px solid var(--border)">SECUNDARIO</div>
+      </div>
+      <div class="divider"></div>
+      <div class="field-group">
+        <div class="field-label">Acceso / Identidad</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> LDAP / Active Directory</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> SSO / SAML / OIDC</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Certificados cliente (mTLS)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> RBAC por rol / OU</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Jobs-to-be-done</div>
+        <textarea class="field-input" rows="3" placeholder="Cuando... quiero... para..." oninput="trackProgress()"></textarea>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Barreras de adopción</div>
+        <textarea class="field-input" rows="2" placeholder="Resistencia al cambio, confianza en IA local..." oninput="trackProgress()"></textarea>
+      </div>
+    </div>
+
+    <!-- B3: CANALES -->
+    <div class="block b3">
+      <div class="block-accent"></div>
+      <div class="block-num">// 3 · CANALES</div>
+      <div class="block-title">¿Cómo llega el agente al usuario?</div>
+      <div class="check-grid">
+        <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Portal web (intranet)</label>
+        <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Teams on-prem / híbrido</label>
+        <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Cliente de escritorio</label>
+        <label class="check-item"><input type="checkbox" onchange="trackProgress()"> API REST interna</label>
+        <label class="check-item"><input type="checkbox" onchange="trackProgress()"> CLI (para técnicos)</label>
+      </div>
+      <div class="field-group" style="margin-top:.5rem">
+        <div class="field-label">Protocolo</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> HTTPS interno</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> WebSocket (streaming)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> gRPC</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- B6a: HARDWARE -->
+    <div class="block b6a">
+      <div class="block-accent"></div>
+      <div class="block-num">// 6a · HARDWARE & CÓMPUTO ← CRÍTICO</div>
+      <div class="block-title">Dimensiona el hardware antes de elegir el modelo</div>
+
+      <div class="field-group">
+        <div class="field-label">GPU</div>
+        <div class="gpu-chips" id="gpuChips">
+          <div class="gpu-chip" onclick="selChip(this,'gpuChips','hwGpu')">RTX 4090</div>
+          <div class="gpu-chip" onclick="selChip(this,'gpuChips','hwGpu')">A10G</div>
+          <div class="gpu-chip" onclick="selChip(this,'gpuChips','hwGpu')">A100</div>
+          <div class="gpu-chip" onclick="selChip(this,'gpuChips','hwGpu')">H100</div>
+          <div class="gpu-chip" onclick="selChip(this,'gpuChips','hwGpu')">Multi-GPU</div>
+        </div>
+        <input type="text" class="field-input" style="margin-top:5px" placeholder="Otro: AMD Instinct, Apple M-series, RISC-V..." oninput="trackProgress(); if(this.value.trim()){document.getElementById('hwGpu').textContent=this.value; document.querySelectorAll('#gpuChips .gpu-chip').forEach(c=>c.classList.remove('sel'));}">
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Modelo LLM desplegado</div>
+        <div class="model-grid" id="modelCards">
+          <div class="model-card" onclick="selModel(this)"><div class="model-name">Llama 3.x</div><div class="model-meta">8B / 70B</div></div>
+          <div class="model-card" onclick="selModel(this)"><div class="model-name">Mistral</div><div class="model-meta">7B / 22B</div></div>
+          <div class="model-card" onclick="selModel(this)"><div class="model-name">Qwen 2.5</div><div class="model-meta">7B / 32B</div></div>
+          <div class="model-card" onclick="selModel(this)"><div class="model-name">Phi-3.5</div><div class="model-meta">3.8B mini</div></div>
+        </div>
+        <input type="text" class="field-input" style="margin-top:5px" placeholder="Otro modelo: DeepSeek, Gemma, Command-R..." oninput="trackProgress(); if(this.value.trim()){var m=this.value.trim(); document.getElementById('hwModel').textContent=m; document.querySelectorAll('#modelCards .model-card').forEach(c=>c.classList.remove('sel'));}">
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Cuantización</div>
+        <div class="quant-row" id="quantRow">
+          <button class="q-btn" onclick="selQuant(this)">FP16</button>
+          <button class="q-btn" onclick="selQuant(this)">Q8</button>
+          <button class="q-btn" onclick="selQuant(this)">Q4</button>
+          <button class="q-btn" onclick="selQuant(this)">GPTQ</button>
+        </div>
+      </div>
+
+      <div class="hw-meter">
+        <div class="hw-meter-top"><span class="hw-name">GPU VRAM estimado</span><span id="vramPct">0%</span></div>
+        <div class="meter-bar"><div class="meter-fill" id="vramBar" style="width:0%"></div></div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">RAM servidor</div>
+        <input type="text" class="field-input" placeholder="Ej: 128 GB DDR5" oninput="trackProgress()">
+      </div>
+    </div>
+
+    <!-- B6b: RECURSOS CONOCIMIENTO -->
+    <div class="block b6b">
+      <div class="block-accent"></div>
+      <div class="block-num">// 6b · RECURSOS DE CONOCIMIENTO</div>
+      <div class="block-title">Datos y conocimiento que consume el agente</div>
+
+      <div class="field-group">
+        <div class="field-label">Base de conocimiento</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Documentos (PDF, MD, HTML)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> BBDD SQL estructurada</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> APIs internas</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Código fuente</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Vector DB local</div>
+        <div class="gpu-chips" id="vdbChips">
+          <div class="gpu-chip" onclick="selChip(this,'vdbChips',null)">ChromaDB</div>
+          <div class="gpu-chip" onclick="selChip(this,'vdbChips',null)">Qdrant</div>
+          <div class="gpu-chip" onclick="selChip(this,'vdbChips',null)">Weaviate</div>
+          <div class="gpu-chip" onclick="selChip(this,'vdbChips',null)">FAISS</div>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Pipeline de ingesta</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Manual</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Automático (schedule)</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Trigger por evento</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Clasificación datos sensibles</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> PII</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Confidencial</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Secreto</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-label">Cifrado en reposo</div>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> AES-256 activado</label>
+          <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Sin cifrado (red aislada)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- B9: COSTES TCO -->
+    <div class="block b9">
+      <div class="block-accent"></div>
+      <div class="block-num">// 9 · COSTES (TCO), RIESGOS Y CUMPLIMIENTO — on-prem desplaza OPEX → CAPEX</div>
+      <div class="block-title">Planifica el coste total de propiedad</div>
+      <div class="tco-grid">
+        <div class="tco-card">
+          <div class="tco-title">CAPEX (una vez)</div>
+          <textarea class="field-input" rows="4" placeholder="Hardware GPU: ___€&#10;Servidores: ___€&#10;Almacenamiento: ___€&#10;Networking: ___€" oninput="trackProgress()"></textarea>
+        </div>
+        <div class="tco-card">
+          <div class="tco-title">OPEX (anual)</div>
+          <textarea class="field-input" rows="4" placeholder="Electricidad: ___€/año&#10;Personal: ___€/año&#10;Actualiz. modelos: ___€/año&#10;Mantenimiento: ___€/año" oninput="trackProgress()"></textarea>
+        </div>
+        <div class="tco-card">
+          <div class="tco-title">Riesgos on-prem</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Obsolescencia hardware</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Actualiz. modelos manual</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> SPOF sin redundancia</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Capacidad limitada en pico</label>
+          </div>
+        </div>
+        <div class="tco-card">
+          <div class="tco-title">Normativa aplicable</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> ENS (Esquema Nac. Seg.)</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> GDPR / RGPD</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> EU AI Act</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Normativa sectorial</label>
+          </div>
+        </div>
+      </div>
+      <div class="field-group" style="margin-top:.5rem">
+        <div class="field-label">Break-even estimado vs. cloud (meses)</div>
+        <input type="text" class="field-input" placeholder="Ej: 18 meses — cálculo: €CAPEX / (€/mes-cloud - €/mes-onprem)" oninput="trackProgress()">
+      </div>
+    </div>
+
+    <!-- B5: KPIs -->
+    <div class="block b5">
+      <div class="block-accent"></div>
+      <div class="block-num">// 5 · FUENTES DE VALOR (KPIs)</div>
+      <div class="block-title">¿Cómo demostramos que el TCO vale la pena?</div>
+      <div class="kpi-list">
+        <div>
+          <div class="kpi-head">
+            <span class="kpi-lbl">KPI 1 — <input type="text" class="field-input" style="width:130px;display:inline-block" placeholder="nombre del KPI" oninput="trackProgress()"></span>
+            <span class="kpi-pct" id="p1pct">0%</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar" id="p1bar" style="width:0%;background:var(--green)"></div></div>
+          <input type="range" min="0" max="100" value="0" style="width:100%;margin-top:3px;accent-color:var(--green)" oninput="setKpi('p1',this.value)">
+        </div>
+        <div>
+          <div class="kpi-head">
+            <span class="kpi-lbl">KPI 2 — <input type="text" class="field-input" style="width:130px;display:inline-block" placeholder="nombre del KPI" oninput="trackProgress()"></span>
+            <span class="kpi-pct" id="p2pct">0%</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar" id="p2bar" style="width:0%;background:var(--teal)"></div></div>
+          <input type="range" min="0" max="100" value="0" style="width:100%;margin-top:3px;accent-color:var(--teal)" oninput="setKpi('p2',this.value)">
+        </div>
+        <div>
+          <div class="kpi-head">
+            <span class="kpi-lbl">KPI 3 — <input type="text" class="field-input" style="width:130px;display:inline-block" placeholder="nombre del KPI" oninput="trackProgress()"></span>
+            <span class="kpi-pct" id="p3pct">0%</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar" id="p3bar" style="width:0%;background:var(--blue)"></div></div>
+          <input type="range" min="0" max="100" value="0" style="width:100%;margin-top:3px;accent-color:var(--blue)" oninput="setKpi('p3',this.value)">
+        </div>
+        <div>
+          <div class="kpi-head">
+            <span class="kpi-lbl">KPI 4 — Ahorro vs. cloud (€/año)</span>
+            <span class="kpi-pct" id="p4pct">0%</span>
+          </div>
+          <div class="kpi-bar-bg"><div class="kpi-bar" id="p4bar" style="width:0%;background:var(--amber)"></div></div>
+          <input type="range" min="0" max="100" value="0" style="width:100%;margin-top:3px;accent-color:var(--amber)" oninput="setKpi('p4',this.value)">
+        </div>
+      </div>
+      <div class="field-group" style="margin-top:.6rem">
+        <div class="field-label">Break-even ROI (meses)</div>
+        <input type="text" class="field-input" placeholder="Ej: 18 meses" oninput="trackProgress()">
+      </div>
+    </div>
+
+    <!-- B10: GUARDARRAÍLES -->
+    <div class="block b10">
+      <div class="block-accent"></div>
+      <div class="block-num">// 10 · GUARDARRAÍLES ON-PREM — Seguridad · Calidad · Ético · Operacional</div>
+      <div class="block-title" style="color:var(--red)">¿Qué controles garantizan operación segura dentro del perímetro?</div>
+      <div class="guard-row">
+        <div class="guard-card">
+          <div class="guard-title">🔒 Seguridad Perimetral</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Sin acceso a internet</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Filtro prompt injection</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Logs auditables locales</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Auth LDAP / SSO</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> TLS en tráfico interno</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> API del modelo protegida</label>
+          </div>
+          <div class="field-group" style="margin-top:5px">
+            <div class="field-label">Nivel riesgo EU AI Act</div>
+            <select class="field-input" onchange="trackProgress()">
+              <option value="">-- seleccionar --</option>
+              <option>Mínimo riesgo</option>
+              <option>Riesgo limitado</option>
+              <option>Alto riesgo</option>
+            </select>
+          </div>
+        </div>
+        <div class="guard-card">
+          <div class="guard-title">✅ Calidad & Modelo</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Benchmark antes de prod.</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Umbral confianza RAG</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Agente cita la fuente</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> LLM-as-judge local</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Test regresión en updates</label>
+          </div>
+          <div class="field-group" style="margin-top:5px">
+            <div class="field-label">Tasa alucinación máx.</div>
+            <input type="text" class="field-input" placeholder="< __%" oninput="trackProgress()">
+          </div>
+        </div>
+        <div class="guard-card">
+          <div class="guard-title">⚖️ Ético / Normativo</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Auditoría de sesgos</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> No decide sobre personas</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> GDPR: PII no en logs</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> ENS / normativa sectorial</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Transparencia IA activa</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Validado DPO / legal</label>
+          </div>
+        </div>
+        <div class="guard-card">
+          <div class="guard-title">⚙️ Operacional On-Prem</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Monitor GPU (util., temp.)</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Alertas OOM</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Cola de peticiones (picos)</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Rate limiting por usuario</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Plan failover / redundancia</label>
+            <label class="check-item"><input type="checkbox" onchange="trackProgress()"> Registro inmutable / Event Sourcing</label>
+          </div>
+          <div class="field-group" style="margin-top:5px">
+            <div class="field-label">SLA disponibilidad</div>
+            <input type="text" class="field-input" placeholder="Ej: 99.5%" oninput="trackProgress()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /canvas-grid -->
+
+  <div class="export-panel" id="exportPanel">
+    <div class="export-pre">$ agent-canvas --export --edition=onprem --format=json</div>
+    <div class="export-title">Canvas On-Prem completado</div>
+    <div class="export-sub">Tu diseño está listo para exportar y compartir con el equipo de infraestructura.</div>
+    <div class="export-actions">
+      <button class="btn-term" onclick="exportCanvas()">$ export --json</button>
+    <button class="btn-term primary" onclick="exportWord()">$ generate --doc</button>
+      <button class="btn-term" onclick="window.print()">$ print</button>
+    </div>
+  </div>
+
+</div><!-- /canvas-wrap -->
+
+<script>
+  // GPU selector
+  function selChip(el, groupId, statusId) {
+    document.querySelectorAll('#'+groupId+' .gpu-chip').forEach(c => c.classList.remove('sel'));
+    el.classList.add('sel');
+    if (statusId) document.getElementById(statusId).textContent = el.textContent;
+    trackProgress();
+  }
+
+  // Model selector
+  let selModelEl = null;
+  function selModel(el) {
+    document.querySelectorAll('#modelCards .model-card').forEach(c => c.classList.remove('sel'));
+    el.classList.add('sel');
+    selModelEl = el;
+    document.getElementById('hwModel').textContent = el.querySelector('.model-name').textContent + ' ' + el.querySelector('.model-meta').textContent;
+    updateVram();
+    trackProgress();
+  }
+
+  // Quant selector
+  function selQuant(el) {
+    document.querySelectorAll('#quantRow .q-btn').forEach(b => b.classList.remove('sel'));
+    el.classList.add('sel');
+    document.getElementById('hwQuant').textContent = el.textContent;
+    updateVram();
+  }
+
+  function updateVram() {
+    const model = selModelEl?.querySelector('.model-name')?.textContent || '';
+    const quant = document.querySelector('#quantRow .q-btn.sel')?.textContent || 'FP16';
+    const base = { 'Llama 3.x': 70, 'Mistral': 55, 'Qwen 2.5': 60, 'Phi-3.5': 30 };
+    const qMult = { 'FP16': 1, 'Q8': 0.6, 'Q4': 0.35, 'GPTQ': 0.3 };
+    let pct = (base[model] || 50) * (qMult[quant] || 1);
+    pct = Math.min(100, pct);
+    document.getElementById('vramBar').style.width = pct + '%';
+    document.getElementById('vramBar').style.background = pct > 80 ? 'var(--red)' : pct > 60 ? 'var(--amber)' : 'var(--green)';
+    document.getElementById('vramPct').textContent = Math.round(pct) + '%';
+  }
+
+  // Agencia
+  function selAg(el) {
+    el.closest('.ag-row').querySelectorAll('.ag-btn').forEach(b => b.classList.remove('sel'));
+    el.classList.add('sel');
+    trackProgress();
+  }
+
+  // KPI bars
+  function setKpi(id, val) {
+    document.getElementById(id+'bar').style.width = val + '%';
+    document.getElementById(id+'pct').textContent = val + '%';
+    trackProgress();
+  }
+
+  // Progress
+  function trackProgress() {
+    const blocks = document.querySelectorAll('.block');
+    let done = 0;
+    blocks.forEach(b => {
+      const inputs = b.querySelectorAll('input[type=text], textarea, select');
+      const checks = b.querySelectorAll('input[type=checkbox]:checked');
+      const sels   = b.querySelectorAll('.gpu-chip.sel, .model-card.sel, .q-btn.sel, .ag-btn.sel');
+      const filled = [...inputs].some(i => i.value.trim().length > 2) || checks.length > 0 || sels.length > 0;
+      if (filled) done++;
+    });
+    const total = blocks.length;
+    const pct = Math.round(done / total * 100);
+    document.getElementById('progFill').style.width = pct + '%';
+    document.getElementById('progText').textContent = done + '/' + total + ' bloques';
+    if (pct >= 70) document.getElementById('exportPanel').classList.add('visible');
+  }
+
+  function exportCanvas() {
+    const data = { version: 2, edition: 'onprem', timestamp: new Date().toISOString(), blocks: {} };
+    document.querySelectorAll('.block').forEach(b => {
+      const num = b.querySelector('.block-num')?.textContent?.trim();
+      if (!num) return;
+      const vals = {};
+      b.querySelectorAll('input[type=text], textarea, select').forEach(i => { if(i.value) vals[i.placeholder?.substring(0,30)||'field'] = i.value; });
+      b.querySelectorAll('input[type=checkbox]:checked').forEach(c => { vals[c.parentElement.textContent.trim()] = true; });
+      b.querySelectorAll('.gpu-chip.sel, .model-card.sel, .q-btn.sel, .ag-btn.sel').forEach(s => { vals['selected_'+s.textContent.trim()] = true; });
+      data.blocks[num.substring(0,30)] = vals;
+    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'agent-canvas-v2-onprem.json';
+    a.click();
+  }
+
+  function resetAll() {
+    if (!confirm('¿Reiniciar el canvas? Se perderán todos los datos.')) return;
+    document.querySelectorAll('input[type=text], textarea, select').forEach(i => i.value = '');
+    document.querySelectorAll('input[type=checkbox]').forEach(i => i.checked = false);
+    document.querySelectorAll('input[type=range]').forEach(r => r.value = 0);
+    document.querySelectorAll('.gpu-chip, .model-card, .q-btn, .ag-btn').forEach(b => b.classList.remove('sel'));
+    ['p1','p2','p3','p4'].forEach(id => { document.getElementById(id+'bar').style.width = '0%'; document.getElementById(id+'pct').textContent = '0%'; });
+    document.getElementById('hwModel').textContent = '— sin seleccionar —';
+    document.getElementById('hwGpu').textContent = '— sin configurar —';
+    document.getElementById('hwQuant').textContent = '—';
+    document.getElementById('hwStack').textContent = '— sin seleccionar —';
+    document.getElementById('vramBar').style.width = '0%';
+    document.getElementById('vramPct').textContent = '0%';
+    document.getElementById('exportPanel').classList.remove('visible');
+    trackProgress();
+  }
+
+// ─── WORD EXPORT ─────────────────────────────────────────────────────
+function exportWord() {
+  const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  function getCheck(sel) {
+    const r = [];
+    document.querySelectorAll(sel + ' input[type=checkbox]:checked').forEach(c =>
+      r.push(c.parentElement.textContent.trim()));
+    return r;
+  }
+  function getTextInputs(sel) {
+    const r = {};
+    document.querySelectorAll(sel).forEach(el => {
+      const v = el.tagName==='SELECT'
+        ? el.options[el.selectedIndex]?.text
+        : el.value?.trim();
+      if (!v || v==='-- seleccionar --') return;
+      const fg = el.closest('.field-group');
+      const lbl = fg?.querySelector('.field-label')?.textContent?.trim()
+               || el.placeholder?.substring(0,45) || 'Campo';
+      r[lbl] = v;
+    });
+    return r;
+  }
+  function getSel(sel) {
+    const r = [];
+    document.querySelectorAll(sel).forEach(el => r.push(el.textContent.trim()));
+    return r;
+  }
+  function ulList(items) {
+    if (!items?.length) return '<p style="color:#94A3B8;font-style:italic;font-size:9pt">Sin datos</p>';
+    return '<ul style="margin:3pt 0">' + items.map(i=>`<li>${esc(i)}</li>`).join('') + '</ul>';
+  }
+  function kvTable(obj) {
+    const entries = Object.entries(obj||{}).filter(([,v])=>v);
+    if (!entries.length) return '<p style="color:#94A3B8;font-style:italic;font-size:9pt">Sin datos</p>';
+    return entries.map(([k,v])=>`<p><strong>${esc(k)}:</strong> ${esc(v)}</p>`).join('');
+  }
+  function sec(title, color) {
+    return `<div style="background:${color};color:white;padding:8pt 12pt;margin:20pt 0 10pt;font-size:13pt;font-weight:bold">${title}</div>`;
+  }
+  function h2(t) {
+    return `<h2 style="font-size:13pt;font-weight:bold;color:#1D4ED8;border-bottom:2px solid #DBEAFE;padding-bottom:3pt;margin:16pt 0 6pt">${t}</h2>`;
+  }
+  function h3(t) {
+    return `<h3 style="font-size:9pt;font-weight:bold;color:#64748B;text-transform:uppercase;letter-spacing:.06em;margin:10pt 0 3pt">${t}</h3>`;
+  }
+
+  const date = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+
+  // Seg cards
+  const sc  = document.querySelectorAll('.b1 .seg-card');
+  const s1n = sc[0]?.querySelector('.seg-name')?.textContent?.trim()||'Segmento primario';
+  const s1d = sc[0]?.querySelector('.seg-desc')?.textContent?.trim()||'';
+  const s2n = sc[1]?.querySelector('.seg-name')?.textContent?.trim()||'Segmento secundario';
+  const s2d = sc[1]?.querySelector('.seg-desc')?.textContent?.trim()||'';
+
+  const b1c = getCheck('.b1'), b1t = getTextInputs('.b1 input[type=text],.b1 textarea');
+  const b2c = getCheck('.b2'), b2t = getTextInputs('.b2 input[type=text],.b2 textarea');
+  const b3c = getCheck('.b3');
+  const b4c = getCheck('.b4'), b4t = getTextInputs('.b4 input[type=text]');
+  const b5t = getTextInputs('.b5 input[type=text]');
+
+  const b6c = [...getCheck('.b6'),...getCheck('.b6a'),...getCheck('.b6b')];
+  const b6t = Object.assign({},
+    getTextInputs('.b6 input[type=text],.b6 textarea'),
+    getTextInputs('.b6a input[type=text],.b6a textarea'),
+    getTextInputs('.b6b input[type=text],.b6b textarea'));
+
+  const b7c = getCheck('.b7'), b7t = getTextInputs('.b7 textarea');
+  const b8c = getCheck('.b8'), b8t = getTextInputs('.b8 input[type=text]');
+  const b9c = getCheck('.b9'), b9t = getTextInputs('.b9 input[type=text],.b9 textarea');
+
+  const gc   = document.querySelectorAll('.b10 .guard-card');
+  const b10g = Array.from(gc).map(g=>({
+    title: g.querySelector('.guard-card-title,.guard-title')?.textContent?.trim()||'Control',
+    checks: Array.from(g.querySelectorAll('input[type=checkbox]:checked'))
+                 .map(c=>c.parentElement.textContent.trim())
+  }));
+  const b10t = getTextInputs('.b10 input[type=text],.b10 select');
+
+  // Chips / selected buttons
+  const agLvl  = getSel('.b7 .ag-btn.sel').join(', ')||'—';
+  const gpuSel = getSel('.b6a .gpu-chip.sel').join(', ')||'—';
+  const mdlEl  = document.querySelector('.b6a .model-card.sel');
+  const mdlSel = mdlEl ? (mdlEl.querySelector('.model-name')?.textContent||'')+' '+(mdlEl.querySelector('.model-meta')?.textContent||'') : '—';
+  const qSel   = getSel('.q-btn.sel').join(', ')||'—';
+  const stSel  = getSel('.b8 .gpu-chip.sel').join(', ')||'—';
+
+  const flowPat  = b7c.filter(c=>/Secuencial|Enrutador|Router|ReAct|Multi-agente|Orquestador/i.test(c));
+  const agType   = b7c.filter(c=>/RAG|Tool-use|Multi-step|Summ|Full|retriev|chunk/i.test(c));
+  const benefits = b2c.filter(c=>/↓|⚡|✓|📈|💰|Esfuerzo|Inmediatez|Reducc|Product|Ahorro|Privac|Latencia|Soberan/i.test(c));
+  const onpremR  = b2c.filter(c=>/Normativa|cloud|prem|Coste|Soberan|Latencia|volumen|Privac/i.test(c));
+  const llmPlat  = b8c.filter(c=>/Azure|OpenAI|Google|AWS|Vertex|Bedrock/i.test(c));
+  const fworks   = b8c.filter(c=>/LangChain|LlamaIndex|Copilot|Semantic|AutoGen|CrewAI|MCP|Haystack|propio/i.test(c));
+  const dataSrc  = b8c.filter(c=>/SharePoint|Confluence|Zendesk|Power|APIs|NAS|BBDD|SQL|LDAP|intranet/i.test(c));
+  const obsrv    = b8c.filter(c=>/LangSmith|Foundry|Prometheus|Grafana/i.test(c));
+  const network  = b8c.filter(c=>/Air-gap|Intranet|VPN|DMZ|HTTPS|WebSocket|gRPC/i.test(c));
+  const risks    = b9c.filter(c=>/Alucinac|Vendor|Escal|Disponib|Obsolesc|Actualiz|SPOF|Capacid|lock/i.test(c));
+  const regs     = b9c.filter(c=>/GDPR|AI Act|ENS|ISO|normativa|RGPD/i.test(c));
+
+  const doc = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><title>Agent Design Document</title>
+<style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#1E293B;line-height:1.5}p{margin:3pt 0}ul{margin:4pt 0;padding-left:20pt}li{margin:2pt 0}table{border-collapse:collapse;width:100%;margin:8pt 0}td,th{border:1px solid #E2E6F0;padding:5pt 8pt;font-size:10pt;vertical-align:top}th{background:#F8FAFC;font-weight:700}</style>
+</head><body>
+<p style="font-size:22pt;font-weight:700;color:#0F1D3B;margin:0 0 4pt">Agent Design Document</p>
+<p style="color:#94A3B8;font-size:9pt">Agent Canvas v2 · ${date}</p>
+<hr style="border:none;border-top:3px solid #2563EB;margin:10pt 0">
+${sec('PARTE I — PRD: PRODUCT REQUIREMENTS DOCUMENT','#1D4ED8')}
+${h2('1. Segmento de Usuarios')}
+<table><tr><th>Segmento</th><th>Descripción</th></tr>
+<tr><td><strong>★ ${esc(s1n)}</strong></td><td>${esc(s1d)}</td></tr>
+<tr><td>${esc(s2n)}</td><td>${esc(s2d)}</td></tr></table>
+${b1c.length?h3('Control de Acceso / RBAC')+ulList(b1c):''}
+${Object.keys(b1t).length?h3('Jobs-to-be-done & Barreras')+kvTable(b1t):''}
+${h2('2. Problema y Propuesta de Valor')}
+${kvTable(b2t)}
+${benefits.length?h3('Beneficios clave')+ulList(benefits):''}
+${onpremR.length?h3('Justificación On-Prem')+ulList(onpremR):''}
+${h2('3. Canales de Entrega')}
+${ulList(b3c)}
+${h2('4. Personalidad y Experiencia de Usuario')}
+${kvTable(b4t)}
+${b4c.length?h3('Controles de experiencia')+ulList(b4c):''}
+${h2('5. KPIs y Métricas de Éxito')}
+${kvTable(b5t)}
+${sec('PARTE II — ADR: ARCHITECTURE DECISION RECORD','#0F172A')}
+${h2('6. Recursos e Infraestructura')}
+${gpuSel!=='—'?`<p><strong>GPU:</strong> ${esc(gpuSel)}</p>`:''}
+${mdlSel!=='—'?`<p><strong>Modelo LLM:</strong> ${esc(mdlSel.trim())}</p>`:''}
+${qSel!=='—'?`<p><strong>Cuantización:</strong> ${esc(qSel)}</p>`:''}
+${b6c.length?h3('Tecnologías y datos')+ulList(b6c):''}
+${Object.keys(b6t).length?kvTable(b6t):''}
+${h2('7. Actividades Clave — Skills & Flujo de Control')}
+<p><strong>Nivel de agencia:</strong> ${esc(agLvl)}</p>
+${flowPat.length?h3('Patrón de flujo de control')+ulList(flowPat):''}
+${agType.length?h3('Tipo de agencia / Contexto')+ulList(agType):''}
+${Object.keys(b7t).length?h3('Skills definidas')+kvTable(b7t):''}
+${h2('8. Socios, Integraciones y Protocolo')}
+${llmPlat.length?h3('Plataforma LLM')+ulList(llmPlat):''}
+${stSel!=='—'?`<p><strong>Serving stack:</strong> ${esc(stSel)}</p>`:''}
+${fworks.length?h3('Orquestación / Framework')+ulList(fworks):''}
+${dataSrc.length?h3('Fuentes de datos')+ulList(dataSrc):''}
+${obsrv.length?h3('Observabilidad')+ulList(obsrv):''}
+${network.length?h3('Red / Conectividad')+ulList(network):''}
+${Object.keys(b8t).length?kvTable(b8t):''}
+${h2('9. Costes, Riesgos y Cumplimiento')}
+${Object.keys(b9t).length?kvTable(b9t):''}
+${risks.length?h3('Riesgos identificados')+ulList(risks):''}
+${regs.length?h3('Normativa aplicable')+ulList(regs):''}
+${h2('10. Guardarraíles')}
+<table><tr><th>Categoría</th><th>Controles activos</th></tr>
+${b10g.filter(g=>g.checks.length).map(g=>`<tr><td>${esc(g.title)}</td><td>${g.checks.map(c=>`• ${esc(c)}`).join('<br>')}</td></tr>`).join('')}
+</table>
+${Object.keys(b10t).length?kvTable(b10t):''}
+<hr style="border:none;border-top:1px solid #E2E6F0;margin:20pt 0">
+<p style="color:#94A3B8;font-size:9pt">Generado automáticamente desde Agent Canvas v2 — ${date}</p>
+</body></html>`;
+
+  const blob = new Blob(['﻿', doc], {type:'application/msword'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'agent-design-document.doc';
+  a.click();
+}
+// ─── END WORD EXPORT ────────────────────────────────────────────
+
+</script>
+</body>
+</html>
