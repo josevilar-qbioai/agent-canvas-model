@@ -274,6 +274,6 @@ If you use it in your organization and improve it, share your learnings with the
 
 ---
 
-**Version:** 2.0 (2025)
+**Version:** 3.0 (2026)
 **Author:** Jose Antonio Vilar — QMetrika Labs
 **Contact:** javsprivate@gmail.com

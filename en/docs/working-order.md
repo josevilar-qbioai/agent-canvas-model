@@ -80,5 +80,5 @@ Development costs, licenses, maintenance. Technical, business, and regulatory ri
 
 ---
 
-**Version:** 2.0 (2025)
+**Version:** 3.0 (2026)
 **Author:** Jose Antonio Vilar — QMetrika Labs

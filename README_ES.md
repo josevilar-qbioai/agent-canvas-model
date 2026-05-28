@@ -160,4 +160,4 @@ Este proyecto está bajo la [Licencia MIT](LICENSE). Compártelo, adáptalo, mej
 
 Framework desarrollado por **Jose Antonio Vilar** — [QMetrika Labs](https://qmetrikalabs.com)
 
-**Versión**: 3.0 (2025)
+**Versión**: 3.0 (2026)

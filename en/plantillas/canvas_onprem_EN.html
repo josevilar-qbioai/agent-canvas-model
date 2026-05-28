@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agent Canvas v2 — On-Prem Edition</title>
+<title>Agent Canvas v3 — On-Prem Edition</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -597,7 +597,7 @@
       <div class="term-dot g"></div>
     </div>
     <div class="term-path">
-      <span class="p1">user@qmetrikalabs</span><span class="p2">:</span><span class="p1">~</span><span class="p2">/</span><span class="p3">agent-canvas-v2</span><span class="cursor"></span>
+      <span class="p1">user@qmetrikalabs</span><span class="p2">:</span><span class="p1">~</span><span class="p2">/</span><span class="p3">agent-canvas-v3</span><span class="cursor"></span>
     </div>
   </div>
   <div class="badge-onprem">● ON-PREM · LOCAL MODELS · AIR-GAP READY</div>
@@ -609,10 +609,10 @@
 
 <div class="boot">
   <div class="boot-pre">
-    <span>#</span> Agent Canvas v2 — On-Prem Edition<br>
+    <span>#</span> Agent Canvas v3 — On-Prem Edition<br>
     <span>#</span> Ollama · vLLM · TGI · Hardware dedicado · Sin datos al exterior
   </div>
-  <h1>Agent Canvas <em>v2</em><br>On-Prem Edition</h1>
+  <h1>Agent Canvas <em>v3</em><br>On-Prem Edition</h1>
   <p class="boot-desc">Framework de diseño para agentes IA con modelos locales. Soberanía total de datos. Sin dependencia de proveedor cloud. Completa los 10 bloques — empieza por ★.</p>
   <div class="boot-stats">
     <div class="boot-stat"><span class="val">10</span><span class="lbl">BLOQUES</span></div>
@@ -1210,7 +1210,7 @@
   }
 
   function exportCanvas() {
-    const data = { version: 2, edition: 'onprem', timestamp: new Date().toISOString(), blocks: {} };
+    const data = { version: 3, edition: 'onprem', timestamp: new Date().toISOString(), blocks: {} };
     document.querySelectorAll('.block').forEach(b => {
       const num = b.querySelector('.block-num')?.textContent?.trim();
       if (!num) return;
@@ -1223,7 +1223,7 @@
     const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'agent-canvas-v2-onprem.json';
+    a.download = 'agent-canvas-v3-onprem.json';
     a.click();
   }
 

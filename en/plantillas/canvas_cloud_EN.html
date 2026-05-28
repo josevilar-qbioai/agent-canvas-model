@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agent Canvas v2 — Cloud Edition</title>
+<title>Agent Canvas v3 — Cloud Edition</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -591,7 +591,7 @@
   <div class="header-logo">
     <div class="dot"></div>
     <span>Agent Canvas</span>
-    <div class="badge">Cloud Edition · v2</div>
+    <div class="badge">Cloud Edition · v3</div>
   </div>
   <div class="header-actions">
     <button class="btn-ghost" onclick="resetAll()">↺ Reiniciar</button>
@@ -600,13 +600,13 @@
 </header>
 
 <div class="hero">
-  <div class="hero-eyebrow">Microsoft Copilot Studio · LangChain · Azure OpenAI</div>
-  <h1>Agent Canvas <span>v2</span><br>Cloud Edition</h1>
+  <div class="hero-eyebrow">Microsoft Copilot Studio · LangChain · Azure OpenAI · MCP</div>
+  <h1>Agent Canvas <span>v3</span><br>Cloud Edition</h1>
   <p class="hero-sub">Framework de diseño para agentes IA en entornos cloud. Completa los 10 bloques en el orden indicado por ★.</p>
   <div class="hero-stats">
     <div class="hero-stat"><strong>10</strong><span>Bloques de diseño</span></div>
     <div class="hero-stat"><strong>★→1</strong><span>Orden recomendado</span></div>
-    <div class="hero-stat"><strong>v2</strong><span>Con guardarraíles</span></div>
+    <div class="hero-stat"><strong>v3</strong><span>Con guardarraíles</span></div>
   </div>
 </div>
 
@@ -1071,7 +1071,7 @@
   function updateKpi(n, el) { trackProgress(); }
 
   function exportCanvas() {
-    const data = { version: 2, edition: 'cloud', timestamp: new Date().toISOString(), blocks: {} };
+    const data = { version: 3, edition: 'cloud', timestamp: new Date().toISOString(), blocks: {} };
     document.querySelectorAll('.block').forEach(b => {
       const num = b.querySelector('.block-num')?.textContent?.trim();
       if (!num) return;
@@ -1087,7 +1087,7 @@
     const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'agent-canvas-v2-cloud.json';
+    a.download = 'agent-canvas-v3-cloud.json';
     a.click();
   }
 

@@ -152,4 +152,4 @@ This project is licensed under the [MIT License](LICENSE). Share it, adapt it, i
 
 Framework developed by **Jose Antonio Vilar** — [QMetrika Labs](https://qmetrikalabs.com)
 
-**Version**: 2.0 (2025)
+**Version**: 3.0 (2026)

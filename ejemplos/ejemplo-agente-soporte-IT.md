@@ -8,7 +8,7 @@ Ejemplo completo del Agent Canvas aplicado a un agente de soporte tecnico intern
 
 ## 1. Segmento de Usuarios
 
-- **Primario**: Empleados de la organizacion (2.000+ personas) que necesitan resolver incidencias IT del dia a dia
+- **Primario**: Empleados de la organizacion (3.000+ personas) que necesitan resolver incidencias IT del dia a dia
 - **Secundario**: Equipo de soporte IT (15 personas) que recibe menos tickets de nivel 1
 
 ---

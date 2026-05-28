@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agent Canvas v2 — On-Prem Edition</title>
+<title>Agent Canvas v3 — On-Prem Edition</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -597,7 +597,7 @@
       <div class="term-dot g"></div>
     </div>
     <div class="term-path">
-      <span class="p1">user@qmetrikalabs</span><span class="p2">:</span><span class="p1">~</span><span class="p2">/</span><span class="p3">agent-canvas-v2</span><span class="cursor"></span>
+      <span class="p1">user@qmetrikalabs</span><span class="p2">:</span><span class="p1">~</span><span class="p2">/</span><span class="p3">agent-canvas-v3</span><span class="cursor"></span>
     </div>
   </div>
   <div class="badge-onprem">● ON-PREM · LOCAL MODELS · AIR-GAP READY</div>
@@ -610,10 +610,10 @@
 
 <div class="boot">
   <div class="boot-pre">
-    <span>#</span> Agent Canvas v2 — On-Prem Edition<br>
+    <span>#</span> Agent Canvas v3 — On-Prem Edition<br>
     <span>#</span> Ollama · vLLM · TGI · Hardware dedicado · Sin datos al exterior
   </div>
-  <h1>Agent Canvas <em>v2</em><br>On-Prem Edition</h1>
+  <h1>Agent Canvas <em>v3</em><br>On-Prem Edition</h1>
   <p class="boot-desc">Framework de diseño para agentes IA con modelos locales. Soberanía total de datos. Sin dependencia de proveedor cloud. Completa los 10 bloques — empieza por ★.</p>
   <div class="boot-stats">
     <div class="boot-stat"><span class="val">10</span><span class="lbl">BLOQUES</span></div>
@@ -1226,7 +1226,7 @@
   }
 
   function exportCanvas() {
-    const data = { version: 2, edition: 'onprem', timestamp: new Date().toISOString(), blocks: {} };
+    const data = { version: 3, edition: 'onprem', timestamp: new Date().toISOString(), blocks: {} };
     document.querySelectorAll('.block').forEach(b => {
       const num = b.querySelector('.block-num')?.textContent?.trim();
       if (!num) return;
@@ -1239,7 +1239,7 @@
     const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'agent-canvas-v2-onprem.json';
+    a.download = 'agent-canvas-v3-onprem.json';
     a.click();
   }
 
@@ -1366,7 +1366,7 @@ function exportWord() {
 <style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#1E293B;line-height:1.5}p{margin:3pt 0}ul{margin:4pt 0;padding-left:20pt}li{margin:2pt 0}table{border-collapse:collapse;width:100%;margin:8pt 0}td,th{border:1px solid #E2E6F0;padding:5pt 8pt;font-size:10pt;vertical-align:top}th{background:#F8FAFC;font-weight:700}</style>
 </head><body>
 <p style="font-size:22pt;font-weight:700;color:#0F1D3B;margin:0 0 4pt">Agent Design Document</p>
-<p style="color:#94A3B8;font-size:9pt">Agent Canvas v2 · ${date}</p>
+<p style="color:#94A3B8;font-size:9pt">Agent Canvas v3 · ${date}</p>
 <hr style="border:none;border-top:3px solid #2563EB;margin:10pt 0">
 ${sec('PARTE I — PRD: PRODUCT REQUIREMENTS DOCUMENT','#1D4ED8')}
 ${h2('1. Segmento de Usuarios')}
@@ -1416,7 +1416,7 @@ ${b10g.filter(g=>g.checks.length).map(g=>`<tr><td>${esc(g.title)}</td><td>${g.ch
 </table>
 ${Object.keys(b10t).length?kvTable(b10t):''}
 <hr style="border:none;border-top:1px solid #E2E6F0;margin:20pt 0">
-<p style="color:#94A3B8;font-size:9pt">Generado automáticamente desde Agent Canvas v2 — ${date}</p>
+<p style="color:#94A3B8;font-size:9pt">Generado automáticamente desde Agent Canvas v3 — ${date}</p>
 </body></html>`;
 
   const blob = new Blob(['﻿', doc], {type:'application/msword'});
