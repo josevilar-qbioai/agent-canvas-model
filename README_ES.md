@@ -166,6 +166,6 @@ Las contribuciones son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Origen
 
-Desarrollado por **Jose Antonio Vilar** — [QMetrika Labs](mailto:qmetrika@proton.me)
+Desarrollado por **Jose Antonio Vilar** — QMetrika Labs — qmetrika[at]proton.me
 
 **Versión**: 4.0 (2026)

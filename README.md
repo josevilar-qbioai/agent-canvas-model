@@ -166,6 +166,6 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Origin
 
-Developed by **Jose Antonio Vilar** — [QMetrika Labs](mailto:qmetrika@proton.me)
+Developed by **Jose Antonio Vilar** — QMetrika Labs — qmetrika[at]proton.me
 
 **Version**: 4.0 (2026)
