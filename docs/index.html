@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Canvas Model — QMetrika Labs</title>
+<meta name="description" content="Framework de diseño de agentes IA. Adapta el Business Model Canvas a 10 bloques para planificar, diseñar y desplegar agentes en producción.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:   #08080F;
+  --sf:   #0D0D1C;
+  --sf2:  #121226;
+  --bd:   #1C1C38;
+  --bd2:  #252548;
+  --tx:   #E6E6F4;
+  --tx2:  #9090B8;
+  --mu:   #505070;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+  --indigo:  #6366F1;
+  --emerald: #10B981;
+  --cyan:    #06B6D4;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--tx); min-height: 100vh; line-height: 1.5; }
+
+header {
+  background: var(--sf); border-bottom: 1px solid var(--bd);
+  padding: 0 2rem; height: 54px;
+  display: flex; align-items: center; gap: .75rem;
+}
+.q-logo {
+  width: 26px; height: 26px; background: var(--indigo); border-radius: 6px;
+  display: grid; place-items: center;
+  font-family: var(--mono); font-size: .78rem; font-weight: 700; color: #fff;
+}
+.logo-name { font-size: .82rem; font-weight: 600; color: var(--tx); }
+.logo-badge {
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .04em;
+  color: var(--indigo); background: rgba(99,102,241,.12);
+  border: 1px solid rgba(99,102,241,.3); padding: .16rem .5rem; border-radius: 4px;
+}
+.header-right { margin-left: auto; }
+.gh-link {
+  font-size: .75rem; color: var(--tx2); text-decoration: none;
+  border: 1px solid var(--bd2); padding: .3rem .75rem; border-radius: 5px;
+  transition: all .15s; font-family: var(--mono);
+}
+.gh-link:hover { border-color: var(--indigo); color: var(--indigo); }
+
+.hero {
+  max-width: 860px; margin: 0 auto;
+  padding: 5rem 2rem 4rem; text-align: center;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: .68rem; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.25rem;
+}
+.eyebrow span { color: var(--indigo); }
+h1 {
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.1;
+  letter-spacing: -.025em; margin-bottom: 1rem;
+}
+h1 em { color: var(--indigo); font-style: normal; }
+.sub {
+  font-size: 1rem; color: var(--tx2); max-width: 520px;
+  margin: 0 auto 3.5rem; line-height: 1.7;
+}
+
+.cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  max-width: 940px; margin: 0 auto 4rem; padding: 0 2rem;
+}
+@media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+@media (min-width: 701px) and (max-width: 920px) { .cards { grid-template-columns: 1fr 1fr; } }
+
+.card {
+  background: var(--sf); border: 1px solid var(--bd);
+  border-radius: 10px; padding: 1.75rem 1.5rem;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: .6rem;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 2px;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.5); }
+.card-cloud::before  { background: var(--indigo); }
+.card-onprem::before { background: var(--emerald); }
+.card-mcp::before    { background: var(--cyan); }
+.card-cloud:hover  { border-color: var(--indigo); }
+.card-onprem:hover { border-color: var(--emerald); }
+.card-mcp:hover    { border-color: var(--cyan); }
+
+.card-label {
+  font-family: var(--mono); font-size: .62rem;
+  text-transform: uppercase; letter-spacing: .1em;
+}
+.card-cloud  .card-label { color: var(--indigo); }
+.card-onprem .card-label { color: var(--emerald); }
+.card-mcp    .card-label { color: var(--cyan); }
+.card h2 { font-size: .95rem; font-weight: 600; color: var(--tx); }
+.card p  { font-size: .82rem; color: var(--tx2); line-height: 1.6; flex: 1; }
+.card-cta {
+  margin-top: .5rem; font-family: var(--mono); font-size: .75rem; font-weight: 500;
+  display: flex; align-items: center; gap: .35rem;
+}
+.card-cloud  .card-cta { color: var(--indigo); }
+.card-onprem .card-cta { color: var(--emerald); }
+.card-mcp    .card-cta { color: var(--cyan); }
+
+.features-wrap {
+  max-width: 860px; margin: 0 auto 5rem; padding: 0 2rem; text-align: center;
+}
+.features-label {
+  font-family: var(--mono); font-size: .62rem; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+.tag {
+  font-size: .75rem; padding: .3rem .8rem; border-radius: 20px;
+  border: 1px solid var(--bd2); color: var(--tx2); background: var(--sf);
+}
+
+footer {
+  background: var(--sf); border-top: 1px solid var(--bd);
+  padding: 1.25rem 2rem; text-align: center;
+  font-size: .72rem; color: var(--mu);
+  display: flex; align-items: center; justify-content: center; gap: .75rem; flex-wrap: wrap;
+}
+footer a { color: var(--indigo); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+.sep { opacity: .4; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="q-logo">Q</div>
+  <span class="logo-name">Agent Canvas Model</span>
+  <span class="logo-badge">v4.0 · 2026</span>
+  <div class="header-right">
+    <a href="https://github.com/josevilar-qbioai/agent-canvas-model" class="gh-link" target="_blank" rel="noopener">GitHub →</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <p class="eyebrow"><span>QMetrika Labs</span> · Agent Canvas Model</p>
+    <h1>Diseña tu agente IA<br>antes de <em>programarlo</em></h1>
+    <p class="sub">Adaptación del Business Model Canvas para planificar, diseñar y desplegar agentes en producción. 10 bloques. Sin código. Con exportación a Word.</p>
+  </div>
+
+  <div class="cards">
+    <a href="cloud/" class="card card-cloud">
+      <div class="card-label">Cloud Edition</div>
+      <h2>Agentes en Cloud</h2>
+      <p>Para agentes con Azure, AWS, GCP, Copilot Studio, LangChain o APIs gestionadas.</p>
+      <div class="card-cta">Abrir canvas →</div>
+    </a>
+    <a href="onprem/" class="card card-onprem">
+      <div class="card-label">On-Prem Edition</div>
+      <h2>Modelos locales</h2>
+      <p>Para agentes con Ollama, vLLM o LM Studio en entornos air-gap o alta privacidad.</p>
+      <div class="card-cta">Abrir canvas →</div>
+    </a>
+    <a href="mcp/" class="card card-mcp">
+      <div class="card-label">MCP Canvas</div>
+      <h2>Arquitectura MCP</h2>
+      <p>Diseña tu capa de Model Context Protocol: servidores, transporte, seguridad y observabilidad.</p>
+      <div class="card-cta">Abrir canvas →</div>
+    </a>
+  </div>
+
+  <div class="features-wrap">
+    <p class="features-label">Funcionalidades v4.0</p>
+    <div class="tags">
+      <span class="tag">💾 Auto-guardado</span>
+      <span class="tag">🔗 Compartir por enlace</span>
+      <span class="tag">📂 Importar / Exportar JSON</span>
+      <span class="tag">📄 Exportar Word PRD+ADR</span>
+      <span class="tag">♿ WCAG 2.2 AA</span>
+      <span class="tag">⌨️ Navegación por teclado</span>
+      <span class="tag">⚡ Control Flow Pattern</span>
+      <span class="tag">🔌 MCP checkbox</span>
+      <span class="tag">🔒 Event Sourcing</span>
+      <span class="tag">🖥️ Air-gap ready</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Agent Canvas Model</span>
+  <span class="sep">·</span>
+  <a href="https://github.com/josevilar-qbioai/agent-canvas-model" target="_blank" rel="noopener">QMetrika Labs</a>
+  <span class="sep">·</span>
+  <span>MIT License</span>
+  <span class="sep">·</span>
+  <a href="mailto:qmetrika@proton.me">qmetrika@proton.me</a>
+</footer>
+
+</body>
+</html>

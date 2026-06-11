@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Canvas v4 — Cloud Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/canvas-cloud.css">
+</head>
+<body>
+
+<!-- Skip link for keyboard users (WCAG 2.2) -->
+<a class="skip-link" href="#main-canvas">Saltar al canvas</a>
+
+<header role="banner">
+  <div class="header-logo">
+    <div class="dot" aria-hidden="true"></div>
+    <span>Agent Canvas</span>
+    <div class="badge" aria-label="Edición Cloud versión 4">Cloud Edition · v4</div>
+  </div>
+  <div class="header-actions" role="toolbar" aria-label="Acciones del canvas">
+    <label for="canvasName" class="sr-only">Nombre del canvas</label>
+    <input id="canvasName" name="canvasName" type="text"
+      placeholder="Nombre del proyecto…"
+      aria-label="Nombre del proyecto"
+      style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:white;border-radius:6px;padding:.3rem .7rem;font-size:.8rem;width:180px">
+    <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
+    <button id="btnSave" class="btn-ghost" aria-label="Guardar canvas localmente">💾 Guardar</button>
+    <button id="btnImportJSON" class="btn-import" aria-label="Importar canvas desde archivo JSON">📂 Importar</button>
+    <button id="btnExportJSON" class="btn-ghost" aria-label="Exportar canvas como JSON">↓ JSON</button>
+    <button id="btnShare" class="btn-ghost" aria-label="Generar enlace para compartir el canvas">🔗 Compartir</button>
+    <button id="btnReset" class="btn-ghost" aria-label="Reiniciar canvas">↺ Reiniciar</button>
+    <button id="btnWord" class="btn-primary" style="background:var(--green);border-color:var(--green)" aria-label="Generar documento Word con PRD y ADR">📄 Generar Documento</button>
+  </div>
+</header>
+
+<!-- Share modal -->
+<div id="shareModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+  <div class="modal-box">
+    <div id="shareModalTitle" class="modal-title">🔗 Enlace para compartir</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">
+      Este enlace contiene todo el estado del canvas. Cualquier persona con él puede cargar tu diseño exactamente como está.
+    </p>
+    <textarea id="shareURL" class="modal-url" readonly aria-label="URL de compartir" rows="3"></textarea>
+    <div class="modal-actions">
+      <button id="btnCloseModal" class="btn-ghost">Cerrar</button>
+      <button id="btnCopyURL" class="btn-primary">📋 Copiar enlace</button>
+    </div>
+  </div>
+</div>
+
+<div class="hero" role="region" aria-label="Presentación del canvas">
+  <div class="hero-eyebrow" aria-hidden="true">Microsoft Copilot Studio · LangChain · Azure OpenAI · MCP</div>
+  <h1>Agent Canvas <span>v4</span><br>Cloud Edition</h1>
+  <p class="hero-sub">Framework de diseño para agentes IA en entornos cloud. Completa los 10 bloques en el orden indicado por ★.</p>
+  <div class="hero-stats" aria-label="Estadísticas del framework">
+    <div class="hero-stat"><strong>10</strong><span>Bloques de diseño</span></div>
+    <div class="hero-stat"><strong>★→1</strong><span>Orden recomendado</span></div>
+    <div class="hero-stat"><strong>v4</strong><span>Con persistencia y compartir</span></div>
+  </div>
+</div>
+
+<main id="main-canvas">
+<div class="canvas-wrap">
+  <div class="canvas-header">
+    <div>
+      <div class="canvas-title">Canvas de Diseño</div>
+      <div class="canvas-subtitle" id="canvasSubtitle">Completa cada bloque haciendo clic · Los cambios se guardan automáticamente</div>
+    </div>
+    <div>
+      <div class="progress-label" id="progressLabel" aria-live="polite">0 / 10 bloques completados</div>
+      <div class="progress-bar" style="width:240px" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="progressLabel">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="canvas-grid" role="main" aria-label="Bloques del canvas de diseño">
+
+    <!-- BLOCK 8: SOCIOS / INTEGRACIONES -->
+    <div class="block b8" data-block="b8" data-collapsible="true"
+      role="region" aria-labelledby="b8-title" aria-expanded="false" tabindex="0">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b8-title">8 · Socios / Integraciones</div>
+      <div class="block-title">🔌 Con qué sistemas conecta el agente</div>
+      <div data-stop-toggle>
+        <div class="field-group">
+          <div class="field-label" id="b8-llm-label">Plataforma LLM</div>
+          <div class="check-grid" role="group" aria-labelledby="b8-llm-label">
+            <label class="check-item"><input type="checkbox" value="Azure OpenAI Service"> Azure OpenAI Service</label>
+            <label class="check-item"><input type="checkbox" value="OpenAI API"> OpenAI API</label>
+            <label class="check-item"><input type="checkbox" value="Google Vertex AI"> Google Vertex AI</label>
+            <label class="check-item"><input type="checkbox" value="AWS Bedrock"> AWS Bedrock</label>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-group">
+          <div class="field-label" id="b8-orch-label">Orquestación / Framework</div>
+          <div class="check-grid" role="group" aria-labelledby="b8-orch-label">
+            <label class="check-item"><input type="checkbox" value="Microsoft Copilot Studio"> Microsoft Copilot Studio</label>
+            <label class="check-item"><input type="checkbox" value="LangChain / LangGraph"> LangChain / LangGraph</label>
+            <label class="check-item"><input type="checkbox" value="Semantic Kernel"> Semantic Kernel</label>
+            <label class="check-item"><input type="checkbox" value="AutoGen / CrewAI"> AutoGen / CrewAI</label>
+            <label class="check-item"><input type="checkbox" value="MCP (Model Context Protocol)"> MCP (Model Context Protocol)</label>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-group">
+          <div class="field-label" id="b8-data-label">Fuentes de datos / Integraciones</div>
+          <div class="check-grid" role="group" aria-labelledby="b8-data-label">
+            <label class="check-item"><input type="checkbox" value="SharePoint"> SharePoint</label>
+            <label class="check-item"><input type="checkbox" value="Confluence"> Confluence</label>
+            <label class="check-item"><input type="checkbox" value="Zendesk / ServiceNow"> Zendesk / ServiceNow</label>
+            <label class="check-item"><input type="checkbox" value="Power Automate"> Power Automate</label>
+            <label class="check-item"><input type="checkbox" value="APIs REST propias"> APIs REST propias</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label" id="b8-obs-label">Observabilidad</div>
+          <div class="check-grid" role="group" aria-labelledby="b8-obs-label">
+            <label class="check-item"><input type="checkbox" value="LangSmith"> LangSmith</label>
+            <label class="check-item"><input type="checkbox" value="Azure AI Foundry"> Azure AI Foundry</label>
+            <label class="check-item"><input type="checkbox" value="Prometheus / Grafana"> Prometheus / Grafana</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 7: ACTIVIDADES CLAVE -->
+    <div class="block b7" data-block="b7" data-collapsible="true"
+      role="region" aria-labelledby="b7-title" aria-expanded="false" tabindex="0">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b7-title">7 · Actividades Clave</div>
+      <div class="block-title">⚡ Skills y nivel de agencia</div>
+      <div data-stop-toggle>
+        <div class="field-group">
+          <div class="field-label" id="b7-agency-label">Tipo de agencia</div>
+          <div class="agencia-select" role="radiogroup" aria-labelledby="b7-agency-label">
+            <button class="ag-btn" role="radio" aria-checked="false">Informativo</button>
+            <button class="ag-btn" role="radio" aria-checked="false">Sugeridor</button>
+            <button class="ag-btn" role="radio" aria-checked="false">Supervisor</button>
+            <button class="ag-btn" role="radio" aria-checked="false">Autónomo</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-group">
+          <div class="field-label" id="b7-flow-label">Patrón de Flujo de Control</div>
+          <div class="check-grid" role="group" aria-labelledby="b7-flow-label">
+            <label class="check-item"><input type="checkbox" value="Secuencial (Pipeline rígido)"> Secuencial (Pipeline rígido)</label>
+            <label class="check-item"><input type="checkbox" value="Enrutador (Router / Intent Classifier)"> Enrutador (Router / Intent Classifier)</label>
+            <label class="check-item"><input type="checkbox" value="Agente Autónomo (ReAct / Loop)"> Agente Autónomo (ReAct / Loop)</label>
+            <label class="check-item"><input type="checkbox" value="Multi-agente (Orquestador-Trabajadores)"> Multi-agente (Orquestador-Trabajadores)</label>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-group">
+          <div class="field-label">Skills definidas</div>
+          <div class="skill-cards" id="skillCards">
+            <div class="skill-card">
+              <div class="skill-card-title">Skill Informativa</div>
+              <textarea class="field-input" name="b7_skill_informativa" rows="2"
+                placeholder="Describe qué responde este skill…"
+                aria-label="Skill Informativa: descripción"></textarea>
+            </div>
+            <div class="skill-card">
+              <div class="skill-card-title">Skill Transaccional</div>
+              <textarea class="field-input" name="b7_skill_transaccional" rows="2"
+                placeholder="Pasos y condiciones de ejecución…"
+                aria-label="Skill Transaccional: descripción"></textarea>
+            </div>
+            <div class="skill-card" style="border-left-color:#059669">
+              <div class="skill-card-title">Skill Administrativa</div>
+              <textarea class="field-input" name="b7_skill_administrativa" rows="2"
+                placeholder="Operaciones sobre sistemas…"
+                aria-label="Skill Administrativa: descripción"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label" id="b7-ctx-label">Ventana de contexto</div>
+          <div class="check-grid" role="group" aria-labelledby="b7-ctx-label">
+            <label class="check-item"><input type="checkbox" value="RAG (retrieval)"> RAG (retrieval)</label>
+            <label class="check-item"><input type="checkbox" value="Summarization"> Summarization</label>
+            <label class="check-item"><input type="checkbox" value="Full context"> Full context</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 2: PROPUESTA DE VALOR ★ -->
+    <div class="block b2" data-block="b2" data-collapsible="true"
+      role="region" aria-labelledby="b2-title" aria-expanded="false" tabindex="0">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b2-title">★ 2 · Propuesta de Valor — Empieza aquí</div>
+      <div class="block-title" style="color:var(--blue)">💎 ¿Qué problema resuelve?</div>
+      <div data-stop-toggle>
+        <div class="field-group">
+          <label class="field-label" for="b2_problema">Problema central</label>
+          <textarea class="field-input" id="b2_problema" name="b2_problema" rows="3"
+            placeholder="¿Qué tarea manual, lenta o propensa a errores existe hoy?"
+            aria-describedby="b2-title"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="b2_alternativa">Alternativa actual (sin agente)</label>
+          <textarea class="field-input" id="b2_alternativa" name="b2_alternativa" rows="2"
+            placeholder="¿Cómo lo hace el usuario hoy?"></textarea>
+        </div>
+        <div class="divider"></div>
+        <div class="field-group">
+          <div class="field-label" id="b2-ben-label">Beneficios clave &amp; Métrica de impacto</div>
+          <div class="check-grid" role="group" aria-labelledby="b2-ben-label">
+            <label class="check-item"><input type="checkbox" value="↓ Esfuerzo manual (carga reducida)"> ↓ Esfuerzo manual (carga reducida)</label>
+            <label class="check-item"><input type="checkbox" value="⚡ Inmediatez (elimina tiempos de espera)"> ⚡ Inmediatez (elimina tiempos de espera)</label>
+            <label class="check-item"><input type="checkbox" value="✓ Reducción de errores"> ✓ Reducción de errores</label>
+            <label class="check-item"><input type="checkbox" value="📈 Productividad del personal"> 📈 Productividad del personal</label>
+            <label class="check-item"><input type="checkbox" value="💰 Ahorro de costes directos"> 💰 Ahorro de costes directos</label>
+          </div>
+          <input type="text" class="field-input" name="b2_metrica" style="margin-top:5px"
+            placeholder="Métrica: Ej: −40% tiempo de resolución o −60% consultas manuales"
+            aria-label="Métrica de impacto principal">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="b2_dato_critico">Dato crítico que justifica el agente</label>
+          <textarea class="field-input" id="b2_dato_critico" name="b2_dato_critico" rows="2"
+            placeholder="Ej: la tarea X consume Y horas/semana al equipo"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="b2_ventaja">¿Por qué el agente es mejor que la alternativa?</label>
+          <textarea class="field-input" id="b2_ventaja" name="b2_ventaja" rows="2"
+            placeholder="Disponibilidad 24/7, consistencia, sin formación técnica…"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Stack Cloud</div>
+          <div class="tag-wrap" aria-label="Tecnologías del stack cloud">
+            <span class="tag" style="color:var(--blue);border-color:#BFDBFE">Copilot Studio</span>
+            <span class="tag" style="color:var(--teal);border-color:#A5F3FC">Azure OpenAI</span>
+            <span class="tag" style="color:#7C3AED;border-color:#DDD6FE">Power Platform</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 4: RELACIÓN / PERSONALIDAD -->
+    <div class="block b4" data-block="b4" data-collapsible="true"
+      role="region" aria-labelledby="b4-title" aria-expanded="false" tabindex="0">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b4-title">4 · Relación / Personalidad</div>
+      <div class="block-title">🤝 Experiencia de usuario</div>
+      <div data-stop-toggle>
+        <div class="field-group">
+          <div class="field-label" id="b4-rol-label">Rol del agente</div>
+          <div class="check-grid" role="group" aria-labelledby="b4-rol-label">
+            <label class="check-item"><input type="checkbox" value="Asistente experto"> Asistente experto</label>
+            <label class="check-item"><input type="checkbox" value="Tutor / guía"> Tutor / guía</label>
+            <label class="check-item"><input type="checkbox" value="Operador técnico"> Operador técnico</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="b4_tono">Tono y estilo</label>
+          <input type="text" class="field-input" id="b4_tono" name="b4_tono"
+            placeholder="Ej: educado, profesional, basado en evidencia">
+        </div>
+        <div class="field-group">
+          <div class="field-label" id="b4-fb-label">Gestión de errores / Fallback</div>
+          <div class="check-grid" role="group" aria-labelledby="b4-fb-label">
+            <label class="check-item"><input type="checkbox" value="Escala a humano"> Escala a humano</label>
+            <label class="check-item"><input type="checkbox" value="Respuesta predefinida"> Respuesta predefinida</label>
+            <label class="check-item"><input type="checkbox" value="Cita la fuente oficial"> Cita la fuente oficial</label>
+            <label class="check-item"><input type="checkbox" value="Reintento automático"> Reintento automático</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-label">Transparencia IA</div>
+          <label class="check-item"><input type="checkbox" value="El usuario sabe que habla con un agente IA"> El usuario sabe que habla con un agente IA</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 1: SEGMENTO DE USUARIOS ★ -->
+    <div class="block b1" data-block="b1" data-collapsible="true"
+      role="region" aria-labelledby="b1-title" aria-expanded="false" tabindex="0">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b1-title">★ 1 · Segmento de Usuarios — Empieza aquí</div>
+      <div class="block-title" style="color:var(--amber)">👥 ¿Para quién es?</div>
+      <div data-stop-toggle>
+        <div class="seg-cards" role="list" aria-label="Segmentos de usuarios">
+          <div class="seg-card" role="listitem">
+            <div class="seg-name" contenteditable="true"
+              aria-label="Nombre segmento primario" role="textbox"
+              data-default="Segmento primario">Segmento primario</div>
+            <div class="seg-desc" contenteditable="true"
+              aria-label="Descripción segmento primario" role="textbox"
+              data-default="Define el usuario principal...">Define el usuario principal...</div>
+            <div class="seg-pill" style="background:#FFFBEB;color:var(--amber);border:1px solid #FDE68A">★ Primario</div>
+          </div>
+          <div class="seg-card" role="listitem">
+            <div class="seg-name" contenteditable="true"
+              aria-label="Nombre segmento secundario" role="textbox"
+              data-default="Segmento secundario">Segmento secundario</div>
+            <div class="seg-desc" contenteditable="true"
+              aria-label="Descripción segmento secundario" role="textbox"
+              data-default="Usuario secundario o stakeholder...">Usuario secundario o stakeholder...</div>
+            <div class="seg-pill" style="background:#F8FAFC;color:var(--muted);border:1px solid var(--border)">Secundario</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="field-group">
+          <div class="field-label" id="b1-rbac-label">Acceso / RBAC</div>
+          <div class="check-grid" role="group" aria-labelledby="b1-rbac-label">
+            <label class="check-item"><input type="checkbox" value="Azure Active Directory"> Azure Active Directory</label>
+            <label class="check-item"><input type="checkbox" value="SSO / OIDC"> SSO / OIDC</label>
+            <label class="check-item"><input type="checkbox" value="Roles por departamento"> Roles por departamento</label>
+            <label class="check-item"><input type="checkbox" value="Sin autenticación (público)"> Sin autenticación (público)</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="b1_jobs">Jobs-to-be-done principales</label>
+          <textarea class="field-input" id="b1_jobs" name="b1_jobs" rows="3"
+            placeholder="Cuando… quiero… para…"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="b1_barreras">Barreras de adopción</label>
+          <textarea class="field-input" id="b1_barreras" name="b1_barreras" rows="2"
+            placeholder="Resistencia al cambio, curva de aprendizaje…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 3: CANALES -->
+    <div class="block b3" data-block="b3" data-collapsible="true"
+      role="region" aria-labelledby="b3-title" aria-expanded="false" tabindex="0">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b3-title">3 · Canales</div>
+      <div class="block-title">📡 ¿Cómo llega al usuario?</div>
+      <div data-stop-toggle>
+        <div class="check-grid" role="group" aria-label="Canales de distribución">
+          <label class="check-item"><input type="checkbox" value="Microsoft Teams"> Microsoft Teams [★ Principal]</label>
+          <label class="check-item"><input type="checkbox" value="M365 Copilot Chat"> M365 Copilot Chat</label>
+          <label class="check-item"><input type="checkbox" value="Portal web / intranet"> Portal web / intranet</label>
+          <label class="check-item"><input type="checkbox" value="Correo electrónico"> Correo electrónico</label>
+          <label class="check-item"><input type="checkbox" value="API REST (headless)"> API REST (headless)</label>
+          <label class="check-item"><input type="checkbox" value="WhatsApp / Telegram"> WhatsApp / Telegram</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 6: RECURSOS CLAVE -->
+    <div class="block b6" data-block="b6"
+      role="region" aria-labelledby="b6-title">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b6-title">6 · Recursos Clave</div>
+      <div class="block-title">🧠 Datos, modelos e infraestructura cloud</div>
+      <div class="block-grid">
+        <div>
+          <div class="field-group">
+            <div class="field-label" id="b6-llm-label">Modelo LLM</div>
+            <div class="check-grid" role="group" aria-labelledby="b6-llm-label">
+              <label class="check-item"><input type="checkbox" value="GPT-4o"> GPT-4o</label>
+              <label class="check-item"><input type="checkbox" value="GPT-4o mini"> GPT-4o mini</label>
+              <label class="check-item"><input type="checkbox" value="Claude Sonnet 4.6"> Claude Sonnet 4.6</label>
+              <label class="check-item"><input type="checkbox" value="Gemini 1.5 Pro"> Gemini 1.5 Pro</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field-label" id="b6-data-label">Clasificación datos</div>
+            <div class="check-grid" role="group" aria-labelledby="b6-data-label">
+              <label class="check-item"><input type="checkbox" value="Público"> Público</label>
+              <label class="check-item"><input type="checkbox" value="Interno / Confidencial"> Interno / Confidencial</label>
+              <label class="check-item"><input type="checkbox" value="Restringido (PII)"> Restringido (PII)</label>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="field-group">
+            <div class="field-label" id="b6-vec-label">Contexto / Vector DB</div>
+            <div class="check-grid" role="group" aria-labelledby="b6-vec-label">
+              <label class="check-item"><input type="checkbox" value="Azure AI Search"> Azure AI Search</label>
+              <label class="check-item"><input type="checkbox" value="Pinecone"> Pinecone</label>
+              <label class="check-item"><input type="checkbox" value="Chroma"> Chroma</label>
+              <label class="check-item"><input type="checkbox" value="Weaviate"> Weaviate</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="b6_kb">Base de conocimiento</label>
+            <textarea class="field-input" id="b6_kb" name="b6_kb" rows="2"
+              placeholder="Fuentes: SharePoint, Confluence, APIs…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 9: COSTES Y RIESGOS -->
+    <div class="block b9" data-block="b9"
+      role="region" aria-labelledby="b9-title">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b9-title">9 · Costes, Riesgos y Cumplimiento</div>
+      <div class="block-title">💸 Estructura de costes cloud y riesgos</div>
+      <div class="risk-row">
+        <div class="risk-card">
+          <div class="risk-card-title">Costes variables (OPEX)</div>
+          <textarea class="field-input" name="b9_costes" rows="3"
+            placeholder="Tokens API: €/1k&#10;Hosting: €/mes&#10;Almacenamiento: €/GB"
+            aria-label="Costes variables OPEX"></textarea>
+        </div>
+        <div class="risk-card">
+          <div class="risk-card-title" id="b9-risk-label">Riesgos identificados</div>
+          <div class="check-grid" role="group" aria-labelledby="b9-risk-label">
+            <label class="check-item"><input type="checkbox" value="Alucinaciones IA"> Alucinaciones IA</label>
+            <label class="check-item"><input type="checkbox" value="Vendor lock-in"> Vendor lock-in</label>
+            <label class="check-item"><input type="checkbox" value="Escalado de costes"> Escalado de costes</label>
+            <label class="check-item"><input type="checkbox" value="Disponibilidad API"> Disponibilidad API</label>
+          </div>
+        </div>
+        <div class="risk-card">
+          <div class="risk-card-title" id="b9-norm-label">Cumplimiento normativo</div>
+          <div class="check-grid" role="group" aria-labelledby="b9-norm-label">
+            <label class="check-item"><input type="checkbox" value="GDPR / RGPD"> GDPR / RGPD</label>
+            <label class="check-item"><input type="checkbox" value="EU AI Act"> EU AI Act</label>
+            <label class="check-item"><input type="checkbox" value="Esquema Nac. Seguridad"> Esquema Nac. Seguridad</label>
+            <label class="check-item"><input type="checkbox" value="ISO 27001"> ISO 27001</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 5: KPIs -->
+    <div class="block b5" data-block="b5"
+      role="region" aria-labelledby="b5-title">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b5-title">5 · Fuentes de Valor (KPIs)</div>
+      <div class="block-title">📈 ¿Cómo medimos el éxito?</div>
+      <div class="kpi-row">
+        <div class="kpi-item">
+          <div class="kpi-label">
+            <span>KPI 1 —
+              <input type="text" class="field-input" name="b5_kpi1_name"
+                data-kpi-label="1"
+                style="width:160px;display:inline-block"
+                placeholder="Nombre del KPI"
+                aria-label="KPI 1 nombre">
+            </span>
+            <span id="kpi1pct" aria-live="polite">0%</span>
+          </div>
+          <div class="kpi-bar-bg" role="presentation">
+            <div class="kpi-bar" id="kpi1bar" style="width:0%;background:var(--teal)" aria-hidden="true"></div>
+          </div>
+          <input type="range" min="0" max="100" value="0"
+            data-kpi="1"
+            style="width:100%;margin-top:3px;accent-color:var(--teal)"
+            aria-label="KPI 1 valor objetivo"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-label">
+            <span>KPI 2 —
+              <input type="text" class="field-input" name="b5_kpi2_name"
+                data-kpi-label="2"
+                style="width:160px;display:inline-block"
+                placeholder="Nombre del KPI"
+                aria-label="KPI 2 nombre">
+            </span>
+            <span id="kpi2pct" aria-live="polite">0%</span>
+          </div>
+          <div class="kpi-bar-bg" role="presentation">
+            <div class="kpi-bar" id="kpi2bar" style="width:0%;background:var(--blue)" aria-hidden="true"></div>
+          </div>
+          <input type="range" min="0" max="100" value="0"
+            data-kpi="2"
+            style="width:100%;margin-top:3px;accent-color:var(--blue)"
+            aria-label="KPI 2 valor objetivo"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-label">
+            <span>KPI 3 —
+              <input type="text" class="field-input" name="b5_kpi3_name"
+                data-kpi-label="3"
+                style="width:160px;display:inline-block"
+                placeholder="Nombre del KPI"
+                aria-label="KPI 3 nombre">
+            </span>
+            <span id="kpi3pct" aria-live="polite">0%</span>
+          </div>
+          <div class="kpi-bar-bg" role="presentation">
+            <div class="kpi-bar" id="kpi3bar" style="width:0%;background:var(--green)" aria-hidden="true"></div>
+          </div>
+          <input type="range" min="0" max="100" value="0"
+            data-kpi="3"
+            style="width:100%;margin-top:3px;accent-color:var(--green)"
+            aria-label="KPI 3 valor objetivo"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-label">
+            <span>KPI 4 —
+              <input type="text" class="field-input" name="b5_kpi4_name"
+                data-kpi-label="4"
+                style="width:160px;display:inline-block"
+                placeholder="Nombre del KPI"
+                aria-label="KPI 4 nombre">
+            </span>
+            <span id="kpi4pct" aria-live="polite">0%</span>
+          </div>
+          <div class="kpi-bar-bg" role="presentation">
+            <div class="kpi-bar" id="kpi4bar" style="width:0%;background:var(--amber)" aria-hidden="true"></div>
+          </div>
+          <input type="range" min="0" max="100" value="0"
+            data-kpi="4"
+            style="width:100%;margin-top:3px;accent-color:var(--amber)"
+            aria-label="KPI 4 valor objetivo"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 10: GUARDARRAÍLES -->
+    <div class="block b10" data-block="b10"
+      role="region" aria-labelledby="b10-title">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b10-title">10 · Guardarraíles — Seguridad, Calidad, Ético y Operacional</div>
+      <div class="block-title" style="color:var(--red)">🛡️ ¿Qué controles garantizan operación segura?</div>
+      <div class="guard-row">
+        <div class="guard-card" role="group" aria-label="Guardarraíles de Seguridad">
+          <div class="guard-card-title">🔒 Seguridad</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" value="Filtro prompt injection"> Filtro prompt injection</label>
+            <label class="check-item"><input type="checkbox" value="Datos en tenant corporativo"> Datos en tenant corporativo</label>
+            <label class="check-item"><input type="checkbox" value="RBAC / AAD aplicado"> RBAC / AAD aplicado</label>
+            <label class="check-item"><input type="checkbox" value="Sanitización de outputs"> Sanitización de outputs</label>
+          </div>
+          <div class="field-group" style="margin-top:6px">
+            <label class="field-label" for="b10_riesgo_aiact">Nivel riesgo EU AI Act</label>
+            <select class="field-input" id="b10_riesgo_aiact" name="b10_riesgo_aiact"
+              aria-label="Nivel de riesgo según EU AI Act">
+              <option value="">-- seleccionar --</option>
+              <option>Mínimo riesgo</option>
+              <option>Riesgo limitado</option>
+              <option>Alto riesgo</option>
+            </select>
+          </div>
+        </div>
+        <div class="guard-card" role="group" aria-label="Guardarraíles de Calidad">
+          <div class="guard-card-title">✅ Calidad</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" value="Umbral de confianza RAG"> Umbral de confianza RAG</label>
+            <label class="check-item"><input type="checkbox" value="Citación de fuentes"> Citación de fuentes</label>
+            <label class="check-item"><input type="checkbox" value="LLM-as-judge activo"> LLM-as-judge activo</label>
+            <label class="check-item"><input type="checkbox" value="Feedback 👍/👎 usuario"> Feedback 👍/👎 usuario</label>
+          </div>
+          <div class="field-group" style="margin-top:6px">
+            <label class="field-label" for="b10_alucin">Tasa alucinación máx. aceptable</label>
+            <input type="text" class="field-input" id="b10_alucin" name="b10_alucin"
+              placeholder="Ej: &lt; 2%">
+          </div>
+        </div>
+        <div class="guard-card" role="group" aria-label="Guardarraíles Éticos y de Cumplimiento">
+          <div class="guard-card-title">⚖️ Ético / Cumplimiento</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" value="Auditoría de sesgos"> Auditoría de sesgos</label>
+            <label class="check-item"><input type="checkbox" value="Transparencia IA activa"> Transparencia IA activa</label>
+            <label class="check-item"><input type="checkbox" value="GDPR: PII no persiste"> GDPR: PII no persiste</label>
+            <label class="check-item"><input type="checkbox" value="Validado por DPO"> Validado por DPO</label>
+          </div>
+        </div>
+        <div class="guard-card" role="group" aria-label="Guardarraíles Operacionales">
+          <div class="guard-card-title">⚙️ Operacional</div>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" value="Presupuesto tokens definido"> Presupuesto tokens definido</label>
+            <label class="check-item"><input type="checkbox" value="Latencia máx. definida"> Latencia máx. definida</label>
+            <label class="check-item"><input type="checkbox" value="Rate limiting activo"> Rate limiting activo</label>
+            <label class="check-item"><input type="checkbox" value="Circuit breaker configurado"> Circuit breaker configurado</label>
+            <label class="check-item"><input type="checkbox" value="Registro inmutable / Event Sourcing"> Registro inmutable / Event Sourcing</label>
+          </div>
+          <div class="field-group" style="margin-top:6px">
+            <label class="field-label" for="b10_sla">SLA disponibilidad objetivo</label>
+            <input type="text" class="field-input" id="b10_sla" name="b10_sla"
+              placeholder="Ej: 99.9%">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /canvas-grid -->
+
+  <div class="export-panel" id="exportPanel" role="region" aria-label="Panel de exportación" aria-live="polite">
+    <div class="export-title">Canvas completado</div>
+    <div class="export-sub">Tu canvas está listo para exportar o compartir con el equipo.</div>
+    <div class="export-actions">
+      <button id="btnWordPanel" class="btn-primary" style="background:var(--green)"
+        aria-label="Generar documento Word con PRD y ADR">📄 Generar Doc Word (PRD+ADR)</button>
+      <button id="btnJSONPanel" class="btn-ghost" style="color:#94A3B8"
+        aria-label="Descargar JSON del canvas">↓ JSON</button>
+      <button id="btnPrint" class="btn-ghost" style="color:#94A3B8"
+        aria-label="Imprimir canvas">🖨 Imprimir</button>
+    </div>
+  </div>
+
+</div><!-- /canvas-wrap -->
+</main>
+
+<!-- sr-only utility class (WCAG) -->
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

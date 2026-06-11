@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP Architecture Canvas v1 — Agent Canvas Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+/* ════════════════════════════════════════════════════════
+   AGENT CANVAS MODEL — UNIFIED DESIGN SYSTEM
+   QMetrika Labs · MCP Canvas · MIT License
+════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+:root {
+  
+  /* ── SHARED TOKENS — QMetrika Labs ── */
+  --bg:   #08080F;
+  --sf:   #0D0D1C;
+  --sf2:  #121226;
+  --sf3:  #17172E;
+  --bd:   #1C1C38;
+  --bd2:  #252548;
+  --tx:   #E6E6F4;
+  --tx2:  #9090B8;
+  --mu:   #505070;
+  --r:    8px;
+  --rs:   5px;
+  --sh:   0 1px 3px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
+
+  --ac:   #06B6D4;
+  --acd:  rgba(6,182,212,.12);
+  --acd2: rgba(6,182,212,.22);
+  /* Legacy aliases used by on-prem v3 class names */
+  --green:   var(--ac);
+  --green-d: var(--acd);
+  --green-b: var(--acd);
+  --green-h: var(--ac);
+  --teal:    var(--ac);
+  --teal-d:  var(--acd);
+  --amber:   #F59E0B;
+  --amber-d: rgba(245,158,11,.12);
+  --red:     #F87171;
+  --red-d:   rgba(248,113,113,.12);
+  --blue:    #60A5FA;
+  --purple:  var(--ac);
+  --muted:   var(--mu);
+  --muted2:  var(--mu);
+  --text:    var(--tx);
+  --text2:   var(--tx2);
+  --bg2:     var(--sf);
+  --bg3:     var(--sf2);
+  --bg4:     var(--sf3);
+  --border:  var(--bd);
+  --border2: var(--bd2);
+  --violet:        var(--ac);
+  --violet-mid:    var(--ac);
+  --violet-dim:    var(--acd);
+  --cyan:          var(--ac);
+  --cyan-dim:      var(--acd);
+  --green-dim:     var(--acd);
+  --amber-dim:     rgba(245,158,11,.12);
+  --red-dim:       rgba(248,113,113,.12);
+  --surface:       var(--sf);
+  --surface2:      var(--sf2);
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+  --font-d: 'Inter', system-ui, sans-serif;
+  --font-b: 'Inter', system-ui, sans-serif;
+  --font-m: 'JetBrains Mono', monospace;
+  --shadow: var(--sh);
+  --shadow-h: var(--sh);
+  --r: 8px;
+}
+
+/* ── SKIP LINK ── */
+.skip-link {
+  position: absolute; left: -999px; top: -999px;
+  background: var(--ac); color: #fff; padding: .5rem 1rem;
+  border-radius: var(--r); z-index: 9999; font-size: .8rem; font-weight: 600;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* ── HEADER ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--sf);
+  border-bottom: 1px solid var(--bd);
+  padding: 0 1.5rem;
+  height: auto; min-height: 54px;
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+/* Logo area — targets both old .header-logo / .header-left and new .hdr-left */
+.header-logo, .hdr-left, .header-left { display: flex; align-items: center; gap: .65rem; padding: .45rem 0; }
+.q-logo-mark {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: var(--ac); display: grid; place-items: center;
+  font-family: var(--font-m); font-size: .78rem; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.logo-name, .logo-text { font-size: .82rem; font-weight: 600; color: var(--tx); }
+.logo-edition, .badge-onprem {
+  font-family: var(--font-m); font-size: .62rem; letter-spacing: .04em;
+  color: var(--ac); background: var(--acd); border: 1px solid color-mix(in srgb, var(--ac) 30%, transparent);
+  padding: .18rem .55rem; border-radius: 4px; font-weight: 500;
+}
+/* Keep old badge for backward compat */
+.badge { font-family: var(--font-m); font-size: .62rem; color: var(--tx2); background: var(--sf3); border: 1px solid var(--bd2); padding: .18rem .55rem; border-radius: 4px; }
+.badge-mcp { font-family: var(--font-m); font-size: .62rem; color: var(--ac); background: var(--acd); border: 1px solid color-mix(in srgb, var(--ac) 30%, transparent); padding: .18rem .55rem; border-radius: 4px; }
+
+/* Header dot decorations (on-prem) — hide in unified design */
+.term-win, .term-dots { display: none; }
+.term-prompt { font-family: var(--font-m); font-size: .72rem; color: var(--mu); }
+.term-prompt .p1 { color: var(--ac); } .term-prompt .p2 { color: var(--mu); } .term-prompt .p3 { color: var(--tx2); }
+
+/* Header actions */
+.header-actions, .header-right, .hdr-right { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; margin-left: auto; padding: .45rem 0; }
+
+/* Inputs in header */
+#canvasName {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx);
+  border-radius: var(--rs); padding: .3rem .65rem; font-size: .78rem;
+  font-family: inherit; width: 175px;
+}
+#canvasName::placeholder { color: var(--mu); }
+#canvasName:focus { outline: none; border-color: var(--ac); box-shadow: 0 0 0 2px var(--acd); }
+
+/* Save indicator */
+.save-indicator {
+  font-family: var(--font-m); font-size: .62rem; color: var(--ac);
+  opacity: 0; transition: opacity .3s; white-space: nowrap; margin-left: .2rem;
+}
+.save-indicator.visible { opacity: 1; }
+
+/* ── BUTTONS ── */
+button { font-family: inherit; cursor: pointer; }
+.btn-primary, .btn-term.primary {
+  background: var(--ac); border: 1px solid var(--ac); color: #fff;
+  padding: .35rem .9rem; border-radius: var(--rs);
+  font-size: .78rem; font-weight: 600; transition: opacity .15s;
+}
+.btn-primary:hover, .btn-term.primary:hover { opacity: .88; }
+.btn-ghost, .btn-term:not(.primary), .btn-import, .btn-import-btn {
+  background: transparent; border: 1px solid var(--bd2); color: var(--tx2);
+  padding: .35rem .85rem; border-radius: var(--rs);
+  font-size: .78rem; font-weight: 500; transition: all .15s;
+}
+.btn-ghost:hover, .btn-term:not(.primary):hover { border-color: var(--ac); color: var(--ac); background: var(--acd); }
+.btn-import { border-style: dashed; }
+.btn-import:hover { border-color: var(--ac); color: var(--ac); }
+/* Legacy term buttons */
+.btn-term { font-family: inherit; }
+
+/* ── HERO / BOOT SECTION ── */
+.hero, .boot {
+  padding: 3rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--bd);
+  background: transparent;
+  position: relative; z-index: 1;
+}
+/* Remove old scan line */
+body::before { display: none !important; }
+.hero::before, .boot::before { display: none; }
+
+.boot-pre, .hero-eyebrow {
+  font-family: var(--font-m); font-size: .68rem;
+  color: var(--mu); margin-bottom: .85rem;
+  text-transform: uppercase; letter-spacing: .1em;
+}
+.boot-pre span { color: var(--ac); }
+
+.boot h1, .hero h1 {
+  font-size: 2.4rem; font-weight: 700; line-height: 1.1;
+  color: var(--tx); margin-bottom: .75rem; letter-spacing: -.02em;
+}
+.boot h1 em, .hero h1 span { color: var(--ac); font-style: normal; }
+.boot-desc, .hero-sub {
+  font-size: .92rem; color: var(--tx2); max-width: 520px;
+  margin: 0 auto .1rem; line-height: 1.65;
+}
+.boot .boot-desc, .boot h1 { max-width: none; text-align: left; }
+.hero .hero-sub { text-align: center; margin-bottom: 1.5rem; }
+.hero h1 { text-align: center; }
+
+.boot-stats, .hero-stats {
+  display: flex; gap: 2.5rem; margin-top: 1.5rem; flex-wrap: wrap;
+}
+.hero-stats { justify-content: center; }
+.boot-stat, .hero-stat { text-align: center; }
+.boot-stat .val, .hero-stat strong {
+  display: block; font-family: var(--font-m); font-size: 1.5rem; font-weight: 700; color: var(--ac);
+}
+.boot-stat .lbl, .hero-stat span {
+  font-size: .65rem; color: var(--mu); text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* HW Status bar (on-prem) */
+.hw-status {
+  display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1.25rem;
+}
+.hw-chip {
+  background: var(--sf2); border: 1px solid var(--bd); border-radius: var(--rs);
+  padding: .28rem .7rem; font-family: var(--font-m); font-size: .68rem; color: var(--tx2);
+  display: flex; align-items: center; gap: .4rem;
+}
+.hw-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ac); flex-shrink: 0; }
+.hw-val { color: var(--tx); }
+
+/* Phase label (MCP) */
+.phase-label {
+  font-family: var(--font-m); font-size: .62rem; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .1em;
+  padding: .28rem .7rem; background: var(--sf2);
+  border-radius: 20px; border: 1px solid var(--bd);
+  display: inline-block; margin-bottom: .65rem;
+}
+
+/* ── CANVAS WRAP ── */
+.canvas-wrap { max-width: 1240px; margin: 0 auto; padding: 1.5rem; position: relative; z-index: 1; }
+
+/* Canvas bar / header */
+.canvas-bar, .canvas-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem; gap: 1rem; flex-wrap: wrap;
+}
+.canvas-bar {
+  background: var(--sf); border: 1px solid var(--bd);
+  border-radius: var(--r); padding: .55rem 1rem;
+  font-family: var(--font-m); font-size: .72rem;
+}
+.canvas-label { color: var(--mu); }
+.canvas-label strong { color: var(--ac); }
+.canvas-title { font-size: .9rem; font-weight: 600; color: var(--tx); }
+.canvas-subtitle { font-size: .73rem; color: var(--mu); margin-top: .15rem; }
+
+.prog-wrap { display: flex; align-items: center; gap: .65rem; }
+.prog-text, .progress-label {
+  font-family: var(--font-m); font-size: .65rem; color: var(--mu); white-space: nowrap; text-align: right;
+}
+.prog-bar, .progress-bar {
+  width: 180px; background: var(--sf3); border-radius: 4px; height: 4px; overflow: hidden;
+}
+.prog-fill, .progress-fill {
+  height: 100%; background: var(--ac); border-radius: 4px; transition: width .4s ease;
+}
+
+/* ── CANVAS GRID ── */
+.canvas-grid { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+@media (max-width: 840px) { .canvas-grid { grid-template-columns: 1fr; } }
+.grid-2  { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; }
+@media (max-width: 760px) { .grid-2, .grid-1-2 { grid-template-columns: 1fr; } }
+
+/* ── BLOCK ── */
+.block {
+  background: var(--sf); border: 1px solid var(--bd);
+  border-radius: var(--r); padding: 1.2rem;
+  position: relative; overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.block:hover { border-color: var(--bd2); box-shadow: 0 0 0 1px var(--bd2); }
+.block-accent {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--ac); opacity: .55;
+}
+/* Override per-block accent colors with unified accent */
+.b1 .block-accent, .b2 .block-accent, .b3 .block-accent, .b4 .block-accent,
+.b5 .block-accent, .b6 .block-accent, .b7 .block-accent, .b8 .block-accent,
+.b9 .block-accent, .b10 .block-accent, .b6a .block-accent, .b6b .block-accent {
+  background: var(--ac);
+}
+.block-num {
+  font-family: var(--font-m); font-size: .62rem;
+  text-transform: uppercase; letter-spacing: .09em;
+  color: var(--ac); margin-bottom: .3rem;
+}
+/* Legacy colored block-num overrides — reset to accent */
+.b1 .block-num, .b2 .block-num, .b3 .block-num, .b4 .block-num,
+.b5 .block-num, .b6 .block-num, .b7 .block-num, .b8 .block-num,
+.b9 .block-num, .b10 .block-num, .b6a .block-num, .b6b .block-num {
+  color: var(--ac);
+}
+.block-title { font-size: .9rem; font-weight: 600; color: var(--tx); margin-bottom: .85rem; line-height: 1.4; }
+/* Reset per-block title colors */
+.b2 .block-title, .b1 .block-title { color: var(--tx); }
+.block-sub { font-size: .78rem; color: var(--tx2); margin-bottom: .75rem; line-height: 1.55; }
+.block-expand-hint { font-size: .68rem; color: var(--ac); opacity: .5; }
+.block[data-collapsible="true"] .block-body { display: none; }
+.block[data-collapsible="true"].active .block-body { display: block; }
+.block[data-collapsible="true"].active .block-expand-hint { display: none; }
+.block[data-collapsible="true"] { cursor: pointer; }
+
+/* ── FIELDS ── */
+.field-group { margin-bottom: .85rem; }
+.field-label {
+  font-family: var(--font-m); font-size: .62rem;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--mu); display: block; margin-bottom: .38rem;
+}
+.field-input {
+  width: 100%; background: var(--sf2); border: 1px solid var(--bd);
+  color: var(--tx); border-radius: var(--rs); padding: .45rem .65rem;
+  font-size: .82rem; font-family: inherit; resize: vertical;
+  transition: border-color .15s;
+}
+.field-input:focus { outline: none; border-color: var(--ac); box-shadow: 0 0 0 3px var(--acd); }
+.field-input::placeholder { color: var(--mu); }
+select.field-input { cursor: pointer; }
+.mono-input { font-family: var(--font-m); font-size: .78rem; }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--bd); margin: .7rem 0; }
+
+/* ── CHECKBOXES ── */
+.check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .22rem; }
+.check-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .22rem; }
+.check-item {
+  display: flex; align-items: flex-start; gap: .4rem;
+  font-size: .79rem; color: var(--tx2); cursor: pointer;
+  padding: .22rem .35rem; border-radius: 4px; transition: background .15s;
+}
+.check-item:hover { background: var(--acd); color: var(--tx); }
+.check-item input[type=checkbox] { accent-color: var(--ac); width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; }
+
+/* ── CHIPS / GPU chips / ag-btns / transport-cards ── */
+.chip-group, .gpu-chips { display: flex; flex-wrap: wrap; gap: .38rem; }
+.chip, .gpu-chip {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx2);
+  padding: .28rem .7rem; border-radius: 20px; font-size: .76rem;
+  cursor: pointer; transition: all .15s; user-select: none;
+}
+.chip:hover, .gpu-chip:hover { border-color: var(--ac); color: var(--ac); }
+.chip.sel, .gpu-chip.sel, .chip[aria-checked="true"], .gpu-chip[aria-checked="true"] {
+  background: var(--acd); border-color: var(--ac); color: var(--ac); font-weight: 600;
+}
+/* Agency buttons */
+.ag-row { display: flex; gap: .38rem; flex-wrap: wrap; }
+.ag-btn {
+  font-family: inherit; font-size: .76rem; background: var(--sf2);
+  border: 1px solid var(--bd); color: var(--tx2); padding: .3rem .7rem;
+  border-radius: 20px; cursor: pointer; transition: all .15s; user-select: none;
+}
+.ag-btn:hover { border-color: var(--ac); color: var(--ac); }
+.ag-btn.sel, .ag-btn[aria-checked="true"] {
+  background: var(--acd); border-color: var(--ac); color: var(--ac); font-weight: 600;
+}
+/* Model cards */
+.model-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: .4rem; margin-bottom: .4rem; }
+.model-card {
+  background: var(--sf2); border: 1px solid var(--bd); border-radius: var(--rs);
+  padding: .4rem .65rem; cursor: pointer; transition: all .15s;
+}
+.model-card:hover { border-color: var(--ac); }
+.model-card.sel, .model-card[aria-checked="true"] { background: var(--acd); border-color: var(--ac); }
+.model-name { font-family: var(--font-m); font-size: .76rem; color: var(--tx); }
+.model-meta { font-size: .67rem; color: var(--mu); }
+.model-card.sel .model-name, .model-card[aria-checked="true"] .model-name { color: var(--ac); }
+/* Quant buttons */
+.quant-row { display: flex; gap: .38rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.q-btn {
+  font-family: var(--font-m); font-size: .72rem; background: var(--sf2);
+  border: 1px solid var(--bd); color: var(--tx2); padding: .28rem .55rem;
+  border-radius: var(--rs); cursor: pointer; transition: all .15s;
+}
+.q-btn:hover { border-color: var(--ac); color: var(--ac); }
+.q-btn.sel, .q-btn[aria-checked="true"] { background: var(--acd); border-color: var(--ac); color: var(--ac); }
+/* Transport cards (MCP) */
+.transport-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+@media (max-width:560px) { .transport-cards { grid-template-columns: 1fr; } }
+.transport-card {
+  border: 1px solid var(--bd); border-radius: var(--rs); padding: .85rem;
+  cursor: pointer; transition: all .2s; user-select: none;
+}
+.transport-card:hover { border-color: var(--ac); }
+.transport-card.sel, .transport-card[aria-checked="true"] { border-color: var(--ac); background: var(--acd); }
+.transport-card-title { font-family: var(--font-m); font-size: .8rem; color: var(--tx); margin-bottom: .3rem; }
+.transport-card-sub { font-size: .75rem; color: var(--tx2); line-height: 1.5; }
+.transport-card.sel .transport-card-title, .transport-card[aria-checked="true"] .transport-card-title { color: var(--ac); }
+.transport-badge {
+  font-size: .62rem; background: var(--acd); color: var(--ac);
+  border-radius: 4px; padding: .1rem .4rem; font-family: var(--font-m);
+  display: inline-block; margin-bottom: .3rem;
+}
+.transport-badge.cyan { background: var(--acd); color: var(--ac); }
+
+/* ── VRAM METER ── */
+.hw-meter { background: var(--sf2); border: 1px solid var(--bd); border-radius: var(--rs); padding: .5rem .7rem; margin-bottom: .5rem; }
+.hw-meter-top { display: flex; justify-content: space-between; margin-bottom: .3rem; }
+.hw-name { font-family: var(--font-m); font-size: .62rem; color: var(--mu); text-transform: uppercase; }
+#vramPct { font-family: var(--font-m); font-size: .72rem; color: var(--ac); }
+.meter-bar { background: var(--sf3); border-radius: 3px; height: 4px; }
+.meter-fill { height: 100%; background: var(--ac); border-radius: 3px; transition: width .4s, background .3s; }
+
+/* ── SKILL CARDS ── */
+.skill-list { display: flex; flex-direction: column; gap: .5rem; }
+.skill-card { border-left: 2px solid var(--ac); padding: .5rem .65rem; background: var(--sf2); border-radius: 0 var(--rs) var(--rs) 0; }
+.skill-card-title { font-family: var(--font-m); font-size: .62rem; color: var(--ac); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
+
+/* ── SEGMENT CARDS ── */
+.seg-card { border: 1px solid var(--bd); border-radius: var(--rs); padding: .65rem .75rem; margin-bottom: .5rem; background: var(--sf2); }
+.seg-name { font-weight: 600; font-size: .85rem; color: var(--tx); margin-bottom: .2rem; }
+.seg-desc { font-size: .78rem; color: var(--tx2); line-height: 1.5; }
+.seg-name[contenteditable="true"]:focus, .seg-desc[contenteditable="true"]:focus { outline: none; border-bottom: 1px dashed var(--bd2); }
+.seg-pill { display: inline-block; font-family: var(--font-m); font-size: .58rem; padding: .15rem .5rem; border-radius: 3px; margin-top: .4rem; }
+/* Seg-card on cloud canvas (row based) */
+.seg-card-row { display: flex; gap: .75rem; margin-bottom: .6rem; flex-wrap: wrap; }
+
+/* ── KPI BARS ── */
+.kpi-list { display: flex; flex-direction: column; gap: .7rem; }
+.kpi-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .22rem; }
+.kpi-lbl { font-size: .79rem; color: var(--tx2); }
+.kpi-pct { font-family: var(--font-m); font-size: .73rem; font-weight: 700; }
+.kpi-bar-bg { background: var(--sf3); border-radius: 3px; height: 4px; margin-bottom: .18rem; }
+.kpi-bar { height: 100%; border-radius: 3px; transition: width .3s; }
+
+/* ── TCO CARDS ── */
+.tco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+@media (max-width:600px) { .tco-grid { grid-template-columns: 1fr; } }
+.tco-card { background: var(--sf2); border: 1px solid var(--bd); border-radius: var(--rs); padding: .65rem .75rem; }
+.tco-title { font-family: var(--font-m); font-size: .62rem; color: var(--ac); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .4rem; }
+
+/* ── GUARD CARDS ── */
+.guard-row { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+@media (max-width:600px) { .guard-row { grid-template-columns: 1fr; } }
+.guard-card { background: var(--sf2); border: 1px solid var(--bd); border-left: 2px solid var(--ac); border-radius: 0 var(--rs) var(--rs) 0; padding: .65rem .75rem; }
+.guard-title { font-family: var(--font-m); font-size: .62rem; color: var(--ac); margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .06em; }
+
+/* ── SERVER CARDS (MCP) ── */
+.server-cards-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: .75rem; }
+.server-card { background: var(--sf2); border: 1px solid var(--bd); border-radius: var(--rs); padding: .9rem; position: relative; }
+.server-card-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .75rem; }
+.server-num { font-family: var(--font-m); font-size: .67rem; color: var(--ac); text-transform: uppercase; letter-spacing: .1em; }
+.server-section-label { font-family: var(--font-m); font-size: .62rem; color: var(--ac); text-transform: uppercase; letter-spacing: .1em; margin: .5rem 0 .3rem; display: block; }
+.server-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.server-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .5rem; }
+@media(max-width:600px) { .server-grid, .server-grid-3 { grid-template-columns:1fr; } }
+.btn-remove-server { background: transparent; border: none; color: var(--mu); cursor: pointer; padding: .2rem .4rem; border-radius: 4px; margin-left: auto; }
+.btn-remove-server:hover { color: var(--red); background: var(--red-dim); }
+.server-name-preview { font-size: .8rem; color: var(--tx2); font-family: var(--font-m); flex: 1; }
+.btn-add-server {
+  background: transparent; border: 1px dashed var(--bd); color: var(--mu);
+  padding: .5rem 1rem; border-radius: var(--rs);
+  font-size: .78rem; cursor: pointer; width: 100%; text-align: center;
+  transition: all .2s; font-family: inherit;
+}
+.btn-add-server:hover { border-color: var(--ac); color: var(--ac); background: var(--acd); }
+
+/* ── TAGS ── */
+.tag-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .5rem; }
+.tag { font-size: .7rem; padding: .22rem .6rem; border-radius: 20px; border: 1px solid var(--bd2); color: var(--tx2); }
+.tag-violet, .tag-cyan, .tag-green, .tag-amber { background: var(--acd); border-color: color-mix(in srgb, var(--ac) 35%, transparent); color: var(--ac); }
+
+/* ── EXPORT PANEL ── */
+.export-panel {
+  display: none; background: var(--sf); border: 1px solid var(--bd2);
+  border-left: 3px solid var(--ac);
+  border-radius: var(--r); padding: 1.1rem 1.4rem; margin-top: 1rem;
+}
+.export-panel.visible { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.export-pre { font-family: var(--font-m); font-size: .62rem; color: var(--mu); margin-bottom: .2rem; }
+.export-title { font-weight: 600; font-size: .9rem; color: var(--tx); margin-bottom: .15rem; }
+.export-panel-text .export-title { font-weight: 600; font-size: .9rem; color: var(--tx); margin-bottom: .15rem; }
+.export-sub, .export-panel-text .export-sub { font-size: .76rem; color: var(--tx2); }
+.export-actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+/* ── MODAL ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.72); z-index: 500; align-items: center; justify-content: center; }
+.modal-overlay.visible { display: flex; }
+.modal-box { background: var(--sf); border: 1px solid var(--bd2); border-radius: var(--r); padding: 1.5rem; max-width: 520px; width: 90%; box-shadow: var(--sh); }
+.modal-title { font-size: .9rem; font-weight: 700; color: var(--tx); margin-bottom: .4rem; }
+.modal-url { width: 100%; padding: .55rem .75rem; border: 1px solid var(--bd); border-radius: var(--rs); font-size: .72rem; color: var(--tx2); background: var(--sf2); font-family: var(--font-m); resize: none; min-height: 52px; }
+.modal-actions { display: flex; gap: .5rem; margin-top: .7rem; justify-content: flex-end; }
+.modal-sub { font-size: .8rem; color: var(--tx2); margin-bottom: .75rem; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 1.25rem; right: 1.25rem;
+  background: var(--sf); border: 1px solid var(--bd2); color: var(--tx);
+  padding: .6rem 1rem; border-radius: var(--r); font-size: .8rem;
+  z-index: 9999; box-shadow: var(--sh); animation: slideIn .2s ease;
+}
+@keyframes slideIn { from{transform:translateY(.5rem);opacity:0} to{transform:translateY(0);opacity:1} }
+
+/* ── LINK ARROW (MCP) ── */
+.link-arrow { text-align: center; padding: .3rem; color: var(--mu); font-size: .8rem; font-family: var(--font-m); }
+
+/* ── FOCUS ── */
+:focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; border-radius: 3px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--sf);
+  border-top: 1px solid var(--bd);
+  padding: 1.1rem 1.5rem;
+  text-align: center;
+  position: relative; z-index: 1;
+}
+.footer-inner {
+  display: flex; align-items: center; justify-content: center;
+  gap: .75rem; flex-wrap: wrap;
+  font-size: .72rem; color: var(--mu);
+}
+.footer-brand { color: var(--ac); font-weight: 600; }
+.footer-sep { opacity: .4; }
+.footer-mono { font-family: var(--font-m); }
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-canvas">Saltar al canvas</a>
+
+<header role="banner">
+  <div class="header-logo">
+    <div class="q-logo-mark" aria-hidden="true">Q</div>
+    <span class="logo-name">Agent Canvas</span>
+    <span class="logo-edition">MCP Canvas</span>
+  </div>
+  <div class="header-actions" role="toolbar" aria-label="Acciones">
+    <label for="canvasName" class="sr-only">Nombre del canvas</label>
+    <input id="canvasName" type="text" placeholder="Nombre del proyecto MCP…" aria-label="Nombre del proyecto">
+    <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
+    <button id="btnSave" class="btn-ghost">💾 Guardar</button>
+    <button id="btnImportJSON" class="btn-import">📂 Importar</button>
+    <button id="btnExportJSON" class="btn-ghost">↓ JSON</button>
+    <button id="btnShare" class="btn-ghost">🔗 Compartir</button>
+    <button id="btnReset" class="btn-ghost">↺ Reiniciar</button>
+    <button id="btnWord" class="btn-primary">📄 Generar Documento</button>
+  </div>
+</header>
+
+<!-- Share modal -->
+<div id="shareModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+  <div class="modal-box">
+    <div id="shareModalTitle" class="modal-title">🔗 Enlace para compartir</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">Enlace con el estado completo del canvas. Cualquiera con él puede cargarlo directamente.</p>
+    <textarea id="shareURL" class="modal-url" readonly aria-label="URL de compartir" rows="3"></textarea>
+    <div class="modal-actions">
+      <button id="btnCloseModal" class="btn-ghost">Cerrar</button>
+      <button id="btnCopyURL" class="btn-primary">📋 Copiar enlace</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero" role="region" aria-label="Presentación">
+  <div class="hero-eyebrow">Model Context Protocol · Tools · Resources · Prompts · stdio · SSE</div>
+  <h1>MCP Architecture<br><span>Canvas</span></h1>
+  <p class="hero-sub">Diseña la capa MCP de tu agente antes de escribir código. Decide qué servidores construir, qué exponen y cómo se conectan.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>6</strong><span>Bloques de diseño</span></div>
+    <div class="hero-stat"><strong>★→1</strong><span>Orden recomendado</span></div>
+    <div class="hero-stat"><strong>MCP</strong><span>Capa de herramientas</span></div>
+  </div>
+</div>
+
+<main id="main-canvas">
+<div class="canvas-wrap">
+
+  <!-- Progress header -->
+  <div class="canvas-header">
+    <div>
+      <div class="canvas-title">MCP Architecture Canvas</div>
+      <div class="canvas-subtitle">Haz clic en cada bloque para expandirlo · Auto-guardado activado</div>
+    </div>
+    <div style="text-align:right">
+      <div class="progress-label" id="progressLabel" aria-live="polite">0 / 6 bloques completados</div>
+      <div class="progress-bar" style="width:220px" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       PHASE 1 — CONTEXTO
+  ════════════════════════════════════════════ -->
+  <div class="canvas-section">
+    <span class="phase-label">① Contexto — Quién y por qué</span>
+    <div class="grid-1-2">
+
+      <!-- B1: HOST -->
+      <div class="block b1" data-block="b1" data-collapsible="true"
+        role="region" aria-labelledby="b1-title" aria-expanded="false" tabindex="0">
+        <div class="block-accent" aria-hidden="true"></div>
+        <div class="block-num" id="b1-title">★ 1 · Agente Host</div>
+        <div class="block-title">🤖 ¿Qué agente consume estos servidores?</div>
+        <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
+        <div class="block-body" data-stop-toggle>
+          <div class="block-sub">Define el host o cliente que iniciará conexiones MCP.</div>
+          <div class="field-group">
+            <div class="field-label" id="b1-host-label">Host MCP</div>
+            <div class="check-grid" role="group" aria-labelledby="b1-host-label">
+              <label class="check-item"><input type="checkbox" value="Claude Desktop"> Claude Desktop</label>
+              <label class="check-item"><input type="checkbox" value="Cursor / VS Code"> Cursor / VS Code</label>
+              <label class="check-item"><input type="checkbox" value="Agente custom (SDK)"> Agente custom (SDK)</label>
+              <label class="check-item"><input type="checkbox" value="Multi-agente orquestado"> Multi-agente orquestado</label>
+              <label class="check-item"><input type="checkbox" value="Claude API (tool_use)"> Claude API (tool_use)</label>
+              <label class="check-item"><input type="checkbox" value="Otro host MCP"> Otro host MCP</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="b1_proto">Versión protocolo MCP</label>
+            <select class="field-input" id="b1_proto" name="b1_proto" aria-label="Versión protocolo MCP">
+              <option value="">-- seleccionar --</option>
+              <option>2024-11-05 (estable)</option>
+              <option>2025-03-26 (recomendada)</option>
+              <option>latest</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="b1_concurrencia">Agentes concurrentes esperados</label>
+            <input type="text" class="field-input" id="b1_concurrencia" name="b1_concurrencia"
+              placeholder="Ej: 1 agente por usuario, 10 simultáneos">
+          </div>
+          <div class="field-group">
+            <div class="field-label" id="b1-scope-label">Alcance de los servidores</div>
+            <div class="chip-group" role="radiogroup" aria-labelledby="b1-scope-label">
+              <button class="chip" role="radio" aria-checked="false">Un agente los usa</button>
+              <button class="chip" role="radio" aria-checked="false">Compartidos entre agentes</button>
+              <button class="chip" role="radio" aria-checked="false">Exposición pública</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B2: DECISIÓN ARQUITECTÓNICA -->
+      <div class="block b2" data-block="b2" data-collapsible="true"
+        role="region" aria-labelledby="b2-title" aria-expanded="false" tabindex="0">
+        <div class="block-accent" aria-hidden="true"></div>
+        <div class="block-num" id="b2-title">★ 2 · Decisión Arquitectónica</div>
+        <div class="block-title" style="color:var(--violet-mid)">🧭 ¿Por qué MCP? ¿Qué granularidad?</div>
+        <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
+        <div class="block-body" data-stop-toggle>
+          <div class="block-sub">La decisión más importante: qué hardcodear y qué exponer como servidor MCP independiente.</div>
+          <div class="field-group">
+            <div class="field-label" id="b2-why-label">¿Por qué MCP en lugar de tools hardcodeadas?</div>
+            <div class="check-grid" role="group" aria-labelledby="b2-why-label">
+              <label class="check-item"><input type="checkbox" value="Reutilización entre agentes"> Reutilización entre agentes</label>
+              <label class="check-item"><input type="checkbox" value="Desacoplamiento backend"> Desacoplamiento backend</label>
+              <label class="check-item"><input type="checkbox" value="Fuente de datos dinámica"> Fuente de datos dinámica</label>
+              <label class="check-item"><input type="checkbox" value="Múltiples hosts/clientes"> Múltiples hosts/clientes</label>
+              <label class="check-item"><input type="checkbox" value="Terceros pueden contribuir"> Terceros pueden contribuir</label>
+              <label class="check-item"><input type="checkbox" value="Separación de responsabilidades"> Separación de responsabilidades</label>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="field-group">
+            <div class="field-label" id="b2-gran-label">Estrategia de granularidad</div>
+            <div class="chip-group" role="radiogroup" aria-labelledby="b2-gran-label">
+              <button class="chip" role="radio" aria-checked="false">Un servidor por fuente de datos</button>
+              <button class="chip" role="radio" aria-checked="false">Un servidor por dominio funcional</button>
+              <button class="chip" role="radio" aria-checked="false">Servidor único monolítico</button>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="b2_razon_granularidad">Justificación de la estrategia elegida</label>
+            <textarea class="field-input" id="b2_razon_granularidad" name="b2_razon_granularidad" rows="2"
+              placeholder="Ej: cada fuente de datos tiene credenciales y ciclo de vida propios…"></textarea>
+          </div>
+          <div class="divider"></div>
+          <div class="field-group">
+            <div class="field-label" id="b2-bvb-label">Build vs Buy</div>
+            <div class="check-grid" role="group" aria-labelledby="b2-bvb-label">
+              <label class="check-item"><input type="checkbox" value="Construir propio desde cero"> Construir propio desde cero</label>
+              <label class="check-item"><input type="checkbox" value="Usar servidor MCP de tercero existente"> Servidor MCP de tercero existente</label>
+              <label class="check-item"><input type="checkbox" value="Adaptar servidor open-source"> Adaptar servidor open-source</label>
+              <label class="check-item"><input type="checkbox" value="Combinar propio + terceros"> Combinar propio + terceros</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="b2_terceros">Servidores MCP de terceros evaluados</label>
+            <textarea class="field-input mono-input" id="b2_terceros" name="b2_terceros" rows="2"
+              placeholder="Ej: mcp-server-filesystem, mcp-server-github, mcp-server-postgres…"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /grid-1-2 -->
+  </div><!-- /phase 1 -->
+
+  <!-- ════════════════════════════════════════════
+       PHASE 2 — SERVIDORES
+  ════════════════════════════════════════════ -->
+  <div class="canvas-section">
+    <span class="phase-label">② Diseño — Qué servidores construir</span>
+
+    <!-- B3: INVENTARIO DE SERVIDORES -->
+    <div class="block b3" data-block="b3"
+      role="region" aria-labelledby="b3-title">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b3-title">3 · Inventario de Servidores MCP</div>
+      <div class="block-title">🗂️ ¿Qué servidores vas a construir o integrar?</div>
+      <div class="block-sub">Define cada servidor con su propósito, lo que expone y cómo ejecuta. Los Tools son acciones (efectos secundarios posibles); los Resources son datos legibles (URI).</div>
+
+      <div class="server-cards-list" id="serverList" aria-label="Lista de servidores MCP" role="list">
+        <!-- Server cards inserted by JS -->
+      </div>
+      <button class="btn-add-server" id="btnAddServer" aria-label="Añadir nuevo servidor MCP">
+        + Añadir servidor MCP
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       PHASE 3 — IMPLEMENTACIÓN
+  ════════════════════════════════════════════ -->
+  <div class="canvas-section">
+    <span class="phase-label">③ Implementación — Cómo conectar y proteger</span>
+    <div class="grid-2">
+
+      <!-- B4: TRANSPORTE & RUNTIME -->
+      <div class="block b4" data-block="b4" data-collapsible="true"
+        role="region" aria-labelledby="b4-title" aria-expanded="false" tabindex="0">
+        <div class="block-accent" aria-hidden="true"></div>
+        <div class="block-num" id="b4-title">4 · Transporte &amp; Runtime</div>
+        <div class="block-title">🔌 ¿Cómo se conecta el cliente al servidor?</div>
+        <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
+        <div class="block-body" data-stop-toggle>
+          <div class="field-group">
+            <div class="field-label">Protocolo de transporte</div>
+            <div class="transport-cards" role="radiogroup" aria-label="Protocolo de transporte">
+              <div class="transport-card" data-transport="stdio" role="radio" aria-checked="false" tabindex="0">
+                <span class="transport-badge">stdio</span>
+                <div class="transport-card-title">Proceso local (stdio)</div>
+                <div class="transport-card-sub">El host lanza el servidor como subproceso. Máxima privacidad. Ideal para herramientas locales y desarrollo.</div>
+              </div>
+              <div class="transport-card" data-transport="sse" role="radio" aria-checked="false" tabindex="0">
+                <span class="transport-badge cyan">SSE / HTTP</span>
+                <div class="transport-card-title">Servidor remoto (SSE)</div>
+                <div class="transport-card-sub">El servidor corre como proceso HTTP independiente. Permite compartirlo entre múltiples clientes y desplegarlo en cloud.</div>
+              </div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="field-group">
+            <div class="field-label" id="b4-runtime-label">Entorno de ejecución</div>
+            <div class="check-grid" role="group" aria-labelledby="b4-runtime-label">
+              <label class="check-item"><input type="checkbox" value="Proceso local (dev)"> Proceso local (dev)</label>
+              <label class="check-item"><input type="checkbox" value="npm / pip package"> npm / pip package</label>
+              <label class="check-item"><input type="checkbox" value="Docker container"> Docker container</label>
+              <label class="check-item"><input type="checkbox" value="Cloud function / Lambda"> Cloud function / Lambda</label>
+              <label class="check-item"><input type="checkbox" value="Kubernetes / K8s"> Kubernetes / K8s</label>
+              <label class="check-item"><input type="checkbox" value="Monorepo (junto al agente)"> Monorepo (junto al agente)</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field-label" id="b4-lifecycle-label">Ciclo de vida del servidor</div>
+            <div class="chip-group" role="radiogroup" aria-labelledby="b4-lifecycle-label">
+              <button class="chip" role="radio" aria-checked="false">On-demand (arranca con cada conversación)</button>
+              <button class="chip" role="radio" aria-checked="false">Always-on (proceso persistente)</button>
+              <button class="chip" role="radio" aria-checked="false">Serverless (por invocación)</button>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="b4_endpoint">Endpoint / comando de arranque</label>
+            <input type="text" class="field-input mono-input" id="b4_endpoint" name="b4_endpoint"
+              placeholder="Ej: npx @myorg/mcp-server  ó  http://localhost:3000/mcp">
+          </div>
+        </div>
+      </div>
+
+      <!-- B5: SEGURIDAD & AUTH -->
+      <div class="block b5" data-block="b5" data-collapsible="true"
+        role="region" aria-labelledby="b5-title" aria-expanded="false" tabindex="0">
+        <div class="block-accent" aria-hidden="true"></div>
+        <div class="block-num" id="b5-title">5 · Seguridad &amp; Auth</div>
+        <div class="block-title">🔐 ¿Quién puede llamar a qué?</div>
+        <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
+        <div class="block-body" data-stop-toggle>
+          <div class="field-group">
+            <div class="field-label" id="b5-auth-label">Mecanismo de autenticación</div>
+            <div class="chip-group" role="radiogroup" aria-labelledby="b5-auth-label">
+              <button class="chip" role="radio" aria-checked="false">Sin auth (stdio local)</button>
+              <button class="chip" role="radio" aria-checked="false">API Key en header</button>
+              <button class="chip" role="radio" aria-checked="false">OAuth 2.0</button>
+              <button class="chip" role="radio" aria-checked="false">mTLS</button>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field-label" id="b5-perm-label">Permisos por tipo de operación</div>
+            <div class="check-grid" role="group" aria-labelledby="b5-perm-label">
+              <label class="check-item"><input type="checkbox" value="Solo lectura (read-only tools)"> Solo lectura (read-only tools)</label>
+              <label class="check-item"><input type="checkbox" value="Escritura con confirmación humana"> Escritura con confirmación humana</label>
+              <label class="check-item"><input type="checkbox" value="Escritura autónoma permitida"> Escritura autónoma permitida</label>
+              <label class="check-item"><input type="checkbox" value="Eliminación nunca permitida"> Eliminación nunca permitida</label>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="field-group">
+            <div class="field-label" id="b5-sandbox-label">Sandboxing del servidor</div>
+            <div class="check-grid" role="group" aria-labelledby="b5-sandbox-label">
+              <label class="check-item"><input type="checkbox" value="Acceso filesystem restringido"> Acceso filesystem restringido</label>
+              <label class="check-item"><input type="checkbox" value="Red: solo destinos allowlisted"> Red: solo destinos allowlisted</label>
+              <label class="check-item"><input type="checkbox" value="Sin acceso a env vars sensibles"> Sin acceso a env vars sensibles</label>
+              <label class="check-item"><input type="checkbox" value="Contenedor sin privilegios root"> Contenedor sin privilegios root</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field-label" id="b5-data-label">Datos sensibles en tools</div>
+            <div class="check-grid" role="group" aria-labelledby="b5-data-label">
+              <label class="check-item"><input type="checkbox" value="PII pasa por los tools"> PII pasa por los tools</label>
+              <label class="check-item"><input type="checkbox" value="Credenciales en parámetros"> Credenciales en parámetros</label>
+              <label class="check-item"><input type="checkbox" value="Datos regulados (GDPR)"> Datos regulados (GDPR)</label>
+              <label class="check-item"><input type="checkbox" value="Logging de inputs/outputs activado"> Logging de inputs/outputs activado</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="b5_notas_auth">Notas de seguridad adicionales</label>
+            <textarea class="field-input" id="b5_notas_auth" name="b5_notas_auth" rows="2"
+              placeholder="Rate limiting, expiración de tokens, auditoría…"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /grid-2 -->
+  </div><!-- /phase 3 -->
+
+  <!-- ════════════════════════════════════════════
+       PHASE 4 — OPERACIONES
+  ════════════════════════════════════════════ -->
+  <div class="canvas-section">
+    <span class="phase-label">④ Operaciones — Testing, despliegue y observabilidad</span>
+
+    <!-- B6: TESTING, DESPLIEGUE & OBSERVABILIDAD -->
+    <div class="block b6" data-block="b6" data-collapsible="true"
+      role="region" aria-labelledby="b6-title" aria-expanded="false" tabindex="0">
+      <div class="block-accent" aria-hidden="true"></div>
+      <div class="block-num" id="b6-title">6 · Testing, Despliegue &amp; Observabilidad</div>
+      <div class="block-title" style="color:var(--red)">🧪 ¿Cómo verificar que los servidores funcionan?</div>
+      <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
+      <div class="block-body" data-stop-toggle>
+        <div class="grid-2">
+          <div>
+            <div class="field-group">
+              <div class="field-label" id="b6-test-label">Testing</div>
+              <div class="check-grid" role="group" aria-labelledby="b6-test-label">
+                <label class="check-item"><input type="checkbox" value="MCP Inspector (pruebas manuales)"> MCP Inspector (pruebas manuales)</label>
+                <label class="check-item"><input type="checkbox" value="Tests unitarios de tools"> Tests unitarios de tools</label>
+                <label class="check-item"><input type="checkbox" value="Tests de integración agente-servidor"> Tests integración agente-servidor</label>
+                <label class="check-item"><input type="checkbox" value="Tests de contrato (schema)"> Tests de contrato (schema)</label>
+                <label class="check-item"><input type="checkbox" value="Tests de regresión automáticos"> Tests de regresión automáticos</label>
+                <label class="check-item"><input type="checkbox" value="Evaluaciones LLM-as-judge"> Evaluaciones LLM-as-judge</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <div class="field-label" id="b6-cicd-label">CI/CD</div>
+              <div class="check-grid" role="group" aria-labelledby="b6-cicd-label">
+                <label class="check-item"><input type="checkbox" value="GitHub Actions"> GitHub Actions</label>
+                <label class="check-item"><input type="checkbox" value="Tests automáticos en PR"> Tests automáticos en PR</label>
+                <label class="check-item"><input type="checkbox" value="Docker build + push en CI"> Docker build + push en CI</label>
+                <label class="check-item"><input type="checkbox" value="Deploy automático a staging"> Deploy automático a staging</label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="field-group">
+              <div class="field-label" id="b6-obs-label">Observabilidad</div>
+              <div class="check-grid" role="group" aria-labelledby="b6-obs-label">
+                <label class="check-item"><input type="checkbox" value="Log de cada tool call (input + output)"> Log de cada tool call</label>
+                <label class="check-item"><input type="checkbox" value="Latencia por tool (p50/p99)"> Latencia por tool (p50/p99)</label>
+                <label class="check-item"><input type="checkbox" value="Tasa de errores por tool"> Tasa de errores por tool</label>
+                <label class="check-item"><input type="checkbox" value="Tracing distribuido (OpenTelemetry)"> Tracing distribuido</label>
+                <label class="check-item"><input type="checkbox" value="Alertas de disponibilidad"> Alertas de disponibilidad</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <div class="field-label" id="b6-version-label">Versionado &amp; distribución</div>
+              <div class="check-grid" role="group" aria-labelledby="b6-version-label">
+                <label class="check-item"><input type="checkbox" value="Semver (major.minor.patch)"> Semver (major.minor.patch)</label>
+                <label class="check-item"><input type="checkbox" value="CHANGELOG mantenido"> CHANGELOG mantenido</label>
+                <label class="check-item"><input type="checkbox" value="Publicado en npm / PyPI"> Publicado en npm / PyPI</label>
+                <label class="check-item"><input type="checkbox" value="Imagen Docker versionada"> Imagen Docker versionada</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="b6_metricas">Métricas objetivo</label>
+              <textarea class="field-input" id="b6_metricas" name="b6_metricas" rows="2"
+                placeholder="Ej: latencia p99 &lt; 500ms, disponibilidad &gt; 99.5%, tasa error &lt; 1%"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /phase 4 -->
+
+  <!-- EXPORT PANEL -->
+  <div class="export-panel" id="exportPanel" role="region" aria-label="Panel de exportación" aria-live="polite">
+    <div class="export-panel-text">
+      <div class="export-title">🎉 Canvas MCP completado</div>
+      <div class="export-sub">Diseño listo para revisar con el equipo o exportar como documento.</div>
+    </div>
+    <div class="export-actions">
+      <button id="btnWordPanel" class="btn-primary">📄 Generar Documento</button>
+      <button id="btnJSONPanel" class="btn-ghost">↓ JSON</button>
+      <button id="btnPrint" class="btn-ghost">🖨 Imprimir</button>
+    </div>
+  </div>
+
+</div><!-- /canvas-wrap -->
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  MCP CANVAS — Self-contained script (ES5-compatible bundle)
+//  Agent Canvas Model v1.0 · QMetrika Labs
+// ═══════════════════════════════════════════════════════════════
+
+const STORAGE_KEY = 'agentCanvas_mcp_v1';
+let serverCount = 0;
+
+// ── Server card template ─────────────────────────────────────
+function createServerCard(idx) {
+  idx = idx || (++serverCount);
+  const card = document.createElement('div');
+  card.className = 'server-card';
+  card.dataset.serverId = idx;
+  card.setAttribute('role', 'listitem');
+  card.innerHTML = `
+    <div class="server-card-header">
+      <span class="server-num">Servidor ${idx}</span>
+      <input type="text" class="field-input server-name-preview"
+        name="srv_${idx}_name" placeholder="nombre-del-servidor (ej: db-mcp)"
+        aria-label="Nombre del servidor ${idx}" style="margin:0;flex:1;"
+        oninput="refreshServerLabel(this,${idx})">
+      <button class="btn-remove-server" onclick="removeServer(this)" aria-label="Eliminar servidor ${idx}">✕</button>
+    </div>
+    <div class="server-grid">
+      <div class="field-group" style="margin-bottom:0">
+        <label class="field-label" for="srv_${idx}_purpose">Propósito / responsabilidad</label>
+        <textarea class="field-input" id="srv_${idx}_purpose" name="srv_${idx}_purpose" rows="2"
+          placeholder="Qué problema resuelve este servidor…" oninput="trackProgress()"></textarea>
+      </div>
+      <div class="field-group" style="margin-bottom:0">
+        <label class="field-label" for="srv_${idx}_source">Sistema que envuelve</label>
+        <input type="text" class="field-input mono-input" id="srv_${idx}_source" name="srv_${idx}_source"
+          placeholder="Ej: PostgreSQL, GitHub API, filesystem…" oninput="trackProgress()">
+      </div>
+    </div>
+    <div class="server-grid-3" style="margin-top:.5rem">
+      <div class="field-group" style="margin-bottom:0">
+        <label class="field-label" for="srv_${idx}_runtime">Runtime</label>
+        <select class="field-input" id="srv_${idx}_runtime" name="srv_${idx}_runtime" onchange="trackProgress()">
+          <option value="">-- Runtime --</option>
+          <option>Node.js / TypeScript</option>
+          <option>Python</option>
+          <option>Rust</option>
+          <option>Go</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field-group" style="margin-bottom:0">
+        <label class="field-label" for="srv_${idx}_transport">Transporte</label>
+        <select class="field-input" id="srv_${idx}_transport" name="srv_${idx}_transport" onchange="trackProgress()">
+          <option value="">-- Transporte --</option>
+          <option>stdio (local)</option>
+          <option>SSE / HTTP</option>
+          <option>HTTP Streaming</option>
+        </select>
+      </div>
+      <div class="field-group" style="margin-bottom:0">
+        <label class="field-label" for="srv_${idx}_type">Origen</label>
+        <select class="field-input" id="srv_${idx}_type" name="srv_${idx}_type" onchange="trackProgress()">
+          <option value="">-- Origen --</option>
+          <option>Nuevo desarrollo</option>
+          <option>Adaptar open-source</option>
+          <option>Servidor de tercero</option>
+        </select>
+      </div>
+    </div>
+    <span class="server-section-label">🔧 Tools que expone (una por línea: nombre — descripción breve)</span>
+    <textarea class="field-input mono-input" name="srv_${idx}_tools" rows="3"
+      placeholder="get_record — Obtiene un registro por ID&#10;search_items — Busca ítems por texto&#10;update_status — Actualiza el estado de un ítem"
+      aria-label="Tools del servidor ${idx}" oninput="trackProgress()"></textarea>
+    <span class="server-section-label">📦 Resources que expone (URI template — descripción)</span>
+    <textarea class="field-input mono-input" name="srv_${idx}_resources" rows="2"
+      placeholder="db://tabla/{id} — Registro completo de la tabla&#10;file://docs/{path} — Documento de la base de conocimiento"
+      aria-label="Resources del servidor ${idx}" oninput="trackProgress()"></textarea>
+  `;
+  // Wire inputs for auto-save
+  card.querySelectorAll('input,textarea,select').forEach(el => {
+    el.addEventListener('input',  () => { trackProgress(); scheduleAutoSave(); });
+    el.addEventListener('change', () => { trackProgress(); scheduleAutoSave(); });
+  });
+  return card;
+}
+
+function refreshServerLabel(input, idx) {
+  trackProgress(); scheduleAutoSave();
+}
+
+function removeServer(btn) {
+  btn.closest('.server-card').remove();
+  trackProgress(); scheduleAutoSave();
+}
+
+function addServerCard(data) {
+  const list = document.getElementById('serverList');
+  const card = createServerCard();
+  list.appendChild(card);
+  if (data) applyServerData(card, data);
+  trackProgress();
+}
+
+function applyServerData(card, data) {
+  Object.entries(data || {}).forEach(([name, val]) => {
+    const el = card.querySelector(`[name="${name}"]`);
+    if (el) el.value = val;
+  });
+}
+
+// ── Progress ─────────────────────────────────────────────────
+function trackProgress() {
+  const blocks = document.querySelectorAll('[data-block]');
+  let done = 0;
+  blocks.forEach(b => {
+    const inputs   = b.querySelectorAll('input[name]:not([type=checkbox]):not([type=range]), textarea[name], select[name]');
+    const checks   = b.querySelectorAll('input[type=checkbox]:checked');
+    const chips    = b.querySelectorAll('.chip[aria-checked="true"], .transport-card[aria-checked="true"]');
+    const filled   = [...inputs].some(i => i.value.trim().length > 2);
+    if (filled || checks.length || chips.length) done++;
+  });
+  const pct   = blocks.length ? Math.round(done / blocks.length * 100) : 0;
+  const fill  = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  if (fill)  { fill.style.width = pct + '%'; fill.setAttribute('aria-valuenow', pct); }
+  if (label)  label.textContent = done + ' / ' + blocks.length + ' bloques completados';
+  document.getElementById('exportPanel')?.classList.toggle('visible', pct >= 80);
+}
+
+// ── Chip selection ────────────────────────────────────────────
+function wireChips() {
+  // Radiogroup chips (single select)
+  document.querySelectorAll('[role=radiogroup]').forEach(group => {
+    group.querySelectorAll('.chip, .transport-card').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        group.querySelectorAll('.chip, .transport-card').forEach(b => {
+          b.classList.remove('sel');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('sel');
+        btn.setAttribute('aria-checked', 'true');
+        trackProgress(); scheduleAutoSave();
+      });
+    });
+  });
+}
+
+// ── Block toggle ──────────────────────────────────────────────
+function wireBlocks() {
+  document.querySelectorAll('[data-collapsible="true"]').forEach(block => {
+    block.addEventListener('click', e => {
+      if (e.target.closest('[data-stop-toggle]')) return;
+      const expanded = block.classList.toggle('active');
+      block.setAttribute('aria-expanded', String(expanded));
+    });
+    block.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target === block) {
+        e.preventDefault();
+        block.click();
+      }
+    });
+  });
+}
+
+// ── Auto-save ─────────────────────────────────────────────────
+let _saveTimer = null;
+function scheduleAutoSave() { clearTimeout(_saveTimer); _saveTimer = setTimeout(saveNow, 300); }
+function saveNow() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState()));
+    const ind = document.getElementById('saveIndicator');
+    if (ind) { ind.classList.add('visible'); setTimeout(() => ind.classList.remove('visible'), 1500); }
+  } catch(e) { console.warn('Save failed', e); }
+}
+
+// ── Collect state ─────────────────────────────────────────────
+function collectState() {
+  const state = {
+    version: 1, edition: 'mcp', savedAt: new Date().toISOString(),
+    meta: { name: document.getElementById('canvasName')?.value || '' },
+    blocks: {}, servers: []
+  };
+
+  document.querySelectorAll('[data-block]').forEach(block => {
+    const id = block.dataset.block;
+    const bState = { inputs:{}, checks:[], selected:[] };
+    block.querySelectorAll('input[name]:not([type=checkbox]), textarea[name], select[name]')
+      .forEach(el => { bState.inputs[el.name] = el.value; });
+    block.querySelectorAll('input[type=checkbox]:checked[value]')
+      .forEach(cb => bState.checks.push(cb.value));
+    block.querySelectorAll('.chip[aria-checked="true"], .transport-card[aria-checked="true"]')
+      .forEach(btn => bState.selected.push(btn.dataset.transport || btn.textContent.trim()));
+    state.blocks[id] = bState;
+  });
+
+  // Server cards
+  document.querySelectorAll('.server-card').forEach(card => {
+    const srv = {};
+    card.querySelectorAll('input[name],textarea[name],select[name]')
+      .forEach(el => { srv[el.name] = el.value; });
+    state.servers.push(srv);
+  });
+
+  return state;
+}
+
+// ── Apply state ───────────────────────────────────────────────
+function applyState(state) {
+  if (!state) return;
+  const nameEl = document.getElementById('canvasName');
+  if (nameEl && state.meta?.name) nameEl.value = state.meta.name;
+
+  Object.entries(state.blocks || {}).forEach(([id, bState]) => {
+    const block = document.querySelector(`[data-block="${id}"]`);
+    if (!block) return;
+    Object.entries(bState.inputs || {}).forEach(([name, val]) => {
+      const el = block.querySelector(`[name="${name}"]`);
+      if (el) el.value = val;
+    });
+    block.querySelectorAll('input[type=checkbox][value]').forEach(cb => {
+      cb.checked = (bState.checks || []).includes(cb.value);
+    });
+    (bState.selected || []).forEach(sel => {
+      block.querySelectorAll('.chip, .transport-card').forEach(btn => {
+        const match = (btn.dataset.transport || btn.textContent.trim()) === sel;
+        if (match) { btn.classList.add('sel'); btn.setAttribute('aria-checked','true'); }
+      });
+    });
+  });
+
+  // Servers
+  const list = document.getElementById('serverList');
+  list.innerHTML = '';
+  serverCount = 0;
+  (state.servers || []).forEach(srv => addServerCard(srv));
+  if (!state.servers?.length) { addServerCard(); addServerCard(); }
+}
+
+// ── Load saved ────────────────────────────────────────────────
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    applyState(JSON.parse(raw));
+    return true;
+  } catch(e) { return false; }
+}
+
+// ── Reset ─────────────────────────────────────────────────────
+function resetAll() {
+  if (!confirm('¿Reiniciar el canvas MCP? Se perderán todos los datos.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('input[name]:not([type=checkbox]), textarea[name], select[name]').forEach(el => el.value = '');
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('.chip, .transport-card').forEach(b => { b.classList.remove('sel'); b.setAttribute('aria-checked','false'); });
+  document.querySelectorAll('.block').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-expanded','false'); });
+  const list = document.getElementById('serverList');
+  list.innerHTML = ''; serverCount = 0;
+  addServerCard(); addServerCard();
+  document.getElementById('exportPanel')?.classList.remove('visible');
+  trackProgress();
+}
+
+// ── JSON export / import ──────────────────────────────────────
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(collectState(),null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'mcp-canvas-v1.json'; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+function importJSON() {
+  const inp = document.createElement('input'); inp.type='file'; inp.accept='.json';
+  inp.onchange = async e => {
+    try { applyState(JSON.parse(await e.target.files[0].text())); trackProgress(); saveNow(); }
+    catch(er) { alert('JSON inválido'); }
+  };
+  inp.click();
+}
+
+// ── Share URL ─────────────────────────────────────────────────
+function toB64(str) {
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p)=>String.fromCharCode(parseInt(p,16))))
+    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function fromB64(b64) {
+  const p = b64.replace(/-/g,'+').replace(/_/g,'/');
+  const bin = atob(p+'=='.slice((p.length%4)||4));
+  return decodeURIComponent(bin.split('').map(c=>'%'+c.charCodeAt(0).toString(16).padStart(2,'0')).join(''));
+}
+function generateShareURL() {
+  return location.origin + location.pathname + '#mcp=' + toB64(JSON.stringify(collectState()));
+}
+function loadFromHash() {
+  if (!location.hash.startsWith('#mcp=')) return false;
+  try {
+    applyState(JSON.parse(fromB64(location.hash.slice(5))));
+    history.replaceState(null,'',location.pathname);
+    return true;
+  } catch(e) { return false; }
+}
+
+// ── Word export ───────────────────────────────────────────────
+function exportWord() {
+  const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const getVal = name => document.querySelector(`[name="${name}"]`)?.value || '';
+  const getChecks = sel => {
+    const r = [];
+    document.querySelectorAll(sel + ' input[type=checkbox]:checked').forEach(c=>r.push(c.value||c.closest('label')?.textContent?.trim()));
+    return r;
+  };
+  const getChips = sel => {
+    const r = [];
+    document.querySelectorAll(sel + ' .chip[aria-checked="true"], ' + sel + ' .transport-card[aria-checked="true"]')
+      .forEach(b=>r.push(b.textContent.trim()));
+    return r;
+  };
+  const ul = items => items?.length ? '<ul>' + items.map(i=>`<li>${esc(i)}</li>`).join('') + '</ul>' : '<p><em>Sin datos</em></p>';
+  const sec = (t,c) => `<div style="background:${c};color:white;padding:6px 12px;margin:16px 0 8px;font-family:Arial"><b>${esc(t)}</b></div>`;
+  const h2 = t => `<h2 style="color:#7C3AED;border-bottom:2px solid #7C3AED;padding-bottom:4px;font-family:Arial">${esc(t)}</h2>`;
+
+  // Servers
+  let serversHtml = '';
+  document.querySelectorAll('.server-card').forEach((card,i) => {
+    const name    = card.querySelector('[name$="_name"]')?.value || `Servidor ${i+1}`;
+    const purpose = card.querySelector('[name$="_purpose"]')?.value || '';
+    const source  = card.querySelector('[name$="_source"]')?.value || '';
+    const runtime = card.querySelector('[name$="_runtime"]')?.value || '';
+    const transport = card.querySelector('[name$="_transport"]')?.value || '';
+    const type    = card.querySelector('[name$="_type"]')?.value || '';
+    const tools   = card.querySelector('[name$="_tools"]')?.value || '';
+    const resources = card.querySelector('[name$="_resources"]')?.value || '';
+    serversHtml += `
+      <div style="border:1px solid #3B3069;border-radius:8px;padding:12px;margin-bottom:12px;border-left:4px solid #7C3AED">
+        <b style="font-family:monospace;color:#7C3AED">${esc(name)}</b>
+        <table style="width:100%;border-collapse:collapse;margin:8px 0;font-size:13px">
+          <tr><td style="width:140px;color:#666;padding:3px 8px 3px 0"><b>Propósito</b></td><td>${esc(purpose)}</td></tr>
+          <tr><td style="color:#666;padding:3px 8px 3px 0"><b>Sistema</b></td><td style="font-family:monospace">${esc(source)}</td></tr>
+          <tr><td style="color:#666;padding:3px 8px 3px 0"><b>Runtime</b></td><td>${esc(runtime)}</td></tr>
+          <tr><td style="color:#666;padding:3px 8px 3px 0"><b>Transporte</b></td><td>${esc(transport)}</td></tr>
+          <tr><td style="color:#666;padding:3px 8px 3px 0"><b>Origen</b></td><td>${esc(type)}</td></tr>
+        </table>
+        <p style="font-size:12px;color:#555;margin:4px 0"><b>Tools:</b></p>
+        <pre style="font-size:11px;background:#f4f4f4;padding:6px;border-radius:4px;white-space:pre-wrap">${esc(tools||'—')}</pre>
+        <p style="font-size:12px;color:#555;margin:4px 0"><b>Resources:</b></p>
+        <pre style="font-size:11px;background:#f4f4f4;padding:6px;border-radius:4px;white-space:pre-wrap">${esc(resources||'—')}</pre>
+      </div>`;
+  });
+
+  const doc = `<html><head><meta charset="UTF-8"></head><body>
+
+  <div style="border-bottom:3px solid #7C3AED;padding-bottom:1rem;margin-bottom:2rem">
+    <h1 style="font-family:Arial;color:#7C3AED;margin:0">MCP Architecture Canvas</h1>
+    <p style="color:#888;margin:.3rem 0 0">
+      ${esc(document.getElementById('canvasName')?.value || 'Sin nombre')} · 
+      Generado: ${new Date().toLocaleDateString('es-ES')} · Agent Canvas Model v1.0
+    </p>
+  </div>
+
+  ${sec('BLOQUE 1 — Agente Host','#0891B2')}
+  ${h2('Host y versión de protocolo')}
+  <p><b>Hosts:</b></p>${ul(getChecks('[data-block="b1"]'))}
+  <p><b>Versión MCP:</b> ${esc(getVal('b1_proto'))}</p>
+  <p><b>Concurrencia:</b> ${esc(getVal('b1_concurrencia'))}</p>
+  <p><b>Alcance:</b> ${esc(getChips('[data-block="b1"]').join(', '))}</p>
+
+  ${sec('BLOQUE 2 — Decisión Arquitectónica','#7C3AED')}
+  ${h2('Por qué MCP y qué granularidad')}
+  <p><b>Motivaciones:</b></p>${ul(getChecks('[data-block="b2"]'))}
+  <p><b>Estrategia de granularidad:</b> ${esc(getChips('[data-block="b2"]')[0]||'')}</p>
+  <p><b>Justificación:</b> ${esc(getVal('b2_razon_granularidad'))}</p>
+  <p><b>Servidores de terceros evaluados:</b><br><code>${esc(getVal('b2_terceros'))}</code></p>
+
+  ${sec('BLOQUE 3 — Inventario de Servidores','#059669')}
+  ${h2('Servidores MCP a construir')}
+  ${serversHtml || '<p><em>Sin servidores definidos</em></p>'}
+
+  ${sec('BLOQUE 4 — Transporte & Runtime','#10B981')}
+  ${h2('Protocolo de conexión y entorno de ejecución')}
+  <p><b>Transporte seleccionado:</b> ${esc(getChips('[data-block="b4"]').join(', '))}</p>
+  <p><b>Entornos:</b></p>${ul(getChecks('[data-block="b4"]'))}
+  <p><b>Endpoint / comando:</b> <code>${esc(getVal('b4_endpoint'))}</code></p>
+
+  ${sec('BLOQUE 5 — Seguridad & Auth','#D97706')}
+  ${h2('Autenticación, permisos y sandboxing')}
+  <p><b>Auth:</b> ${esc(getChips('[data-block="b5"]')[0]||'')}</p>
+  <p><b>Permisos:</b></p>${ul(getChecks('[data-block="b5"]'))}
+  <p><b>Notas:</b> ${esc(getVal('b5_notas_auth'))}</p>
+
+  ${sec('BLOQUE 6 — Testing, Despliegue & Observabilidad','#DC2626')}
+  ${h2('Calidad, CI/CD y métricas operacionales')}
+  <p><b>Testing:</b></p>${ul(getChecks('[data-block="b6"]'))}
+  <p><b>Métricas objetivo:</b> ${esc(getVal('b6_metricas'))}</p>
+
+  
+
+
+</body></html>`;
+
+  const blob = new Blob(['﻿', doc], {type:'application/msword'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'mcp-architecture-document.doc'; a.click();
+}
+
+// ── Toast ─────────────────────────────────────────────────────
+function showToast(msg) {
+  document.querySelector('.toast')?.remove();
+  const t = document.createElement('div');
+  t.className = 'toast'; t.setAttribute('role','status'); t.setAttribute('aria-live','polite');
+  t.textContent = msg; document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  wireBlocks();
+  wireChips();
+
+  // Header buttons
+  document.getElementById('btnSave')?.addEventListener('click', () => { saveNow(); showToast('💾 Canvas guardado'); });
+  document.getElementById('btnReset')?.addEventListener('click', resetAll);
+  document.getElementById('btnExportJSON')?.addEventListener('click', exportJSON);
+  document.getElementById('btnImportJSON')?.addEventListener('click', importJSON);
+  document.getElementById('btnWord')?.addEventListener('click', exportWord);
+  document.getElementById('btnWordPanel')?.addEventListener('click', exportWord);
+  document.getElementById('btnJSONPanel')?.addEventListener('click', exportJSON);
+  document.getElementById('btnPrint')?.addEventListener('click', () => window.print());
+
+  document.getElementById('btnShare')?.addEventListener('click', async () => {
+    const url = generateShareURL();
+    document.getElementById('shareURL').value = url;
+    document.getElementById('shareModal').classList.add('visible');
+    try { await navigator.clipboard.writeText(url); } catch(e){}
+    document.getElementById('shareURL').select();
+  });
+  document.getElementById('btnCopyURL')?.addEventListener('click', async () => {
+    const url = document.getElementById('shareURL')?.value;
+    if (url) { await navigator.clipboard.writeText(url); showToast('🔗 Enlace copiado'); document.getElementById('shareModal').classList.remove('visible'); }
+  });
+  document.getElementById('btnCloseModal')?.addEventListener('click', () => document.getElementById('shareModal').classList.remove('visible'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('shareModal')?.classList.remove('visible'); });
+  document.getElementById('shareModal')?.addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('visible'); });
+
+  // Add server button
+  document.getElementById('btnAddServer')?.addEventListener('click', () => addServerCard());
+
+  // Wire canvasName
+  document.getElementById('canvasName')?.addEventListener('input', scheduleAutoSave);
+
+  // Wire all static inputs
+  document.querySelectorAll('input:not(#canvasName):not([type=checkbox]), textarea, select').forEach(el => {
+    if (!el.closest('.server-card')) {
+      el.addEventListener('input',  () => { trackProgress(); scheduleAutoSave(); });
+      el.addEventListener('change', () => { trackProgress(); scheduleAutoSave(); });
+    }
+  });
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    if (!cb.closest('.server-card')) {
+      cb.addEventListener('change', () => { trackProgress(); scheduleAutoSave(); });
+    }
+  });
+
+  // Load: hash first, then localStorage, then defaults
+  const fromHash = loadFromHash();
+  if (fromHash) {
+    trackProgress(); showToast('📥 Canvas cargado desde enlace');
+  } else {
+    const restored = loadSaved();
+    if (!restored) {
+      // Default: 2 empty server cards
+      addServerCard(); addServerCard();
+    } else { trackProgress(); }
+  }
+});
+</script>
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <span>Agent Canvas Model</span>
+    <span class="footer-sep">·</span>
+    <span class="footer-brand">QMetrika Labs</span>
+    <span class="footer-sep">·</span>
+    <span>MIT License</span>
+    <span class="footer-sep">·</span>
+    <span class="footer-mono">MCP Canvas</span>
+  </div>
+</footer>
+
+</body>
+</html>
