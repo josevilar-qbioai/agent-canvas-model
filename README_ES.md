@@ -4,24 +4,41 @@
 
 **Framework de diseño de agentes IA** — Adaptación del Business Model Canvas para planificar, diseñar y desplegar agentes de inteligencia artificial en producción.
 
+🚀 **[Demo en vivo → josevilar-qbioai.github.io/agent-canvas-model](https://josevilar-qbioai.github.io/agent-canvas-model)**
+
 ---
 
-## Novedades en v3.0
+## Tres canvases
 
-| Novedad | Dónde |
-|---------|-------|
-| **Patrón de Flujo de Control** — Secuencial, Enrutador, ReAct Loop, Multi-agente | Bloque 7 |
-| **MCP (Model Context Protocol)** — checkbox explícito | Bloque 8 |
-| **Registro inmutable / Event Sourcing** — checkbox de auditoría | Bloque 10 |
-| **Campos libres GPU y Modelo** — AMD Instinct, Apple Silicon, cualquier arquitectura emergente | On-Prem Bloque 6a |
-| **Bloque 2 simplificado** — Beneficios y Métrica de impacto fusionados en una sola sección | Cloud Bloque 2 |
-| **Exportación a Word con un clic** — genera un documento PRD + ADR estructurado desde los datos del canvas | Ambas ediciones |
+| Canvas | Acento | Caso de uso |
+|--------|--------|-------------|
+| [**Cloud Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/cloud/) | Índigo | Agentes en Azure, AWS, GCP, Copilot Studio, LangChain, APIs gestionadas |
+| [**On-Prem Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/onprem/) | Esmeralda | Modelos locales (Ollama, vLLM, LM Studio), air-gap, alta privacidad |
+| [**MCP Canvas**](https://josevilar-qbioai.github.io/agent-canvas-model/mcp/) | Cian | Capa de Model Context Protocol: servidores, transporte, seguridad, observabilidad |
+
+Los tres comparten el **sistema de diseño QMetrika Labs**: Inter + JetBrains Mono, fondo navy oscuro, color de acento por edición, WCAG 2.2 AA.
+
+---
+
+## Novedades en v4.0
+
+| Novedad | Detalle |
+|---------|---------|
+| **MCP Architecture Canvas** | Nuevo canvas dedicado al diseño de la capa MCP |
+| **HTML standalone** | Cada canvas es un único archivo autocontenido — sin servidor, funciona con `file://` |
+| **Sistema de diseño unificado** | Branding común, fuente Inter, dark theme, acento por canvas |
+| **Auto-guardado localStorage** | Cambios guardados automáticamente con debounce de 300 ms |
+| **Compartir por URL hash** | Comparte el estado completo del canvas en `#canvas=`, `#onprem=`, `#mcp=` |
+| **Importar / Exportar JSON** | Serialización completa del estado para backup y traspaso |
+| **Exportar Word (PRD + ADR)** | Documento estructurado generado en un clic desde los datos del canvas |
+| **GitHub Pages** | Los tres canvases accesibles en una URL pública |
+| **WCAG 2.2 AA** | Skip link, `aria-*`, `role=`, `focus-visible`, etiquetas para lectores de pantalla |
 
 ---
 
 ## Qué es el Agent Canvas
 
-El Agent Canvas es un framework visual de **10 bloques** que adapta la lógica del Business Model Canvas al diseño de agentes IA. Permite a equipos técnicos y de negocio alinear objetivos, definir capacidades y anticipar riesgos antes de escribir una sola línea de código.
+Un framework visual de **10 bloques** que adapta la lógica del Business Model Canvas al diseño de agentes IA. Permite a equipos técnicos y de negocio alinear objetivos, definir capacidades y anticipar riesgos antes de escribir una sola línea de código.
 
 ```
 +------------------+------------------+----------------------+------------------+------------------+
@@ -39,7 +56,7 @@ El Agent Canvas es un framework visual de **10 bloques** que adapta la lógica d
 +------------------+------------------+----------------------+------------------+------------------+
 | 9. ESTRUCTURA DE COSTES Y RIESGOS              | 5. FUENTES DE VALOR (KPIs)                     |
 |                                                 |                                                |
-| Costes de desarrollo, licencias, mantenimiento  | Cómo medimos el éxito?                         |
+| Desarrollo, licencias, mantenimiento, TCO       | Cómo medimos el éxito?                         |
 | Riesgos técnicos, de negocio, normativos        | Qué métricas indican que el agente aporta?     |
 +-------------------------------------------------+------------------------------------------------+
 |               10. GUARDARRAÍLES — Seguridad · Calidad · Ético · Operacional                     |
@@ -55,38 +72,51 @@ El Agent Canvas es un framework visual de **10 bloques** que adapta la lógica d
 - **Evita el error más común**: construir agentes sin definir para quién ni por qué
 - **Alinea negocio y tecnología**: un lenguaje común entre equipos
 - **Reduce riesgos**: identifica costes, dependencias y riesgos antes de desarrollar
-- **Acelera el diseño**: orden sugerido de trabajo (1 a 10) basado en dónde la ambigüedad tiene más coste
+- **Acelera el diseño**: orden sugerido de trabajo (1→10) basado en dónde la ambigüedad tiene más coste
 - **Genera documentación**: exporta un documento Word con PRD + ADR directamente desde el canvas
 
 ---
 
-## Contenido del repositorio
+## Estructura del repositorio
 
 ```
 agent-canvas-model/
-|-- README.md                              # Versión en inglés
-|-- README_ES.md                           # Este archivo
-|-- LICENSE                                # Licencia MIT
-|-- CONTRIBUTING.md                        # Cómo contribuir
-|-- agent-canvas-model.skill               # Skill instalable para Claude Desktop
-|-- plantillas/
-|   |-- Agent_Canvas_Template.md           # Plantilla editable en Markdown
-|   |-- canvas_cloud.html                  # Canvas interactivo - Cloud Edition v3
-|   |-- canvas_onprem.html                 # Canvas interactivo - On-Prem Edition v3
-|-- docs/
-|   |-- guia-mejores-practicas.md          # Guía completa de mejores prácticas
-|   |-- orden-de-trabajo.md                # Orden sugerido para rellenar el canvas
-|-- ejemplos/
-|   |-- ejemplo-agente-soporte-IT.md       # Ejemplo: agente de soporte IT
-|   |-- ejemplo-agente-onboarding.md       # Ejemplo: agente de onboarding
-|-- en/                                    # Versión en inglés
+├── README.md                               # Versión en inglés
+├── README_ES.md                            # Este archivo
+├── LICENSE                                 # Licencia MIT
+├── CONTRIBUTING.md                         # Cómo contribuir
+├── agent-canvas-model.skill               # Skill instalable para Claude Desktop
+│
+├── docs/                                   # Raíz de GitHub Pages
+│   ├── index.html                          # Landing page (dark, 3 tarjetas)
+│   ├── .nojekyll                           # Desactiva el procesado Jekyll
+│   ├── cloud/index.html                    # Cloud Edition (standalone)
+│   ├── onprem/index.html                   # On-Prem Edition (standalone)
+│   ├── mcp/index.html                      # MCP Canvas (standalone)
+│   ├── guia-mejores-practicas.md           # Guía completa de mejores prácticas
+│   └── orden-de-trabajo.md                 # Orden sugerido para rellenar el canvas
+│
+├── plantillas/                             # Plantillas fuente (español)
+│   ├── Agent_Canvas_Template.md            # Plantilla editable en Markdown
+│   ├── canvas_cloud_v4_standalone.html     # Cloud Edition v4 (standalone)
+│   ├── canvas_onprem_v4_standalone.html    # On-Prem Edition v4 (standalone)
+│   ├── canvas_mcp.html                     # MCP Canvas v1 (standalone)
+│   ├── canvas_cloud_v4.html                # Cloud Edition v4 (modular, ES6)
+│   ├── css/canvas-cloud.css                # CSS compartido (versión modular)
+│   └── js/                                 # Módulos ES6 (versión modular)
+│
+├── ejemplos/                               # Ejemplos de uso
+│   ├── ejemplo-agente-soporte-IT.md
+│   └── ejemplo-agente-onboarding.md
+│
+└── en/                                     # Plantillas y docs en inglés
 ```
 
 ---
 
 ## Skill para Claude Desktop
 
-El repositorio incluye un **skill instalable** (`agent-canvas-model.skill`) para [Claude Desktop (Cowork)](https://claude.ai). Al instalarlo, Claude activa automáticamente el framework cuando el usuario pide diseñar o planificar un agente IA.
+El repositorio incluye un **skill instalable** (`agent-canvas-model.skill`) para [Claude Desktop (Cowork)](https://claude.ai). Al instalarlo, Claude activa automáticamente el framework cuando pides diseñar o planificar un agente IA.
 
 **Cómo instalarlo**: descarga `agent-canvas-model.skill` y haz doble clic o arrástralo a Claude Desktop.
 
@@ -111,53 +141,31 @@ El repositorio incluye un **skill instalable** (`agent-canvas-model.skill`) para
 
 ---
 
-## Formatos disponibles
-
-| Formato | Uso recomendado |
-|---------|-----------------|
-| **Markdown** (.md) | Equipos técnicos, integración con repos, edición colaborativa |
-| **HTML interactivo — Cloud** | Navegador, agentes cloud (Azure, AWS, GCP) |
-| **HTML interactivo — On-Prem** | Navegador, agentes con modelos locales (Ollama, vLLM, air-gap) |
-
-Ambas ediciones HTML incluyen **exportación a Word con un clic** que genera un documento estructurado con la Parte I (PRD: bloques 1–5) y la Parte II (ADR: bloques 6–10) rellenos automáticamente con lo que hayas completado en el canvas.
-
----
-
-## Cómo empezar
-
-1. **Elige tu formato** de la carpeta `plantillas/`
-2. **Empieza por el bloque 1** (Segmento de Usuarios) y el **bloque 2** (Propuesta de Valor)
-3. **Valida con usuarios reales** antes de avanzar al resto de bloques
-4. **Revisa y actualiza** el canvas cada 2-3 semanas durante el desarrollo
-5. Lee la [guía de mejores prácticas](docs/guia-mejores-practicas.md) para llevar tu agente a producción
-
----
-
 ## Mejores prácticas (resumen)
 
 1. **Empieza estrecho y profundo** — un agente excelente en un caso de uso supera a uno mediocre que intenta todo
-2. **Define el nivel de autonomía** antes de construir — y define el **patrón de flujo de control** (Pipeline secuencial, Enrutador, ReAct Loop o Multi-agente)
-3. **La calidad del conocimiento determina la calidad del agente** — audita tus datos primero
-4. **Observabilidad desde el día uno** — registra, mide, itera. En entornos regulados, añade event sourcing para trazabilidad inmutable
-5. **El cumplimiento normativo no es una fase final** — es parte del diseño (GDPR, EU AI Act)
-6. **Diseña tu capa MCP** — decide desde el principio si hardcodeas las herramientas o las expones como servidores MCP independientes
+2. **Define el nivel de autonomía antes de construir** — y elige el **patrón de flujo de control**: Secuencial, Enrutador, ReAct Loop o Multi-agente
+3. **La calidad del conocimiento determina la calidad del agente** — audita tus fuentes de datos primero
+4. **Observabilidad desde el día uno** — registra, mide, itera; añade event sourcing inmutable en entornos regulados
+5. **El cumplimiento normativo no es una fase final** — es parte del diseño desde el bloque 1 (GDPR, EU AI Act)
+6. **Diseña tu capa MCP explícitamente** — usa el MCP Canvas para decidir transporte, inventario de servidores, auth y observabilidad
 
 ---
 
 ## Contribuir
 
-Las contribuciones son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md) para saber cómo participar.
+Las contribuciones son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
 ## Licencia
 
-Este proyecto está bajo la [Licencia MIT](LICENSE). Compártelo, adáptalo, mejóralo.
+[Licencia MIT](LICENSE) — compártelo, adáptalo, mejóralo.
 
 ---
 
 ## Origen
 
-Framework desarrollado por **Jose Antonio Vilar** — QMetrika Labs
+Desarrollado por **Jose Antonio Vilar** — [QMetrika Labs](mailto:qmetrika@proton.me)
 
-**Versión**: 3.0 (2026)
+**Versión**: 4.0 (2026)
