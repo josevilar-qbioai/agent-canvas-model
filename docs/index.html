@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agent Canvas Model — QMetrika Labs</title>
 <meta name="description" content="Framework de diseño de agentes IA. Adapta el Business Model Canvas a 10 bloques para planificar, diseñar y desplegar agentes en producción.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -140,22 +142,26 @@ footer a:hover { text-decoration: underline; }
   margin-bottom: 1.75rem; letter-spacing: .01em; opacity: .75;
 }
 .q-logo-svg { display:block; flex-shrink:0; }
+.q-logo-img { width:32px; height:32px; object-fit:contain; flex-shrink:0; }
+.hero-video-wrap {
+  width: 120px; height: 120px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-video {
+  width: 120px; height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  opacity: .9;
+}
 </style>
 </head>
 <body>
 
 <header>
-  <svg class="q-logo-svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <defs>
-    <linearGradient id="qgrad" x1="4" y1="4" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#D8DDE6"/>
-      <stop offset="50%" stop-color="#A8B4BF"/>
-      <stop offset="100%" stop-color="#6E7880"/>
-    </linearGradient>
-  </defs>
-  <circle cx="13" cy="12" r="8.5" stroke="url(#qgrad)" stroke-width="2.2" fill="none"/>
-  <line x1="18.5" y1="18" x2="24" y2="24" stroke="url(#qgrad)" stroke-width="2.2" stroke-linecap="round"/>
-</svg>
+  <img src="assets/logo-q.png" class="q-logo-img" alt="QMetrika" width="32" height="32">
   <span class="logo-name">Agent Canvas Model</span>
   <span class="logo-badge">v4.0 · 2026</span>
   <div class="header-right">
@@ -165,6 +171,12 @@ footer a:hover { text-decoration: underline; }
 
 <main>
   <div class="hero">
+    <div class="hero-video-wrap">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto"
+             aria-label="QMetrika logo animation">
+        <source src="assets/video-q-metrika.mp4" type="video/mp4">
+      </video>
+    </div>
     <p class="eyebrow"><span>QMetrika Labs</span> · Agent Canvas Model</p>
     <h1>Diseña tu agente IA<br>antes de <em>programarlo</em></h1>
     <p class="tagline">Primero la quietud del pensamiento, luego la técnica.</p>
