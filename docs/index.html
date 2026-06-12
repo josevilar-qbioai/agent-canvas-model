@@ -9,14 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:   #08080F;
-  --sf:   #0D0D1C;
-  --sf2:  #121226;
-  --bd:   #1C1C38;
-  --bd2:  #252548;
-  --tx:   #E6E6F4;
-  --tx2:  #9090B8;
-  --mu:   #505070;
+  --bg:   #252830;
+  --sf:   #2C2F34;
+  --sf2:  #32363B;
+  --bd:   #3C4047;
+  --bd2:  #494E55;
+  --tx:   #F0F2F5;
+  --tx2:  #9BA3AD;
+  --mu:   #5C646E;
   --mono: 'JetBrains Mono', monospace;
   --sans: 'Inter', system-ui, sans-serif;
   --indigo:  #6366F1;
@@ -139,12 +139,23 @@ footer a:hover { text-decoration: underline; }
   font-size: .95rem; color: var(--tx2); font-style: italic;
   margin-bottom: 1.75rem; letter-spacing: .01em; opacity: .75;
 }
+.q-logo-svg { display:block; flex-shrink:0; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="q-logo">Q</div>
+  <svg class="q-logo-svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="qgrad" x1="4" y1="4" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D8DDE6"/>
+      <stop offset="50%" stop-color="#A8B4BF"/>
+      <stop offset="100%" stop-color="#6E7880"/>
+    </linearGradient>
+  </defs>
+  <circle cx="13" cy="12" r="8.5" stroke="url(#qgrad)" stroke-width="2.2" fill="none"/>
+  <line x1="18.5" y1="18" x2="24" y2="24" stroke="url(#qgrad)" stroke-width="2.2" stroke-linecap="round"/>
+</svg>
   <span class="logo-name">Agent Canvas Model</span>
   <span class="logo-badge">v4.0 · 2026</span>
   <div class="header-right">

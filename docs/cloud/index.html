@@ -27,15 +27,15 @@ body {
 :root {
   
   /* ── SHARED TOKENS — QMetrika Labs ── */
-  --bg:   #08080F;
-  --sf:   #0D0D1C;
-  --sf2:  #121226;
-  --sf3:  #17172E;
-  --bd:   #1C1C38;
-  --bd2:  #252548;
-  --tx:   #E6E6F4;
-  --tx2:  #9090B8;
-  --mu:   #505070;
+  --bg:   #252830;
+  --sf:   #2C2F34;
+  --sf2:  #32363B;
+  --sf3:  #393D42;
+  --bd:   #3C4047;
+  --bd2:  #494E55;
+  --tx:   #F0F2F5;
+  --tx2:  #9BA3AD;
+  --mu:   #5C646E;
   --r:    8px;
   --rs:   5px;
   --sh:   0 1px 3px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
@@ -516,6 +516,7 @@ footer {
 .footer-sep { opacity: .4; }
 .footer-mono { font-family: var(--font-m); }
 
+.q-logo-svg { display:block; flex-shrink:0; }
 </style>
 </head>
 <body>
@@ -525,7 +526,17 @@ footer {
 
 <header role="banner">
   <div class="header-logo">
-    <div class="q-logo-mark" aria-hidden="true">Q</div>
+    <svg class="q-logo-svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="qgrad" x1="4" y1="4" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D8DDE6"/>
+      <stop offset="50%" stop-color="#A8B4BF"/>
+      <stop offset="100%" stop-color="#6E7880"/>
+    </linearGradient>
+  </defs>
+  <circle cx="13" cy="12" r="8.5" stroke="url(#qgrad)" stroke-width="2.2" fill="none"/>
+  <line x1="18.5" y1="18" x2="24" y2="24" stroke="url(#qgrad)" stroke-width="2.2" stroke-linecap="round"/>
+</svg>
     <span class="logo-name">Agent Canvas</span>
     <span class="logo-edition">Cloud Edition</span>
   </div>
