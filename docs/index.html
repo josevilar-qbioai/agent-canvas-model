@@ -24,6 +24,7 @@
   --indigo:  #6366F1;
   --emerald: #10B981;
   --cyan:    #06B6D4;
+  --amber:   #F59E0B;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--sans); background: var(--bg); color: var(--tx); min-height: 100vh; line-height: 1.5; }
@@ -72,11 +73,11 @@ h1 em { color: var(--indigo); font-style: normal; }
 }
 
 .cards {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-  max-width: 940px; margin: 0 auto 4rem; padding: 0 2rem;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  max-width: 1200px; margin: 0 auto 4rem; padding: 0 2rem;
 }
 @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
-@media (min-width: 701px) and (max-width: 920px) { .cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 701px) and (max-width: 1024px) { .cards { grid-template-columns: 1fr 1fr; } }
 
 .card {
   background: var(--sf); border: 1px solid var(--bd);
@@ -91,29 +92,33 @@ h1 em { color: var(--indigo); font-style: normal; }
   left: 0; top: 0; bottom: 0; width: 2px;
 }
 .card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.5); }
-.card-cloud::before  { background: var(--indigo); }
-.card-onprem::before { background: var(--emerald); }
-.card-mcp::before    { background: var(--cyan); }
-.card-cloud:hover  { border-color: var(--indigo); }
-.card-onprem:hover { border-color: var(--emerald); }
-.card-mcp:hover    { border-color: var(--cyan); }
+.card-cloud::before      { background: var(--indigo); }
+.card-onprem::before     { background: var(--emerald); }
+.card-mcp::before        { background: var(--cyan); }
+.card-enterprise::before { background: var(--amber); }
+.card-cloud:hover      { border-color: var(--indigo); }
+.card-onprem:hover     { border-color: var(--emerald); }
+.card-mcp:hover        { border-color: var(--cyan); }
+.card-enterprise:hover { border-color: var(--amber); }
 
 .card-label {
   font-family: var(--mono); font-size: .62rem;
   text-transform: uppercase; letter-spacing: .1em;
 }
-.card-cloud  .card-label { color: var(--indigo); }
-.card-onprem .card-label { color: var(--emerald); }
-.card-mcp    .card-label { color: var(--cyan); }
+.card-cloud      .card-label { color: var(--indigo); }
+.card-onprem     .card-label { color: var(--emerald); }
+.card-mcp        .card-label { color: var(--cyan); }
+.card-enterprise .card-label { color: var(--amber); }
 .card h2 { font-size: .95rem; font-weight: 600; color: var(--tx); }
 .card p  { font-size: .82rem; color: var(--tx2); line-height: 1.6; flex: 1; }
 .card-cta {
   margin-top: .5rem; font-family: var(--mono); font-size: .75rem; font-weight: 500;
   display: flex; align-items: center; gap: .35rem;
 }
-.card-cloud  .card-cta { color: var(--indigo); }
-.card-onprem .card-cta { color: var(--emerald); }
-.card-mcp    .card-cta { color: var(--cyan); }
+.card-cloud      .card-cta { color: var(--indigo); }
+.card-onprem     .card-cta { color: var(--emerald); }
+.card-mcp        .card-cta { color: var(--cyan); }
+.card-enterprise .card-cta { color: var(--amber); }
 
 .features-wrap {
   max-width: 860px; margin: 0 auto 5rem; padding: 0 2rem; text-align: center;
@@ -200,6 +205,12 @@ footer a:hover { text-decoration: underline; }
       <div class="card-label">MCP Canvas</div>
       <h2>Arquitectura MCP</h2>
       <p>Diseña tu capa de Model Context Protocol: servidores, transporte, seguridad y observabilidad.</p>
+      <div class="card-cta">Abrir canvas →</div>
+    </a>
+    <a href="enterprise/" class="card card-enterprise">
+      <div class="card-label">Enterprise Adoption</div>
+      <h2>Adopción Empresarial</h2>
+      <p>Mandato ejecutivo, gobernanza, gestión del cambio y hoja de ruta antes de construir.</p>
       <div class="card-cta">Abrir canvas →</div>
     </a>
   </div>

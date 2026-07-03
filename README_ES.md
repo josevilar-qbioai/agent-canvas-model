@@ -8,15 +8,16 @@
 
 ---
 
-## Tres canvases
+## Cuatro canvases
 
 | Canvas | Acento | Caso de uso |
 |--------|--------|-------------|
+| [**Enterprise Adoption**](https://josevilar-qbioai.github.io/agent-canvas-model/enterprise/) | Ámbar | Mandato ejecutivo, gobernanza, gestión del cambio, hoja de ruta — antes de construir |
 | [**Cloud Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/cloud/) | Índigo | Agentes en Azure, AWS, GCP, Copilot Studio, LangChain, APIs gestionadas |
 | [**On-Prem Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/onprem/) | Esmeralda | Modelos locales (Ollama, vLLM, LM Studio), air-gap, alta privacidad |
 | [**MCP Canvas**](https://josevilar-qbioai.github.io/agent-canvas-model/mcp/) | Cian | Capa de Model Context Protocol: servidores, transporte, seguridad, observabilidad |
 
-Los tres comparten el **sistema de diseño QMetrika Labs**: Inter + JetBrains Mono, fondo navy oscuro, color de acento por edición, WCAG 2.2 AA.
+Los cuatro comparten el **sistema de diseño QMetrika Labs**: Inter + JetBrains Mono, fondo charcoal oscuro (`#252830`), color de acento por edición, WCAG 2.2 AA.
 
 ---
 
@@ -31,7 +32,8 @@ Los tres comparten el **sistema de diseño QMetrika Labs**: Inter + JetBrains Mo
 | **Compartir por URL hash** | Comparte el estado completo del canvas en `#canvas=`, `#onprem=`, `#mcp=` |
 | **Importar / Exportar JSON** | Serialización completa del estado para backup y traspaso |
 | **Exportar Word (PRD + ADR)** | Documento estructurado generado en un clic desde los datos del canvas |
-| **GitHub Pages** | Los tres canvases accesibles en una URL pública |
+| **Enterprise Adoption Canvas** | Nuevo canvas Fase 3 para gobernanza organizativa y gestión del cambio |
+| **GitHub Pages** | Los cuatro canvases accesibles en una URL pública |
 | **WCAG 2.2 AA** | Skip link, `aria-*`, `role=`, `focus-visible`, etiquetas para lectores de pantalla |
 
 ---

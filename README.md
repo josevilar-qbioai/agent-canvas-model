@@ -8,15 +8,16 @@
 
 ---
 
-## Three Canvases
+## Four Canvases
 
 | Canvas | Accent | Use case |
 |--------|--------|----------|
+| [**Enterprise Adoption**](https://josevilar-qbioai.github.io/agent-canvas-model/enterprise/) | Amber | Executive mandate, governance, change management, adoption roadmap — before you build |
 | [**Cloud Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/cloud/) | Indigo | Agents on Azure, AWS, GCP, Copilot Studio, LangChain, managed APIs |
 | [**On-Prem Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/onprem/) | Emerald | Local models (Ollama, vLLM, LM Studio), air-gap, high-privacy environments |
 | [**MCP Canvas**](https://josevilar-qbioai.github.io/agent-canvas-model/mcp/) | Cyan | Model Context Protocol layer: servers, transport, security, observability |
 
-All three share a unified **QMetrika Labs design system**: Inter + JetBrains Mono, dark navy base, per-canvas accent color, WCAG 2.2 AA.
+All four share a unified **QMetrika Labs design system**: Inter + JetBrains Mono, dark charcoal base (`#252830`), per-canvas accent color, WCAG 2.2 AA.
 
 ---
 
@@ -31,7 +32,8 @@ All three share a unified **QMetrika Labs design system**: Inter + JetBrains Mon
 | **URL hash sharing** | Share full canvas state via `#canvas=`, `#onprem=`, `#mcp=` encoded hash |
 | **JSON import / export** | Full state serialization for backup and handoff |
 | **Word export (PRD + ADR)** | One-click structured document from canvas data |
-| **GitHub Pages** | All three canvases live at a public URL |
+| **Enterprise Adoption Canvas** | New Phase 3 canvas for organizational governance and change management |
+| **GitHub Pages** | All four canvases live at a public URL |
 | **WCAG 2.2 AA** | Skip link, `aria-*`, `role=`, `focus-visible`, screen-reader labels |
 
 ---
@@ -90,6 +92,7 @@ agent-canvas-model/
 ├── docs/                                   # GitHub Pages root
 │   ├── index.html                          # Landing page (dark, 3 canvas cards)
 │   ├── .nojekyll                           # Disables Jekyll processing
+│   ├── enterprise/index.html               # Enterprise Adoption Canvas (standalone)
 │   ├── cloud/index.html                    # Cloud Edition (standalone)
 │   ├── onprem/index.html                   # On-Prem Edition (standalone)
 │   ├── mcp/index.html                      # MCP Canvas (standalone)
@@ -100,6 +103,7 @@ agent-canvas-model/
 │   ├── Agent_Canvas_Template.md            # Editable Markdown template
 │   ├── canvas_cloud_v4_standalone.html     # Cloud Edition v4 (standalone)
 │   ├── canvas_onprem_v4_standalone.html    # On-Prem Edition v4 (standalone)
+│   ├── canvas_enterprise_adoption.html     # Enterprise Adoption Canvas (standalone)
 │   ├── canvas_mcp.html                     # MCP Canvas v1 (standalone)
 │   ├── canvas_cloud_v4.html                # Cloud Edition v4 (modular, ES6)
 │   ├── css/canvas-cloud.css                # Shared CSS (modular version)
