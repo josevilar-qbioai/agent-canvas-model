@@ -222,7 +222,7 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:1rem 1.5rem;t
     <span class="save-indicator" id="saveInd" aria-live="polite">✓ guardado</span>
   </div>
   <div class="header-actions">
-    <button id="btnExp" class="btn-ghost">Exportar ▾</button>
+    <button id="btnExp" class="btn-ghost">Export ▾</button>
     <button id="btnShare" class="btn-ghost">Share</button>
     <button id="btnSave" class="btn-primary">Save</button>
   </div>
@@ -454,7 +454,7 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:1rem 1.5rem;t
         </div>
       </div>
       <div class="fg"><label class="fl">¿Qué puede pausar el programa?</label><textarea class="fi" name="ent_b10_para" rows="2" placeholder="Incidente, nueva regulación, piloto negativo…"></textarea></div>
-      <div class="fg"><label class="fl">Guardarraíles regulatorios</label>
+      <div class="fg"><label class="fl">Regulatory Guardrails</label>
         <div class="cg">
           <label class="ci"><input type="checkbox" name="ent_b10_gdpr"> GDPR</label>
           <label class="ci"><input type="checkbox" name="ent_b10_aiact"> EU AI Act</label>
@@ -635,7 +635,7 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:1rem 1.5rem;t
     <div class="block" data-block="cl10">
       <div class="block-bar"></div>
       <p class="block-num">B10 · Guardrails</p>
-      <h3 class="block-title">Guardarraíles</h3>
+      <h3 class="block-title">Guardrails</h3>
       <div class="fg"><label class="fl">Controles de seguridad</label>
         <div class="cg">
           <label class="ci"><input type="checkbox" name="cl_b10_prompt_inj"> Anti-prompt injection</label>
@@ -782,7 +782,7 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:1rem 1.5rem;t
     <div class="block" data-block="op10">
       <div class="block-bar"></div>
       <p class="block-num">B10 · Guardrails</p>
-      <h3 class="block-title">Guardarraíles y Privacidad</h3>
+      <h3 class="block-title">Guardrails & Privacy</h3>
       <div class="fg"><label class="fl">Controles de seguridad</label>
         <div class="cg">
           <label class="ci"><input type="checkbox" name="op_b10_no_egress"> Sin salida de datos</label>
@@ -947,12 +947,12 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:1rem 1.5rem;t
 <!-- EXPORT PANEL -->
 <div id="expPanel" class="exp-panel" style="max-width:1400px;margin:0 auto 1rem;padding-left:1.5rem;padding-right:1.5rem;" role="region">
   <div>
-    <p class="exp-title">Exportar tablero completo</p>
-    <p class="exp-sub">JSON con los 4 canvases · Word con todos los bloques</p>
+    <p class="exp-title">Export full board</p>
+    <p class="exp-sub">JSON con los 4 canvases · Word con todos los blocks</p>
   </div>
   <div class="exp-btns">
-    <button id="btnExpJson" class="btn-ghost">↓ JSON completo</button>
-    <button id="btnImpJson" class="btn-ghost">↑ Importar JSON</button>
+    <button id="btnExpJson" class="btn-ghost">↓ Full JSON</button>
+    <button id="btnImpJson" class="btn-ghost">↑ Import JSON</button>
     <button id="btnExpWord" class="btn-primary">↓ Word (todos los canvases)</button>
   </div>
   <input type="file" id="jsonFile" accept=".json" class="sr-only">
@@ -963,12 +963,12 @@ footer{background:var(--sf);border-top:1px solid var(--bd);padding:1rem 1.5rem;t
 <!-- SHARE MODAL -->
 <div id="shareModal" class="modal-ov" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
   <div class="modal-box">
-    <h2 class="modal-title" id="shareTitle">Compartir tablero</h2>
+    <h2 class="modal-title" id="shareTitle">Share board</h2>
     <p class="modal-sub">El estado completo de los 4 canvases está codificado en la URL.</p>
     <textarea id="shareUrl" class="modal-url" readonly></textarea>
     <div class="modal-acts">
-      <button id="btnCopy" class="btn-primary">Copiar enlace</button>
-      <button id="btnCloseModal" class="btn-ghost">Cerrar</button>
+      <button id="btnCopy" class="btn-primary">Copy link</button>
+      <button id="btnCloseModal" class="btn-ghost">Close</button>
     </div>
   </div>
 </div>
@@ -1166,7 +1166,7 @@ document.getElementById('jsonFile').addEventListener('change', e => {
 document.getElementById('btnExpWord').addEventListener('click', () => {
   const s = collectState();
   const pname = s.project||'Proyecto IA';
-  const date = new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'});
+  const date = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   const esc = t => (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const h1 = t => `<h1 style="font-size:20pt;color:#92400E;border-bottom:3px solid #F59E0B;padding-bottom:8pt;margin-top:0">${esc(t)}</h1>`;
   const h2 = (t,color) => `<h2 style="font-size:14pt;color:${color||'#1C1917'};margin-top:18pt;border-bottom:1px solid #E7E5E4;padding-bottom:4pt">${esc(t)}</h2>`;
@@ -1206,14 +1206,14 @@ ${h3('B5. KPIs')}${f('North star','cl_b5_northstar')}${f('Target 3 meses','cl_b5
 ${h3('B7. Actividades')}${f('Skills','cl_b7_skills')}${f('Pipeline','cl_b7_pipeline')}
 ${h3('B8. Socios')}${f('APIs externas','cl_b8_apis')}${f('Proveedores','cl_b8_proveedores')}
 ${h3('B9. Costes')}${f('Coste mensual estimado','cl_b9_coste')}${f('Riesgos técnicos','cl_b9_riesgos_tec')}
-${h3('B10. Guardarraíles')}${f('Política de escalación','cl_b10_escalacion')}
+${h3('B10. Guardrails')}${f('Escalation policy','cl_b10_escalacion')}
 
 ${h2('FASE 2B — ON-PREM EDITION','#064E3B')}
 ${h3('B1. Segmento')}${f('Para quién','op_b1_para_quien')}${f('Regulación','op_b1_regulacion')}
 ${h3('B2. Propuesta')}${f('Justificación on-prem','op_b2_justificacion')}${f('Ventaja vs cloud','op_b2_ventaja')}
 ${h3('B6. Hardware')}${f('Hardware personalizado','op_b6_hw_custom')}
 ${h3('B9. Costes')}${f('CAPEX','op_b9_capex')}${f('OPEX mensual','op_b9_opex')}${f('Riesgos','op_b9_riesgos')}
-${h3('B10. Guardarraíles')}${f('Plan de continuidad','op_b10_continuidad')}
+${h3('B10. Guardrails')}${f('Continuity plan','op_b10_continuidad')}
 
 ${h2('FASE 3 — MCP CANVAS','#164E63')}
 ${h3('M1. Contexto')}${f('¿Qué expone el servidor MCP?','mcp_m1_expone')}
@@ -1248,8 +1248,8 @@ document.getElementById('btnShare').addEventListener('click', () => {
 });
 document.getElementById('btnCopy').addEventListener('click', () => {
   navigator.clipboard.writeText(document.getElementById('shareUrl').value).then(() => {
-    const b=document.getElementById('btnCopy'); b.textContent='✓ Copiado';
-    setTimeout(()=>b.textContent='Copiar enlace',2000);
+    const b=document.getElementById('btnCopy'); b.textContent='✓ Copied';
+    setTimeout(()=>b.textContent='Copy link',2000);
   });
 });
 document.getElementById('btnCloseModal').addEventListener('click', () => document.getElementById('shareModal').classList.remove('visible'));

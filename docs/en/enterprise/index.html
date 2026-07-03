@@ -261,7 +261,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
            placeholder="Name del proyecto IA…"
            aria-label="Name del proyecto">
     <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
-    <button id="btnExport" class="btn-ghost" aria-controls="exportPanel">Exportar ▾</button>
+    <button id="btnExport" class="btn-ghost" aria-controls="exportPanel">Export ▾</button>
     <button id="btnShare"  class="btn-ghost">Share</button>
     <button id="btnSave"   class="btn-primary">Save</button>
   </div>
@@ -296,7 +296,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
   <div class="canvas-bar" role="complementary" aria-label="Progreso">
     <span class="canvas-label">Enterprise AI Adoption Canvas · <strong>QMetrika Labs</strong></span>
     <div class="prog-wrap">
-      <span class="prog-text" id="progText">0 / 10 bloques</span>
+      <span class="prog-text" id="progText">0 / 10 blocks</span>
       <div class="prog-bar" role="progressbar" aria-label="Progreso" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progBar">
         <div class="prog-fill" id="progFill" style="width:0%"></div>
       </div>
@@ -704,7 +704,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
         </div>
         <div class="divider"></div>
         <div class="field-group">
-          <label class="field-label">Guardarraíles del programa</label>
+          <label class="field-label">Program Guardrails</label>
           <div class="check-grid">
             <label class="check-item"><input type="checkbox" name="b10_gdpr" value="1"> GDPR / Privacidad</label>
             <label class="check-item"><input type="checkbox" name="b10_aiact" value="1"> EU AI Act</label>
@@ -722,13 +722,13 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
   <!-- ── EXPORT PANEL ── -->
   <div id="exportPanel" class="export-panel" role="region" aria-label="Opciones de exportación">
     <div>
-      <p class="export-pre">Exportar canvas</p>
+      <p class="export-pre">Export canvas</p>
       <p class="export-title">Enterprise AI Adoption Canvas</p>
-      <p class="export-sub">Exporta como JSON para compartir o como Word para entregar a dirección.</p>
+      <p class="export-sub">Export as JSON to share, or as Word to deliver to leadership.</p>
     </div>
     <div class="export-actions">
       <button id="btnExportJson" class="btn-ghost">↓ JSON</button>
-      <button id="btnImportJson" class="btn-ghost">↑ Importar JSON</button>
+      <button id="btnImportJson" class="btn-ghost">↑ Import JSON</button>
       <button id="btnExportWord" class="btn-primary">↓ Word (PRD)</button>
     </div>
     <input type="file" id="jsonFileInput" accept=".json" class="sr-only" aria-label="Importar JSON">
@@ -740,12 +740,12 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
 <!-- ── SHARE MODAL ── -->
 <div id="shareModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
   <div class="modal-box">
-    <h2 class="modal-title" id="shareModalTitle">Compartir canvas</h2>
-    <p class="modal-sub">Copia este enlace. El estado completo del canvas está codificado en la URL.</p>
+    <h2 class="modal-title" id="shareModalTitle">Share canvas</h2>
+    <p class="modal-sub">Copy this link. The full canvas state is encoded in the URL.</p>
     <textarea id="shareUrl" class="modal-url" readonly aria-label="URL de compartir"></textarea>
     <div class="modal-actions">
-      <button id="btnCopyUrl" class="btn-primary">Copiar enlace</button>
-      <button id="btnCloseModal" class="btn-ghost">Cerrar</button>
+      <button id="btnCopyUrl" class="btn-primary">Copy link</button>
+      <button id="btnCloseModal" class="btn-ghost">Close</button>
     </div>
   </div>
 </div>
@@ -782,7 +782,7 @@ function trackProgress() {
   });
   const pct = Math.round((filled / blocks.length) * 100);
   document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('progText').textContent = filled + ' / ' + blocks.length + ' bloques';
+  document.getElementById('progText').textContent = filled + ' / ' + blocks.length + ' blocks';
   document.getElementById('progBar').setAttribute('aria-valuenow', pct);
   document.getElementById('statPct').textContent = pct + '%';
 }
@@ -994,7 +994,7 @@ document.getElementById('btnShare').addEventListener('click', () => {
 });
 document.getElementById('btnCopyUrl').addEventListener('click', () => {
   navigator.clipboard.writeText(document.getElementById('shareUrl').value).then(() => {
-    const btn = document.getElementById('btnCopyUrl'); btn.textContent = '✓ Copiado'; setTimeout(() => btn.textContent = 'Copiar enlace', 2000);
+    const btn = document.getElementById('btnCopyUrl'); btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy link', 2000);
   });
 });
 document.getElementById('btnCloseModal').addEventListener('click', () => document.getElementById('shareModal').classList.remove('visible'));

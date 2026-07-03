@@ -549,10 +549,10 @@ footer {
       aria-label="Nombre del proyecto"
       style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:white;border-radius:6px;padding:.3rem .7rem;font-size:.8rem;width:180px">
     <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
-    <button id="btnSave" class="btn-ghost" aria-label="Guardar canvas localmente">💾 Guardar</button>
-    <button id="btnImportJSON" class="btn-import" aria-label="Importar canvas desde archivo JSON">📂 Importar</button>
-    <button id="btnExportJSON" class="btn-ghost" aria-label="Exportar canvas como JSON">↓ JSON</button>
-    <button id="btnShare" class="btn-ghost" aria-label="Generar enlace para compartir el canvas">🔗 Compartir</button>
+    <button id="btnSave" class="btn-ghost" aria-label="Guardar canvas localmente">💾 Save</button>
+    <button id="btnImportJSON" class="btn-import" aria-label="Importar canvas desde archivo JSON">📂 Import</button>
+    <button id="btnExportJSON" class="btn-ghost" aria-label="Export canvas como JSON">↓ JSON</button>
+    <button id="btnShare" class="btn-ghost" aria-label="Generar enlace para compartir el canvas">🔗 Share</button>
     <button id="btnReset" class="btn-ghost" aria-label="Reiniciar canvas">↺ Reiniciar</button>
     <button id="btnWord" class="btn-primary" style="background:var(--green);border-color:var(--green)" aria-label="Generar documento Word con PRD y ADR">📄 Generar Documento</button>
   </div>
@@ -563,12 +563,12 @@ footer {
   <div class="modal-box">
     <div id="shareModalTitle" class="modal-title">🔗 Enlace para compartir</div>
     <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">
-      Este enlace contiene todo el estado del canvas. Cualquier persona con él puede cargar tu diseño exactamente como está.
+      This link contains the full canvas state. Anyone with it can load your design exactly as it is.
     </p>
     <textarea id="shareURL" class="modal-url" readonly aria-label="URL de compartir" rows="3"></textarea>
     <div class="modal-actions">
-      <button id="btnCloseModal" class="btn-ghost">Cerrar</button>
-      <button id="btnCopyURL" class="btn-primary">📋 Copiar enlace</button>
+      <button id="btnCloseModal" class="btn-ghost">Close</button>
+      <button id="btnCopyURL" class="btn-primary">📋 Copy link</button>
     </div>
   </div>
 </div>
@@ -576,7 +576,7 @@ footer {
 <div class="hero" role="region" aria-label="Presentación del canvas">
   <div class="hero-eyebrow" aria-hidden="true">Microsoft Copilot Studio · LangChain · Azure OpenAI · MCP</div>
   <h1>Agent Canvas <span>v4</span><br>Cloud Edition</h1>
-  <p class="hero-sub">Framework de diseño para agentes IA en entornos cloud. Completa los 10 bloques en el orden indicado por ★.</p>
+  <p class="hero-sub">Framework de diseño para agentes IA en entornos cloud. Completa los 10 blocks en el orden indicado por ★.</p>
   <div class="hero-stats" aria-label="Estadísticas del framework">
     <div class="hero-stat"><strong>10</strong><span>Bloques de diseño</span></div>
     <div class="hero-stat"><strong>★→1</strong><span>Orden recomendado</span></div>
@@ -1732,7 +1732,7 @@ function init() {
   const fromHash = loadFromHash();
   if (fromHash) {
     trackProgress();
-    showToast('📥 Canvas cargado desde enlace compartido');
+    showToast('📥 Canvas loaded from shared link');
   } else {
     const restored = loadSaved();
     if (restored) trackProgress();

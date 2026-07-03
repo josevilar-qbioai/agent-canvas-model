@@ -526,11 +526,11 @@ footer {
 <div id="shareModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
   <div class="modal-box">
     <div id="shareModalTitle" class="modal-title">// share --canvas-state</div>
-    <p class="modal-sub">Enlace con el estado completo del canvas. Cualquiera con este enlace puede cargarlo.</p>
+    <p class="modal-sub">Link with the full canvas state. Anyone with this link can load it.</p>
     <textarea id="shareURL" class="modal-url" readonly aria-label="URL para compartir" rows="3"></textarea>
     <div class="modal-actions">
-      <button id="btnCloseModal" class="btn-term">Cerrar</button>
-      <button id="btnCopyURL" class="btn-term primary">📋 Copiar enlace</button>
+      <button id="btnCloseModal" class="btn-term">Close</button>
+      <button id="btnCopyURL" class="btn-term primary">📋 Copy link</button>
     </div>
   </div>
 </div>
@@ -573,7 +573,7 @@ footer {
     <span>#</span> Ollama · vLLM · TGI · Hardware dedicado · Sin datos al exterior · auto-save activado
   </div>
   <h1>Agent Canvas <em>v4</em><br>On-Prem Edition</h1>
-  <p class="boot-desc">Framework de diseño para agentes IA con modelos locales. Soberanía total de datos. Sin dependencia de proveedor cloud. Completa los 10 bloques — empieza por ★.</p>
+  <p class="boot-desc">Framework de diseño para agentes IA con modelos locales. Soberanía total de datos. Sin dependencia de proveedor cloud. Completa los 10 blocks — empieza por ★.</p>
   <div class="boot-stats">
     <div class="boot-stat"><span class="val">10</span><span class="lbl">BLOQUES</span></div>
     <div class="boot-stat"><span class="val">6a</span><span class="lbl">HARDWARE FIRST</span></div>
@@ -594,14 +594,14 @@ footer {
   <div class="canvas-bar">
     <div class="canvas-label"><strong>canvas.json</strong> · modo edición · auto-save activado</div>
     <div class="prog-wrap">
-      <div class="prog-text" id="progText" aria-live="polite">0/10 bloques</div>
+      <div class="prog-text" id="progText" aria-live="polite">0/10 blocks</div>
       <div class="prog-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div class="prog-fill" id="progFill" style="width:0%"></div>
       </div>
     </div>
   </div>
 
-  <div class="canvas-grid" role="region" aria-label="Canvas bloques">
+  <div class="canvas-grid" role="region" aria-label="Canvas blocks">
 
     <!-- ════ B8: INFRAESTRUCTURA ════ -->
     <div class="block b8" data-block="b8" role="region" aria-labelledby="b8-title">
@@ -1187,7 +1187,7 @@ function trackProgress() {
   const pct = Math.round(done / total * 100);
   document.getElementById('progFill').style.width = pct + '%';
   document.getElementById('progFill').closest('[role=progressbar]')?.setAttribute('aria-valuenow', pct);
-  document.getElementById('progText').textContent = done + '/' + total + ' bloques';
+  document.getElementById('progText').textContent = done + '/' + total + ' blocks';
   if (pct >= 70) document.getElementById('exportPanel').classList.add('visible');
   else document.getElementById('exportPanel').classList.remove('visible');
 }
@@ -1382,7 +1382,7 @@ function resetAll() {
   document.getElementById('vramPct').textContent = '0%';
   document.getElementById('exportPanel').classList.remove('visible');
   document.getElementById('progFill').style.width = '0%';
-  document.getElementById('progText').textContent = '0/10 bloques';
+  document.getElementById('progText').textContent = '0/10 blocks';
   trackProgress();
   showToast('// canvas reseteado');
 }
