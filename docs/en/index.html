@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" translate="no">
+<html lang="en" translate="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Q · Agent Canvas Model — QMetrika Labs</title>
-<meta name="description" content="Framework de diseño de agentes IA en 3 fases: gobernanza organizativa, diseño técnico y arquitectura MCP. Sin código. Con exportación a Word.">
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="AI agent design framework in 3 phases: organizational governance, technical design and MCP architecture. No code. Word export included.">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -30,8 +30,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--sans); background: var(--bg); color: var(--tx); min-height: 100vh; line-height: 1.5; }
 a { text-decoration: none; color: inherit; }
-
-/* ── HEADER ── */
 header {
   background: var(--sf); border-bottom: 1px solid var(--bd);
   padding: 0 2rem; height: 54px;
@@ -65,8 +63,6 @@ header {
 .lang-toggle a:hover { background: var(--sf2); color: var(--tx); }
 .lang-toggle a.active { background: var(--board); color: #fff; font-weight: 700; }
 .lang-toggle .lang-sep { color: var(--bd2); font-size: .65rem; }
-
-/* ── HERO ── */
 .hero {
   max-width: 760px; margin: 0 auto;
   padding: 4.5rem 2rem 3rem; text-align: center;
@@ -100,8 +96,6 @@ h1 em { color: var(--board); font-style: normal; }
   display: block; font-size: .73rem; color: var(--tx2); margin-top: .6rem;
   font-family: var(--mono);
 }
-
-/* ── PHASES SECTION ── */
 .phases-wrap {
   max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem;
 }
@@ -131,7 +125,6 @@ h1 em { color: var(--board); font-style: normal; }
 .phase-1::before { background: var(--amber); }
 .phase-2::before { background: linear-gradient(90deg, var(--indigo), var(--emerald)); }
 .phase-3::before { background: var(--cyan); }
-
 .phase-num {
   font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em;
   margin-bottom: .4rem;
@@ -139,10 +132,8 @@ h1 em { color: var(--board); font-style: normal; }
 .phase-1 .phase-num { color: var(--amber); }
 .phase-2 .phase-num { color: var(--indigo); }
 .phase-3 .phase-num { color: var(--cyan); }
-
 .phase-title { font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
 .phase-desc { font-size: .8rem; color: var(--tx2); line-height: 1.65; margin-bottom: 1rem; }
-
 .phase-blocks { display: flex; flex-direction: column; gap: .3rem; }
 .phase-block {
   display: flex; align-items: flex-start; gap: .5rem;
@@ -154,7 +145,6 @@ h1 em { color: var(--board); font-style: normal; }
 .phase-1 .phase-block-dot { background: var(--amber); }
 .phase-2 .phase-block-dot { background: var(--indigo); }
 .phase-3 .phase-block-dot { background: var(--cyan); }
-
 .phase-links { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.1rem; }
 .phase-link {
   font-family: var(--mono); font-size: .67rem; font-weight: 600;
@@ -169,8 +159,6 @@ h1 em { color: var(--board); font-style: normal; }
 .phase-2 .phase-link.onprem:hover { background: rgba(16,185,129,.15); }
 .phase-3 .phase-link { color: var(--cyan); border-color: rgba(6,182,212,.35); background: rgba(6,182,212,.07); }
 .phase-3 .phase-link:hover { background: rgba(6,182,212,.15); }
-
-/* ── BOARD CTA ── */
 .board-wrap {
   max-width: 1100px; margin: 0 auto 1.5rem; padding: 0 2rem;
 }
@@ -216,8 +204,6 @@ h1 em { color: var(--board); font-style: normal; }
   white-space: nowrap; transition: opacity .15s; text-decoration: none; display: inline-block;
 }
 .board-btn:hover { opacity: .88; }
-
-/* ── INDIVIDUAL CARDS ── */
 .cards-section {
   max-width: 1100px; margin: 0 auto 4rem; padding: 0 2rem;
 }
@@ -231,7 +217,6 @@ h1 em { color: var(--board); font-style: normal; }
 }
 @media (max-width: 700px) { .cards { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 440px) { .cards { grid-template-columns: 1fr; } }
-
 .card {
   background: var(--sf); border: 1px solid var(--bd);
   border-radius: 9px; padding: 1.2rem 1.1rem;
@@ -251,7 +236,6 @@ h1 em { color: var(--board); font-style: normal; }
 .card-cloud:hover        { border-color: var(--indigo); }
 .card-onprem:hover       { border-color: var(--emerald); }
 .card-mcp:hover          { border-color: var(--cyan); }
-
 .card-label {
   font-family: var(--mono); font-size: .58rem;
   text-transform: uppercase; letter-spacing: .1em;
@@ -269,8 +253,6 @@ h1 em { color: var(--board); font-style: normal; }
 .card-cloud      .card-cta { color: var(--indigo); }
 .card-onprem     .card-cta { color: var(--emerald); }
 .card-mcp        .card-cta { color: var(--cyan); }
-
-/* ── FEATURES ── */
 .features-wrap {
   max-width: 860px; margin: 0 auto 5rem; padding: 0 2rem; text-align: center;
 }
@@ -283,8 +265,6 @@ h1 em { color: var(--board); font-style: normal; }
   font-size: .73rem; padding: .28rem .75rem; border-radius: 20px;
   border: 1px solid var(--bd2); color: var(--tx2); background: var(--sf);
 }
-
-/* ── FOOTER ── */
 footer {
   background: var(--sf); border-top: 1px solid var(--bd);
   padding: 1.25rem 2rem; text-align: center;
@@ -301,46 +281,46 @@ footer a:hover { text-decoration: underline; }
 <header>
   <span class="logo-name">Q</span><span class="logo-sep">·</span><span class="logo-sub">Agent Canvas Model</span>
   <span class="logo-badge">v4.1 · 2026</span>
-  <nav class="header-right" aria-label="Navegación principal">
+  <nav class="header-right" aria-label="Main navigation">
     <div class="lang-toggle" aria-label="Language selector">
-      <a href="./" class="active" aria-current="page">ES</a>
+      <a href="../">ES</a>
       <span class="lang-sep">|</span>
-      <a href="en/">EN</a>
+      <a href="./" class="active" aria-current="page">EN</a>
     </div>
     <a href="https://github.com/josevilar-qbioai/agent-canvas-model" class="nav-link" target="_blank" rel="noopener">GitHub</a>
-    <a href="board/" class="nav-link primary">Abrir tablero →</a>
+    <a href="board/" class="nav-link primary">Open board →</a>
   </nav>
 </header>
 
 <main>
 
-  <!-- ── HERO ── -->
+  <!-- HERO -->
   <div class="hero">
     <p class="eyebrow"><span>QMetrika Labs</span> · Agent Canvas Model</p>
-    <h1>El framework para diseñar<br>agentes IA <em>antes de programarlos</em></h1>
-    <p class="tagline">Primero la quietud del pensamiento, luego la técnica.</p>
-    <p class="hero-sub">3 fases, 4 canvas, 10 bloques cada uno. Alinea negocio y tecnología antes de escribir una línea de código.</p>
-    <a href="board/" class="hero-cta">Abrir el tablero integrado →</a>
-    <span class="hero-cta-sub">o explora cada canvas por separado ↓</span>
+    <h1>The framework to design<br>AI agents <em>before you code them</em></h1>
+    <p class="tagline">Stillness of thought first, then the technique.</p>
+    <p class="hero-sub">3 phases, 4 canvas, 10 blocks each. Align business and technology before writing a single line of code.</p>
+    <a href="board/" class="hero-cta">Open the integrated board →</a>
+    <span class="hero-cta-sub">or explore each canvas separately ↓</span>
   </div>
 
-  <!-- ── FASES ── -->
+  <!-- PHASES -->
   <div class="phases-wrap">
-    <p class="section-label">Cómo funciona · 3 fases de diseño</p>
+    <p class="section-label">How it works · 3 design phases</p>
     <div class="phases-grid">
 
-      <!-- FASE 1 -->
+      <!-- PHASE 1 -->
       <div class="phase phase-1">
-        <p class="phase-num">Fase 1 · Estratégica</p>
-        <h2 class="phase-title">Gobernanza y Adopción</h2>
-        <p class="phase-desc">Antes de elegir tecnología, define quién patrocina el programa, cómo se gobierna y cómo gestionar el cambio organizativo.</p>
+        <p class="phase-num">Phase 1 · Strategic</p>
+        <h2 class="phase-title">Governance & Adoption</h2>
+        <p class="phase-desc">Before choosing technology, define who sponsors the program, how it is governed and how to manage organizational change.</p>
         <div class="phase-blocks">
-          <div class="phase-block"><span class="phase-block-dot"></span>Mandato ejecutivo y sponsor</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Modelo de gobernanza (AI Office / CoE)</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Mapa de stakeholders y resistencias</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Hoja de ruta de adopción (3 fases)</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Gestión del cambio y habilitación</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Métricas organizativas y cadencia de revisión</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Executive mandate and sponsor</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Governance model (AI Office / CoE)</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Stakeholder map and resistances</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Adoption roadmap (3 phases)</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Change management and enablement</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Organizational metrics and review cadence</div>
         </div>
         <div class="phase-links">
           <a href="enterprise/" class="phase-link">Enterprise Adoption Canvas →</a>
@@ -349,18 +329,18 @@ footer a:hover { text-decoration: underline; }
 
       <div class="phase-arrow" aria-hidden="true">→</div>
 
-      <!-- FASE 2 -->
+      <!-- PHASE 2 -->
       <div class="phase phase-2">
-        <p class="phase-num">Fase 2 · Técnica</p>
-        <h2 class="phase-title">Diseño del Agente</h2>
-        <p class="phase-desc">Define quién usa el agente, qué valor entrega, qué tecnología necesita y cómo garantizar su operación segura.</p>
+        <p class="phase-num">Phase 2 · Technical</p>
+        <h2 class="phase-title">Agent Design</h2>
+        <p class="phase-desc">Define who uses the agent, what value it delivers, what technology it needs and how to ensure safe operation.</p>
         <div class="phase-blocks">
-          <div class="phase-block"><span class="phase-block-dot"></span>Segmento de usuarios y propuesta de valor</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Canales, personalidad y tono</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>KPIs y fuentes de valor</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Modelo base, Control Flow Pattern</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Socios, integraciones y costes</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Guardarraíles de seguridad y ética</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>User segment and value proposition</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Channels, personality and tone</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>KPIs and value sources</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Base model, Control Flow Pattern</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Partners, integrations and costs</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Security and ethics guardrails</div>
         </div>
         <div class="phase-links">
           <a href="cloud/" class="phase-link cloud">Cloud Edition →</a>
@@ -370,18 +350,18 @@ footer a:hover { text-decoration: underline; }
 
       <div class="phase-arrow" aria-hidden="true">→</div>
 
-      <!-- FASE 3 -->
+      <!-- PHASE 3 -->
       <div class="phase phase-3">
-        <p class="phase-num">Fase 3 · Arquitectura</p>
-        <h2 class="phase-title">Capa MCP</h2>
-        <p class="phase-desc">Diseña la capa de Model Context Protocol: qué expone el servidor, cómo se transporta, con qué seguridad y cómo se observa.</p>
+        <p class="phase-num">Phase 3 · Architecture</p>
+        <h2 class="phase-title">MCP Layer</h2>
+        <p class="phase-desc">Design the Model Context Protocol layer: what the server exposes, how it is transported, with what security and how it is observed.</p>
         <div class="phase-blocks">
-          <div class="phase-block"><span class="phase-block-dot"></span>Herramientas (tools) expuestas</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Recursos y prompts del servidor</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Transporte: stdio / HTTP+SSE / WebSocket</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Autenticación y control de acceso</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Observabilidad y logging</div>
-          <div class="phase-block"><span class="phase-block-dot"></span>Testing y estrategia de despliegue</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Exposed tools</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Server resources and prompts</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Transport: stdio / HTTP+SSE / WebSocket</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Authentication and access control</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Observability and logging</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Testing and deployment strategy</div>
         </div>
         <div class="phase-links">
           <a href="mcp/" class="phase-link">MCP Canvas →</a>
@@ -391,15 +371,15 @@ footer a:hover { text-decoration: underline; }
     </div>
   </div>
 
-  <!-- ── TABLERO INTEGRADO ── -->
+  <!-- BOARD CTA -->
   <div class="board-wrap">
     <a href="board/" class="board-card">
       <div class="board-glow" aria-hidden="true"></div>
       <div class="board-icon" aria-hidden="true">⊞</div>
       <div class="board-body">
-        <p class="board-sup">Recomendado · Tablero Integrado</p>
-        <h2 class="board-title">Canvas Board — Las 3 fases en un solo espacio</h2>
-        <p class="board-desc">Los 4 canvas en pestañas. Mismo proyecto, mismo enlace, exportación a Word de todo a la vez. El punto de entrada recomendado para cualquier iniciativa de IA.</p>
+        <p class="board-sup">Recommended · Integrated Board</p>
+        <h2 class="board-title">Canvas Board — All 3 phases in one workspace</h2>
+        <p class="board-desc">All 4 canvas as tabs. Same project, same link, Word export of everything at once. The recommended entry point for any AI initiative.</p>
         <div class="board-phases">
           <span class="bph bph-ent">① Enterprise</span>
           <span class="bph-arr">→</span>
@@ -410,49 +390,49 @@ footer a:hover { text-decoration: underline; }
           <span class="bph bph-mcp">③ MCP</span>
         </div>
       </div>
-      <a href="board/" class="board-btn">Abrir tablero →</a>
+      <a href="board/" class="board-btn">Open board →</a>
     </a>
   </div>
 
-  <!-- ── CANVASES INDIVIDUALES ── -->
+  <!-- INDIVIDUAL CANVAS -->
   <div class="cards-section">
-    <p class="cards-section-label">O accede a cada canvas por separado</p>
+    <p class="cards-section-label">Or access each canvas separately</p>
     <div class="cards">
       <a href="enterprise/" class="card card-enterprise">
-        <div class="card-label">Fase 1 · Enterprise</div>
-        <h3>Adopción Empresarial</h3>
-        <p>Mandato, gobernanza, cambio y hoja de ruta antes de construir.</p>
-        <div class="card-cta">Abrir →</div>
+        <div class="card-label">Phase 1 · Enterprise</div>
+        <h3>Enterprise Adoption</h3>
+        <p>Mandate, governance, change management and roadmap before you build.</p>
+        <div class="card-cta">Open →</div>
       </a>
       <a href="cloud/" class="card card-cloud">
-        <div class="card-label">Fase 2 · Cloud</div>
-        <h3>Agentes en Cloud</h3>
-        <p>Azure, AWS, GCP, Copilot Studio, LangChain, APIs gestionadas.</p>
-        <div class="card-cta">Abrir →</div>
+        <div class="card-label">Phase 2 · Cloud</div>
+        <h3>Cloud Agents</h3>
+        <p>Azure, AWS, GCP, Copilot Studio, LangChain, managed APIs.</p>
+        <div class="card-cta">Open →</div>
       </a>
       <a href="onprem/" class="card card-onprem">
-        <div class="card-label">Fase 2 · On-Prem</div>
-        <h3>Modelos Locales</h3>
-        <p>Ollama, vLLM, LM Studio. Entornos air-gap y alta privacidad.</p>
-        <div class="card-cta">Abrir →</div>
+        <div class="card-label">Phase 2 · On-Prem</div>
+        <h3>Local Models</h3>
+        <p>Ollama, vLLM, LM Studio. Air-gap and high-privacy environments.</p>
+        <div class="card-cta">Open →</div>
       </a>
       <a href="mcp/" class="card card-mcp">
-        <div class="card-label">Fase 3 · Arquitectura</div>
+        <div class="card-label">Phase 3 · Architecture</div>
         <h3>MCP Canvas</h3>
-        <p>Model Context Protocol: servidores, transporte, seguridad.</p>
-        <div class="card-cta">Abrir →</div>
+        <p>Model Context Protocol: servers, transport, security.</p>
+        <div class="card-cta">Open →</div>
       </a>
     </div>
   </div>
 
-  <!-- ── FEATURES ── -->
+  <!-- FEATURES -->
   <div class="features-wrap">
-    <p class="features-label">Funcionalidades</p>
+    <p class="features-label">Features</p>
     <div class="tags">
-      <span class="tag">💾 Auto-guardado localStorage</span>
-      <span class="tag">🔗 Compartir por URL hash</span>
-      <span class="tag">📂 Importar / Exportar JSON</span>
-      <span class="tag">📄 Exportar Word PRD+ADR</span>
+      <span class="tag">💾 localStorage auto-save</span>
+      <span class="tag">🔗 URL hash sharing</span>
+      <span class="tag">📂 JSON import / export</span>
+      <span class="tag">📄 Word PRD+ADR export</span>
       <span class="tag">⚡ Control Flow Pattern</span>
       <span class="tag">🔌 MCP Architecture Canvas</span>
       <span class="tag">🔒 Event Sourcing</span>

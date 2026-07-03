@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" translate="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -255,15 +255,15 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
     <span class="logo-edition">Enterprise Adoption</span>
   </div>
   <div class="header-actions" role="toolbar" aria-label="Acciones del canvas">
-    <a href="../en/enterprise/" style="font-family:var(--mono,monospace);font-size:.7rem;padding:.28rem .6rem;border:1px solid var(--bd2);border-radius:5px;color:var(--tx2);text-decoration:none;white-space:nowrap;" title="English version">EN</a>
-    <label for="canvasName" class="sr-only">Nombre del proyecto</label>
+    <a href="../../enterprise/" style="font-family:var(--mono,monospace);font-size:.7rem;padding:.28rem .6rem;border:1px solid var(--bd2);border-radius:5px;color:var(--tx2);text-decoration:none;white-space:nowrap;" title="Spanish version">ES</a><a href="./" style="font-family:var(--mono,monospace);font-size:.7rem;padding:.28rem .6rem;border:1px solid var(--board,#8B5CF6);border-radius:5px;color:#fff;background:var(--board,#8B5CF6);text-decoration:none;white-space:nowrap;font-weight:700;" aria-current="page">EN</a>
+    <label for="canvasName" class="sr-only">Name del proyecto</label>
     <input id="canvasName" name="canvasName" type="text"
-           placeholder="Nombre del proyecto IA…"
-           aria-label="Nombre del proyecto">
+           placeholder="Name del proyecto IA…"
+           aria-label="Name del proyecto">
     <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
     <button id="btnExport" class="btn-ghost" aria-controls="exportPanel">Exportar ▾</button>
-    <button id="btnShare"  class="btn-ghost">Compartir</button>
-    <button id="btnSave"   class="btn-primary">Guardar</button>
+    <button id="btnShare"  class="btn-ghost">Share</button>
+    <button id="btnSave"   class="btn-primary">Save</button>
   </div>
 </header>
 
@@ -311,7 +311,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <article class="block" data-block="b1" aria-labelledby="b1-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B1 · Mandato</p>
-        <h2 class="block-title" id="b1-title">Mandato Ejecutivo</h2>
+        <h2 class="block-title" id="b1-title">Executive Mandate</h2>
         <p class="block-sub">¿Quién patrocina el programa desde arriba? Sin mandato claro desde dirección, el programa no escala.</p>
         <div class="field-group">
           <label class="field-label" for="b1_sponsor">Sponsor ejecutivo (nombre y cargo)</label>
@@ -324,9 +324,9 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
         <div class="field-group">
           <label class="field-label">Nivel de apoyo ejecutivo</label>
           <div class="chip-group" role="radiogroup" aria-label="Nivel de apoyo" id="b1_apoyo">
-            <button class="chip" role="radio" aria-checked="false" data-val="bajo">Bajo</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="medio">Medio</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="alto">Alto</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="bajo">Low</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="medio">Medium</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="alto">High</button>
             <button class="chip" role="radio" aria-checked="false" data-val="muy-alto">Muy alto</button>
           </div>
         </div>
@@ -340,7 +340,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <article class="block" data-block="b2" aria-labelledby="b2-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B2 · Gobernanza</p>
-        <h2 class="block-title" id="b2-title">Modelo de Gobernanza</h2>
+        <h2 class="block-title" id="b2-title">Governance Model</h2>
         <p class="block-sub">¿Quién decide qué? La gobernanza evita que la IA sea un proyecto de IT sin impacto en negocio.</p>
         <div class="field-group">
           <label class="field-label">Estructura de gobernanza</label>
@@ -353,7 +353,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
         </div>
         <div class="field-group">
           <label class="field-label" for="b2_decide">¿Quién aprueba qué agentes se construyen?</label>
-          <textarea class="field-input" id="b2_decide" name="b2_decide" rows="2" placeholder="Rol o comité responsable de la cartera de agentes…"></textarea>
+          <textarea class="field-input" id="b2_decide" name="b2_decide" rows="2" placeholder="Role o comité responsable de la cartera de agentes…"></textarea>
         </div>
         <div class="field-group">
           <label class="field-label" for="b2_para">¿Quién puede pausar o detener un despliegue?</label>
@@ -417,17 +417,17 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
         <div class="stakeholder-list" id="stakeholderList">
           <div class="stakeholder-card">
             <div>
-              <div class="stakeholder-label">Departamento / Rol</div>
+              <div class="stakeholder-label">Departamento / Role</div>
               <input class="field-input" type="text" name="sh1_rol" placeholder="Ej. RRHH / Legal…" style="margin-top:.2rem">
             </div>
             <div>
               <div class="stakeholder-label">Posición</div>
               <select class="field-input" name="sh1_pos" style="margin-top:.2rem">
                 <option value="">—</option>
-                <option value="aliado">🟢 Aliado activo</option>
+                <option value="aliado">🟢 Ally activo</option>
                 <option value="neutro">🟡 Neutro</option>
-                <option value="resistencia">🔴 Resistencia</option>
-                <option value="bloqueador">⛔ Bloqueador</option>
+                <option value="resistencia">🔴 Resistance</option>
+                <option value="bloqueador">⛔ Blocker</option>
               </select>
             </div>
             <div style="grid-column:1/-1">
@@ -436,17 +436,17 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
           </div>
           <div class="stakeholder-card">
             <div>
-              <div class="stakeholder-label">Departamento / Rol</div>
+              <div class="stakeholder-label">Departamento / Role</div>
               <input class="field-input" type="text" name="sh2_rol" placeholder="Ej. Operaciones…" style="margin-top:.2rem">
             </div>
             <div>
               <div class="stakeholder-label">Posición</div>
               <select class="field-input" name="sh2_pos" style="margin-top:.2rem">
                 <option value="">—</option>
-                <option value="aliado">🟢 Aliado activo</option>
+                <option value="aliado">🟢 Ally activo</option>
                 <option value="neutro">🟡 Neutro</option>
-                <option value="resistencia">🔴 Resistencia</option>
-                <option value="bloqueador">⛔ Bloqueador</option>
+                <option value="resistencia">🔴 Resistance</option>
+                <option value="bloqueador">⛔ Blocker</option>
               </select>
             </div>
             <div style="grid-column:1/-1">
@@ -455,17 +455,17 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
           </div>
           <div class="stakeholder-card">
             <div>
-              <div class="stakeholder-label">Departamento / Rol</div>
+              <div class="stakeholder-label">Departamento / Role</div>
               <input class="field-input" type="text" name="sh3_rol" placeholder="Ej. Compliance…" style="margin-top:.2rem">
             </div>
             <div>
               <div class="stakeholder-label">Posición</div>
               <select class="field-input" name="sh3_pos" style="margin-top:.2rem">
                 <option value="">—</option>
-                <option value="aliado">🟢 Aliado activo</option>
+                <option value="aliado">🟢 Ally activo</option>
                 <option value="neutro">🟡 Neutro</option>
-                <option value="resistencia">🔴 Resistencia</option>
-                <option value="bloqueador">⛔ Bloqueador</option>
+                <option value="resistencia">🔴 Resistance</option>
+                <option value="bloqueador">⛔ Blocker</option>
               </select>
             </div>
             <div style="grid-column:1/-1">
@@ -479,7 +479,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <article class="block" data-block="b5" aria-labelledby="b5-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B5 · Urgencia</p>
-        <h2 class="block-title" id="b5-title">Urgencia Competitiva</h2>
+        <h2 class="block-title" id="b5-title">Competitive Urgency</h2>
         <p class="block-sub">Un competidor espabilado puede desplazarte de un nicho en meses. Calibra la ventana de oportunidad.</p>
         <div class="field-group">
           <label class="field-label" for="b5_ventana">Ventana de oportunidad estimada</label>
@@ -533,27 +533,27 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <article class="block" data-block="b6" aria-labelledby="b6-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B6 · Hoja de Ruta</p>
-        <h2 class="block-title" id="b6-title">Hoja de Ruta de Adopción</h2>
+        <h2 class="block-title" id="b6-title">Adoption Roadmap</h2>
         <p class="block-sub">Fases del despliegue. El cambio es de gran magnitud — gradual, no inmediato. Define hitos y gates de decisión.</p>
         <div class="roadmap">
           <div class="roadmap-phase">
             <div class="roadmap-dot">1</div>
             <div>
-              <div class="roadmap-title">Piloto</div>
+              <div class="roadmap-title">Pilot</div>
               <input class="field-input" type="text" name="b6_piloto" placeholder="Alcance, duración, criterio de éxito…" style="margin-top:.3rem">
             </div>
           </div>
           <div class="roadmap-phase">
             <div class="roadmap-dot">2</div>
             <div>
-              <div class="roadmap-title">Expansión</div>
+              <div class="roadmap-title">Expansion</div>
               <input class="field-input" type="text" name="b6_expansion" placeholder="Qué departamentos, qué escala…" style="margin-top:.3rem">
             </div>
           </div>
           <div class="roadmap-phase">
             <div class="roadmap-dot">3</div>
             <div>
-              <div class="roadmap-title">Escala</div>
+              <div class="roadmap-title">Scale</div>
               <input class="field-input" type="text" name="b6_escala" placeholder="Producción completa, integración en procesos core…" style="margin-top:.3rem">
             </div>
           </div>
@@ -568,7 +568,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <article class="block" data-block="b7" aria-labelledby="b7-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B7 · Cambio</p>
-        <h2 class="block-title" id="b7-title">Gestión del Cambio</h2>
+        <h2 class="block-title" id="b7-title">Change Management</h2>
         <p class="block-sub">IT no puede liderar solo la adopción. El cambio cultural y organizativo necesita su propio plan.</p>
         <div class="field-group">
           <label class="field-label" for="b7_lider">Responsable de gestión del cambio</label>
@@ -633,7 +633,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <article class="block" data-block="b9" aria-labelledby="b9-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B9 · Métricas</p>
-        <h2 class="block-title" id="b9-title">Métricas de Adopción Organizativa</h2>
+        <h2 class="block-title" id="b9-title">Adoption Metrics Organizativa</h2>
         <p class="block-sub">No las métricas del agente — las métricas de que el cambio está ocurriendo en la organización.</p>
         <div class="kpi-list">
           <div>
@@ -680,7 +680,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <article class="block" data-block="b10" aria-labelledby="b10-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B10 · Revisión</p>
-        <h2 class="block-title" id="b10-title">Cadencia de Revisión del Programa</h2>
+        <h2 class="block-title" id="b10-title">Review Cadence del Programa</h2>
         <p class="block-sub">El equilibrio entre pedal de aceleración y freno. ¿Quién revisa el programa, cuándo, y qué puede pararlo?</p>
         <div class="field-group">
           <label class="field-label" for="b10_quien">¿Quién revisa el portfolio de agentes?</label>
@@ -943,32 +943,32 @@ document.getElementById('btnExportWord').addEventListener('click', () => {
 h1{font-size:20pt;color:#92400E;border-bottom:3px solid #F59E0B;padding-bottom:8pt}
 </style></head><body>
 <h1>Enterprise AI Adoption Canvas</h1>
-<p style="color:#6B7280;font-size:9pt">Proyecto: ${esc(s.name||'Sin nombre')} · ${esc(date)} · QMetrika Labs</p>
-${h2('B1. Mandato Ejecutivo')}
+<p style="color:#6B7280;font-size:9pt">Project: ${esc(s.name||'Sin nombre')} · ${esc(date)} · QMetrika Labs</p>
+${h2('B1. Executive Mandate')}
 ${f('Sponsor ejecutivo','b1_sponsor')}${f('Mandato formal','b1_mandato')}${f('Puede desbloquear','b1_autoridad')}
-${h2('B2. Modelo de Gobernanza')}
+${h2('B2. Governance Model')}
 ${f('Quién decide qué agentes','b2_decide')}${f('Quién puede parar un despliegue','b2_para')}
 ${h2('B3. Propuesta de Valor Organizativa')}
 ${f('Nueva capacidad organizativa','b3_capacidad')}${f('Qué deja de hacer el equipo','b3_deja')}${f('Ventaja competitiva','b3_diferencial')}
 ${h2('B4. Stakeholders Impactados')}
 ${['sh1','sh2','sh3'].map(sh => { const r=s.fields[sh+'_rol']||''; const a=s.fields[sh+'_accion']||''; return r ? p(r + (a?' — '+a:'')) : ''; }).join('')}
-${h2('B5. Urgencia Competitiva')}
+${h2('B5. Competitive Urgency')}
 ${f('¿Qué está haciendo la competencia?','b5_competencia')}${f('Riesgo de inacción','b5_riesgo_inaccion')}
 <p style="margin:4pt 0;font-size:10pt"><strong>Urgencia:</strong> ${esc(s.sliders['b5_urgencia']||'—')}/10 · <strong>Capacidad de cambio:</strong> ${esc(s.sliders['b5_capacidad']||'—')}/10</p>
-${h2('B6. Hoja de Ruta de Adopción')}
-${f('Fase 1 — Piloto','b6_piloto')}${f('Fase 2 — Expansión','b6_expansion')}${f('Fase 3 — Escala','b6_escala')}${f('Gate de decisión entre fases','b6_gate')}
-${h2('B7. Gestión del Cambio')}
+${h2('B6. Adoption Roadmap')}
+${f('Fase 1 — Pilot','b6_piloto')}${f('Fase 2 — Expansion','b6_expansion')}${f('Fase 3 — Scale','b6_escala')}${f('Gate de decisión entre fases','b6_gate')}
+${h2('B7. Change Management')}
 ${f('Responsable de gestión del cambio','b7_lider')}${f('Principales resistencias','b7_resistencias')}${f('Plan de comunicación','b7_plan_com')}
 ${h2('B8. Habilitación y Cultura')}
 ${f('Plan de formación','b8_formacion')}${f('Acciones de cultura IA','b8_cultura')}
-${h2('B9. Métricas de Adopción')}
+${h2('B9. Adoption Metrics')}
 ${['b9_kpi1_name','b9_kpi2_name','b9_kpi3_name'].map((n,i) => {
   const name = s.fields[n]||('KPI '+(i+1));
   const val  = s.sliders['b9_kpi'+(i+1)]||'0';
   const tgt  = s.fields['b9_kpi'+(i+1)+'_target']||'';
   return `<p style="margin:4pt 0;font-size:10pt"><strong>${esc(name)}:</strong> ${esc(val)}% ${tgt ? '· Objetivo: '+esc(tgt) : ''}</p>`;
 }).join('')}
-${h2('B10. Cadencia de Revisión')}
+${h2('B10. Review Cadence')}
 ${f('¿Quién revisa el portfolio?','b10_quien')}${f('¿Qué puede pausar el programa?','b10_para')}${f('Mecanismo de feedback','b10_feedback')}
 <hr style="border:none;border-top:1px solid #E7E5E4;margin:20pt 0">
 <p style="color:#9CA3AF;font-size:9pt">Generado desde Enterprise AI Adoption Canvas · ${esc(date)}</p>

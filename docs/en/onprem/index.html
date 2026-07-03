@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" translate="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -552,12 +552,11 @@ footer {
     <span class="logo-edition">On-Prem Edition</span>
     <span class="term-prompt" aria-hidden="true"><span class="p1">local</span><span class="p2">:</span><span class="p3">~/models</span></span>
   </div>
-  <div class="header-right" role="toolbar" aria-label="Acciones del canvas">
-    <a href="../" class="btn-ghost" style="text-decoration:none;font-size:.75rem;" aria-label="Volver a la página de inicio">← Inicio</a>
-    <a href="../en/onprem/" style="font-family:var(--mono,monospace);font-size:.7rem;padding:.28rem .6rem;border:1px solid var(--bd2);border-radius:5px;color:var(--tx2);text-decoration:none;white-space:nowrap;" title="English version">EN</a>
-    <a href="../en/onprem/" style="font-family:var(--mono,monospace);font-size:.7rem;padding:.28rem .6rem;border:1px solid var(--bd2,#494E55);border-radius:5px;color:var(--tx2,#9BA3AD);text-decoration:none;white-space:nowrap;">EN</a>
+  <div class="header-right" role="toolbar" aria-label="Canvas actions">
+    <a href="../../onprem/" style="font-family:var(--mono,monospace);font-size:.7rem;padding:.28rem .6rem;border:1px solid var(--bd2,#494E55);border-radius:5px;color:var(--tx2,#9BA3AD);text-decoration:none;white-space:nowrap;">ES</a><a href="./" style="font-family:var(--mono,monospace);font-size:.7rem;padding:.28rem .6rem;border:1px solid #8B5CF6;border-radius:5px;color:#fff;background:#8B5CF6;text-decoration:none;white-space:nowrap;font-weight:700;" aria-current="page">EN</a>
+    <a href="../" class="btn-ghost" style="text-decoration:none;font-size:.75rem;" aria-label="Back to home">← Home</a>
     <label for="canvasName" class="sr-only">Nombre del proyecto</label>
-    <input id="canvasName" type="text" placeholder="proyecto-on-prem…" aria-label="Nombre del proyecto">
+    <input id="canvasName" type="text" placeholder="proyecto-on-prem…" aria-label="Project name">
     <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ saved</span>
     <button id="btnSave" class="btn-term">$ save</button>
     <button id="btnImportJSON" class="btn-term import-btn">$ import</button>
@@ -830,7 +829,7 @@ footer {
       <div class="block-accent" aria-hidden="true"></div>
       <div class="block-num" id="b3-title">// 3 · CANALES</div>
       <div class="block-title">¿Cómo llega el agente al usuario?</div>
-      <div class="check-grid" role="group" aria-label="Canales de entrega">
+      <div class="check-grid" role="group" aria-label="Channels de entrega">
         <label class="check-item"><input type="checkbox" value="Portal web (intranet)"> Portal web (intranet)</label>
         <label class="check-item"><input type="checkbox" value="Teams on-prem / híbrido"> Teams on-prem</label>
         <label class="check-item"><input type="checkbox" value="Cliente de escritorio"> Cliente de escritorio</label>
@@ -1068,7 +1067,7 @@ footer {
         </div>
         <div class="guard-card">
           <div class="guard-title">⚖️ Ético / Normativo</div>
-          <div class="check-grid" role="group" aria-label="Guardarraíles éticos">
+          <div class="check-grid" role="group" aria-label="Guardrails éticos">
             <label class="check-item"><input type="checkbox" value="Auditoría de sesgos"> Auditoría de sesgos</label>
             <label class="check-item"><input type="checkbox" value="No decide sobre personas"> No decide sobre personas</label>
             <label class="check-item"><input type="checkbox" value="GDPR: PII no en logs"> GDPR: PII no en logs</label>
@@ -1079,7 +1078,7 @@ footer {
         </div>
         <div class="guard-card">
           <div class="guard-title">⚙️ Operacional On-Prem</div>
-          <div class="check-grid" role="group" aria-label="Guardarraíles operacionales">
+          <div class="check-grid" role="group" aria-label="Guardrails operacionales">
             <label class="check-item"><input type="checkbox" value="Monitor GPU (util., temp.)"> Monitor GPU</label>
             <label class="check-item"><input type="checkbox" value="Alertas OOM"> Alertas OOM</label>
             <label class="check-item"><input type="checkbox" value="Cola de peticiones (picos)"> Cola de peticiones</label>
@@ -1491,22 +1490,22 @@ function exportWord() {
   <p style="color:#94A3B8;font-size:9pt">Agent Canvas v4 · On-Prem Edition · ${date}</p>
   <hr style="border:none;border-top:3px solid #3FB950;margin:10pt 0">
   ${sec('PARTE I — PRD: PRODUCT REQUIREMENTS DOCUMENT','#14532D')}
-  ${h2('1. Segmento de Usuarios')}
+  ${h2('1. User Segment')}
   <table><tr><th>Segmento</th><th>Descripción</th></tr>
   <tr><td><strong>★ ${esc(s1n)}</strong></td><td>${esc(s1d)}</td></tr>
   <tr><td>${esc(s2n)}</td><td>${esc(s2d)}</td></tr></table>
   ${b1c.length ? h3('Control de Acceso')+ulList(b1c) : ''}
   ${getVal('b1_jtbd') ? '<p><strong>Jobs-to-be-done:</strong> '+esc(getVal('b1_jtbd'))+'</p>' : ''}
   ${getVal('b1_barreras') ? '<p><strong>Barreras:</strong> '+esc(getVal('b1_barreras'))+'</p>' : ''}
-  ${h2('2. Propuesta de Valor On-Prem')}
+  ${h2('2. Value Proposition On-Prem')}
   ${getVal('b2_problema') ? '<p><strong>Problema:</strong> '+esc(getVal('b2_problema'))+'</p>' : ''}
   ${getVal('b2_dato_critico') ? '<p><strong>Dato crítico:</strong> '+esc(getVal('b2_dato_critico'))+'</p>' : ''}
   ${b2c.length ? h3('Motivaciones on-prem')+ulList(b2c) : ''}
   ${getVal('b2_metrica') ? '<p><strong>Métrica de impacto:</strong> '+esc(getVal('b2_metrica'))+'</p>' : ''}
   ${getVal('b2_alternativa') ? '<p><strong>Alternativa actual:</strong> '+esc(getVal('b2_alternativa'))+'</p>' : ''}
-  ${h2('3. Canales')}
+  ${h2('3. Channels')}
   ${ulList(b3c)}
-  ${h2('4. Relación / Personalidad')}
+  ${h2('4. Relationship / Personality')}
   ${getVal('b4_tono') ? '<p><strong>Tono:</strong> '+esc(getVal('b4_tono'))+'</p>' : ''}
   ${getVal('b4_idiomas') ? '<p><strong>Idiomas:</strong> '+esc(getVal('b4_idiomas'))+'</p>' : ''}
   ${b4c.length ? h3('Fallback')+ulList(b4c) : ''}
@@ -1522,7 +1521,7 @@ function exportWord() {
   ${h2('6b. Recursos de Conocimiento')}
   ${b6bc.length ? ulList(b6bc) : ''}
   <p><strong>Vector DB:</strong> ${esc(getChip('vdbChips'))}</p>
-  ${h2('7. Actividades Clave')}
+  ${h2('7. Key Activities')}
   <p><strong>Nivel de agencia:</strong> ${esc(agLvl)}</p>
   ${b7c.length ? ulList(b7c) : ''}
   ${['1','2','3'].map(n => getVal('b7_skill'+n) ? '<p><strong>Skill '+n+':</strong> '+esc(getVal('b7_skill'+n))+'</p>' : '').join('')}
@@ -1535,7 +1534,7 @@ function exportWord() {
   ${getVal('b9_opex') ? '<p><strong>OPEX:</strong></p><pre style="font-size:9pt;background:#F8FAFC;padding:4pt">'+esc(getVal('b9_opex'))+'</pre>' : ''}
   ${b9c.length ? h3('Riesgos y normativa')+ulList(b9c) : ''}
   ${getVal('b9_breakeven') ? '<p><strong>Break-even:</strong> '+esc(getVal('b9_breakeven'))+'</p>' : ''}
-  ${h2('10. Guardarraíles')}
+  ${h2('10. Guardrails')}
   <table><tr><th>Categoría</th><th>Controles activos</th></tr>${guardsHtml}</table>
   ${getVal('b10_ai_act') ? '<p><strong>Riesgo EU AI Act:</strong> '+esc(getVal('b10_ai_act'))+'</p>' : ''}
   ${getVal('b10_hallu') ? '<p><strong>Tasa alucinación máx:</strong> '+esc(getVal('b10_hallu'))+'</p>' : ''}
