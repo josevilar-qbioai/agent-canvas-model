@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Canvas Board — QMetrika Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   AGENT CANVAS BOARD — QMetrika Labs · MIT License
+   Tablero integrado: Enterprise → Cloud / On-Prem → MCP
+═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;background:#252830;color:#F0F2F5;min-height:100vh;line-height:1.5;}
+
+:root{
+  --bg:#252830;--sf:#2C2F34;--sf2:#32363B;--sf3:#393D42;
+  --bd:#3C4047;--bd2:#494E55;--tx:#F0F2F5;--tx2:#9BA3AD;--mu:#5C646E;
+  --r:8px;--rs:5px;--mono:'JetBrains Mono',monospace;
+  /* Accent per-tab (overridden by data-tab) */
+  --ac:#F59E0B;--acd:rgba(245,158,11,.12);--acd2:rgba(245,158,11,.22);
+  --amber:#F59E0B;--indigo:#6366F1;--emerald:#10B981;--cyan:#06B6D4;
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:3px;}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:200;
+  background:var(--sf);border-bottom:1px solid var(--bd);
+  padding:0 1.5rem;min-height:54px;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.header-brand{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.q-mark{width:26px;height:26px;border-radius:6px;background:var(--amber);display:grid;place-items:center;font-family:var(--mono);font-size:.78rem;font-weight:700;color:#fff;}
+.brand-name{font-size:.82rem;font-weight:600;}
+.brand-badge{font-family:var(--mono);font-size:.6rem;color:var(--amber);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);padding:.15rem .5rem;border-radius:4px;}
+.header-mid{flex:1;display:flex;align-items:center;gap:.75rem;min-width:0;}
+#projectName{background:var(--sf2);border:1px solid var(--bd);color:var(--tx);border-radius:var(--rs);padding:.32rem .65rem;font-size:.8rem;font-family:inherit;width:220px;}
+#projectName:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 2px rgba(245,158,11,.15);}
+#projectName::placeholder{color:var(--mu);}
+.prog-total{display:flex;align-items:center;gap:.5rem;}
+.prog-total-bar{width:100px;background:var(--sf3);border-radius:3px;height:4px;}
+.prog-total-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--amber),var(--indigo),var(--emerald),var(--cyan));transition:width .4s;}
+.prog-total-pct{font-family:var(--mono);font-size:.65rem;color:var(--tx2);min-width:30px;}
+.save-indicator{font-family:var(--mono);font-size:.62rem;color:var(--amber);opacity:0;transition:opacity .3s;}
+.save-indicator.visible{opacity:1;}
+.header-actions{display:flex;align-items:center;gap:.4rem;}
+button{font-family:inherit;cursor:pointer;}
+.btn-primary{background:var(--amber);border:1px solid var(--amber);color:#1a1200;padding:.32rem .85rem;border-radius:var(--rs);font-size:.76rem;font-weight:700;transition:opacity .15s;}
+.btn-primary:hover{opacity:.85;}
+.btn-ghost{background:transparent;border:1px solid var(--bd2);color:var(--tx2);padding:.32rem .8rem;border-radius:var(--rs);font-size:.76rem;transition:all .15s;}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber);}
+
+/* ── PHASE FLOW BAR ── */
+.phase-bar{
+  background:var(--sf);border-bottom:1px solid var(--bd);
+  padding:.45rem 1.5rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.65rem;
+}
+.ph{padding:.22rem .7rem;border-radius:20px;border:1px solid var(--bd2);color:var(--mu);transition:all .2s;cursor:pointer;}
+.ph.active-phase{font-weight:600;}
+.ph[data-ph="enterprise"].active-phase{background:rgba(245,158,11,.12);border-color:var(--amber);color:var(--amber);}
+.ph[data-ph="cloud"].active-phase{background:rgba(99,102,241,.12);border-color:var(--indigo);color:var(--indigo);}
+.ph[data-ph="onprem"].active-phase{background:rgba(16,185,129,.12);border-color:var(--emerald);color:var(--emerald);}
+.ph[data-ph="mcp"].active-phase{background:rgba(6,182,212,.12);border-color:var(--cyan);color:var(--cyan);}
+.ph-arrow{color:var(--mu);}
+
+/* ── TAB BAR ── */
+.tab-bar{
+  display:flex;align-items:stretch;gap:0;
+  background:var(--sf);border-bottom:1px solid var(--bd);
+  padding:0 1.5rem;overflow-x:auto;
+}
+.tab{
+  display:flex;align-items:center;gap:.45rem;
+  padding:.65rem 1.1rem;border-bottom:2px solid transparent;
+  font-size:.78rem;font-weight:500;color:var(--tx2);
+  cursor:pointer;white-space:nowrap;transition:all .15s;border-top:none;border-left:none;border-right:none;
+  background:transparent;
+}
+.tab:hover{color:var(--tx);}
+.tab-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.tab[data-t="enterprise"].active{color:var(--amber);border-bottom-color:var(--amber);}
+.tab[data-t="cloud"].active     {color:var(--indigo);border-bottom-color:var(--indigo);}
+.tab[data-t="onprem"].active    {color:var(--emerald);border-bottom-color:var(--emerald);}
+.tab[data-t="mcp"].active       {color:var(--cyan);border-bottom-color:var(--cyan);}
+.tab-pct{font-family:var(--mono);font-size:.6rem;opacity:.7;margin-left:.1rem;}
+
+/* ── PANELS ── */
+.panel{display:none;padding:1.5rem;max-width:1400px;margin:0 auto;}
+.panel.active{display:block;}
+.panel[data-t="enterprise"]{--ac:var(--amber);--acd:rgba(245,158,11,.12);}
+.panel[data-t="cloud"]     {--ac:var(--indigo);--acd:rgba(99,102,241,.12);}
+.panel[data-t="onprem"]    {--ac:var(--emerald);--acd:rgba(16,185,129,.12);}
+.panel[data-t="mcp"]       {--ac:var(--cyan);--acd:rgba(6,182,212,.12);}
+
+/* ── PANEL HEADER ── */
+.panel-hero{
+  padding:1.5rem 0 1rem;border-bottom:1px solid var(--bd);margin-bottom:1.25rem;
+  display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.75rem;
+}
+.panel-eyebrow{font-family:var(--mono);font-size:.63rem;color:var(--mu);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.35rem;}
+.panel-eyebrow span{color:var(--ac);}
+.panel-title{font-size:1.4rem;font-weight:700;letter-spacing:-.02em;}
+.panel-title em{color:var(--ac);font-style:normal;}
+.panel-sub{font-size:.82rem;color:var(--tx2);margin-top:.3rem;max-width:500px;line-height:1.6;}
+.panel-stat{text-align:right;}
+.panel-stat .big{font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--ac);display:block;}
+.panel-stat .lbl{font-size:.62rem;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;}
+
+/* ── CANVAS GRID ── */
+.canvas-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.canvas-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.canvas-grid-1{display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1rem;}
+@media(max-width:900px){.canvas-grid-3,.canvas-grid-2{grid-template-columns:1fr;}}
+
+/* ── BLOCK ── */
+.block{
+  background:var(--sf);border:1px solid var(--bd);
+  border-radius:var(--r);padding:1.1rem;position:relative;overflow:hidden;
+  transition:border-color .2s;
+}
+.block:hover{border-color:var(--bd2);}
+.block-bar{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ac);opacity:.6;}
+.block-num{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ac);margin-bottom:.25rem;}
+.block-title{font-size:.88rem;font-weight:600;color:var(--tx);margin-bottom:.6rem;}
+.block-sub{font-size:.76rem;color:var(--tx2);margin-bottom:.6rem;line-height:1.55;}
+.divider{height:1px;background:var(--bd);margin:.55rem 0;}
+
+/* ── FIELDS ── */
+.fg{margin-bottom:.7rem;}
+.fl{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;color:var(--mu);display:block;margin-bottom:.32rem;}
+.fi{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);border-radius:var(--rs);padding:.4rem .6rem;font-size:.8rem;font-family:inherit;resize:vertical;transition:border-color .15s;}
+.fi:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--acd);}
+.fi::placeholder{color:var(--mu);}
+select.fi{cursor:pointer;}
+
+/* ── CHIPS ── */
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;}
+.chip{background:var(--sf2);border:1px solid var(--bd);color:var(--tx2);padding:.25rem .65rem;border-radius:20px;font-size:.74rem;cursor:pointer;transition:all .15s;user-select:none;}
+.chip:hover{border-color:var(--ac);color:var(--ac);}
+.chip.sel{background:var(--acd);border-color:var(--ac);color:var(--ac);font-weight:600;}
+
+/* ── CHECKBOXES ── */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:.18rem;}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.18rem;}
+.ci{display:flex;align-items:flex-start;gap:.35rem;font-size:.77rem;color:var(--tx2);cursor:pointer;padding:.18rem .3rem;border-radius:4px;transition:background .15s;}
+.ci:hover{background:var(--acd);}
+.ci input[type=checkbox]{accent-color:var(--ac);width:12px;height:12px;flex-shrink:0;margin-top:2px;}
+
+/* ── SLIDERS ── */
+.sl-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.35rem;}
+.sl-lbl{font-size:.76rem;color:var(--tx2);min-width:110px;}
+.sl-track{flex:1;background:var(--sf3);border-radius:3px;height:5px;cursor:pointer;}
+.sl-fill{height:100%;border-radius:3px;background:var(--ac);transition:width .25s;}
+.sl-val{font-family:var(--mono);font-size:.7rem;color:var(--ac);min-width:22px;text-align:right;}
+
+/* ── KPI BARS ── */
+.kpi-item{margin-bottom:.65rem;}
+.kpi-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.18rem;}
+.kpi-name{font-size:.77rem;color:var(--tx2);}
+.kpi-pct{font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--ac);}
+.kpi-bg{background:var(--sf3);border-radius:3px;height:4px;}
+.kpi-fill{height:100%;border-radius:3px;background:var(--ac);transition:width .25s;}
+
+/* ── ROADMAP ── */
+.road-item{display:grid;grid-template-columns:28px 1fr;gap:.55rem;align-items:start;margin-bottom:.5rem;}
+.road-dot{width:28px;height:28px;border-radius:50%;background:var(--acd);border:1.5px solid var(--ac);display:grid;place-items:center;font-family:var(--mono);font-size:.65rem;color:var(--ac);font-weight:700;flex-shrink:0;}
+.road-title{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.2rem;}
+
+/* ── STAKEHOLDER CARD ── */
+.sh-card{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:.55rem .7rem;display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.4rem;}
+.sh-lbl{font-family:var(--mono);font-size:.58rem;color:var(--ac);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.15rem;}
+
+/* ── EXPORT PANEL ── */
+.exp-panel{display:none;background:var(--sf);border:1px solid var(--bd2);border-left:3px solid var(--amber);border-radius:var(--r);padding:.9rem 1.2rem;margin-top:.75rem;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+.exp-panel.visible{display:flex;}
+.exp-title{font-weight:600;font-size:.88rem;color:var(--tx);}
+.exp-sub{font-size:.74rem;color:var(--tx2);}
+.exp-btns{display:flex;gap:.4rem;flex-wrap:wrap;}
+
+/* ── MODAL ── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:500;align-items:center;justify-content:center;}
+.modal-ov.visible{display:flex;}
+.modal-box{background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r);padding:1.4rem;max-width:500px;width:90%;box-shadow:0 4px 32px rgba(0,0,0,.5);}
+.modal-title{font-size:.9rem;font-weight:700;margin-bottom:.35rem;}
+.modal-sub{font-size:.78rem;color:var(--tx2);margin-bottom:.65rem;}
+.modal-url{width:100%;padding:.5rem .7rem;border:1px solid var(--bd);border-radius:var(--rs);font-size:.7rem;color:var(--tx2);background:var(--sf2);font-family:var(--mono);resize:none;min-height:48px;}
+.modal-acts{display:flex;gap:.45rem;margin-top:.65rem;justify-content:flex-end;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--sf);border:1px solid var(--bd2);color:var(--tx);padding:.55rem .95rem;border-radius:var(--r);font-size:.78rem;z-index:9999;box-shadow:0 2px 16px rgba(0,0,0,.5);animation:toastIn .2s ease;}
+@keyframes toastIn{from{transform:translateY(.5rem);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ── FOOTER ── */
+footer{background:var(--sf);border-top:1px solid var(--bd);padding:1rem 1.5rem;text-align:center;font-size:.7rem;color:var(--mu);}
+.foot-inner{display:flex;align-items:center;justify-content:center;gap:.65rem;flex-wrap:wrap;}
+.foot-brand{color:var(--amber);font-weight:600;}
+.fsep{opacity:.4;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header role="banner">
+  <div class="header-brand">
+    <div class="q-mark" aria-hidden="true">Q</div>
+    <span class="brand-name">Agent Canvas Board</span>
+    <span class="brand-badge">v1.0 · Integrado</span>
+  </div>
+  <div class="header-mid">
+    <input id="projectName" type="text" placeholder="Nombre del proyecto…" aria-label="Nombre del proyecto">
+    <div class="prog-total" aria-label="Progreso total">
+      <div class="prog-total-bar" role="progressbar" aria-label="Progreso total" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="totalBar">
+        <div class="prog-total-fill" id="totalFill" style="width:0%"></div>
+      </div>
+      <span class="prog-total-pct" id="totalPct">0%</span>
+    </div>
+    <span class="save-indicator" id="saveInd" aria-live="polite">✓ guardado</span>
+  </div>
+  <div class="header-actions">
+    <button id="btnExp" class="btn-ghost">Exportar ▾</button>
+    <button id="btnShare" class="btn-ghost">Compartir</button>
+    <button id="btnSave" class="btn-primary">Guardar</button>
+  </div>
+</header>
+
+<!-- PHASE BAR -->
+<nav class="phase-bar" aria-label="Fases del proyecto">
+  <span class="ph active-phase" data-ph="enterprise" data-goto="enterprise">① Enterprise Adoption</span>
+  <span class="ph-arrow" aria-hidden="true">→</span>
+  <span class="ph" data-ph="cloud" data-goto="cloud">② Cloud Edition</span>
+  <span class="ph-arrow" aria-hidden="true">·</span>
+  <span class="ph" data-ph="onprem" data-goto="onprem">② On-Prem Edition</span>
+  <span class="ph-arrow" aria-hidden="true">→</span>
+  <span class="ph" data-ph="mcp" data-goto="mcp">③ MCP Canvas</span>
+</nav>
+
+<!-- TAB BAR -->
+<div class="tab-bar" role="tablist" aria-label="Canvas">
+  <button class="tab active" data-t="enterprise" role="tab" aria-selected="true" aria-controls="panel-enterprise">
+    <span class="tab-dot" aria-hidden="true"></span>Enterprise<span class="tab-pct" id="tpct-enterprise">0%</span>
+  </button>
+  <button class="tab" data-t="cloud" role="tab" aria-selected="false" aria-controls="panel-cloud">
+    <span class="tab-dot" aria-hidden="true"></span>Cloud<span class="tab-pct" id="tpct-cloud">0%</span>
+  </button>
+  <button class="tab" data-t="onprem" role="tab" aria-selected="false" aria-controls="panel-onprem">
+    <span class="tab-dot" aria-hidden="true"></span>On-Prem<span class="tab-pct" id="tpct-onprem">0%</span>
+  </button>
+  <button class="tab" data-t="mcp" role="tab" aria-selected="false" aria-controls="panel-mcp">
+    <span class="tab-dot" aria-hidden="true"></span>MCP<span class="tab-pct" id="tpct-mcp">0%</span>
+  </button>
+</div>
+
+<main>
+
+<!-- ════════════════════ PANEL ENTERPRISE ════════════════════ -->
+<div class="panel active" id="panel-enterprise" data-t="enterprise" role="tabpanel">
+  <div class="panel-hero">
+    <div>
+      <p class="panel-eyebrow"><span>Fase 1 · Estratégica</span> · Enterprise AI Adoption</p>
+      <h2 class="panel-title">Adopción de IA <em>antes de construir</em></h2>
+      <p class="panel-sub">Mandato, gobernanza y gestión del cambio organizativo antes de elegir tecnología.</p>
+    </div>
+    <div class="panel-stat">
+      <span class="big" id="epct">0%</span>
+      <span class="lbl">completado</span>
+    </div>
+  </div>
+
+  <div class="canvas-grid-3">
+    <div class="block" data-block="ent1">
+      <div class="block-bar"></div>
+      <p class="block-num">B1 · Mandato</p>
+      <h3 class="block-title">Mandato Ejecutivo</h3>
+      <div class="fg"><label class="fl">Sponsor ejecutivo</label><input class="fi" type="text" name="ent_b1_sponsor" placeholder="Nombre y cargo…"></div>
+      <div class="fg"><label class="fl">Mandato formal</label><textarea class="fi" name="ent_b1_mandato" rows="2" placeholder="¿Qué ha aprobado dirección?"></textarea></div>
+      <div class="fg"><label class="fl">Nivel de apoyo</label>
+        <div class="chips" data-rg="ent_b1_apoyo">
+          <button class="chip" data-val="bajo">Bajo</button><button class="chip" data-val="medio">Medio</button>
+          <button class="chip" data-val="alto">Alto</button><button class="chip" data-val="muy-alto">Muy alto</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="ent2">
+      <div class="block-bar"></div>
+      <p class="block-num">B2 · Gobernanza</p>
+      <h3 class="block-title">Modelo de Gobernanza</h3>
+      <div class="fg"><label class="fl">Estructura</label>
+        <div class="chips" data-rg="ent_b2_estructura">
+          <button class="chip" data-val="ai-office">AI Office</button>
+          <button class="chip" data-val="coe">CoE</button>
+          <button class="chip" data-val="comite">Comité</button>
+          <button class="chip" data-val="distribuido">Distribuido</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">¿Quién decide qué agentes se construyen?</label><textarea class="fi" name="ent_b2_decide" rows="2" placeholder="Rol o comité responsable…"></textarea></div>
+      <div class="fg"><label class="fl">Funciones en gobernanza</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="ent_b2_legal"> Legal/Compliance</label>
+          <label class="ci"><input type="checkbox" name="ent_b2_ciso"> CISO/Seguridad</label>
+          <label class="ci"><input type="checkbox" name="ent_b2_rrhh"> RRHH</label>
+          <label class="ci"><input type="checkbox" name="ent_b2_etica"> Ética/Resp. IA</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="ent3">
+      <div class="block-bar"></div>
+      <p class="block-num">B3 · Valor Org.</p>
+      <h3 class="block-title">Propuesta de Valor Organizativa</h3>
+      <div class="fg"><label class="fl">Nueva capacidad organizativa</label><textarea class="fi" name="ent_b3_capacidad" rows="2" placeholder="¿Qué podrá hacer la org. que hoy no puede?"></textarea></div>
+      <div class="fg"><label class="fl">Ventaja competitiva esperada</label><textarea class="fi" name="ent_b3_diferencial" rows="2" placeholder="Diferenciador de mercado…"></textarea></div>
+      <div class="fg"><label class="fl">Horizonte</label>
+        <div class="chips" data-rg="ent_b3_horizonte">
+          <button class="chip" data-val="3m">3 meses</button><button class="chip" data-val="6m">6 meses</button>
+          <button class="chip" data-val="1y">1 año</button><button class="chip" data-val="2y">2+ años</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-2">
+    <div class="block" data-block="ent4">
+      <div class="block-bar"></div>
+      <p class="block-num">B4 · Stakeholders</p>
+      <h3 class="block-title">Stakeholders Impactados</h3>
+      <div class="sh-card">
+        <div><div class="sh-lbl">Dept./Rol</div><input class="fi" type="text" name="ent_sh1_rol" placeholder="Ej. RRHH…" style="margin-top:.2rem"></div>
+        <div><div class="sh-lbl">Posición</div>
+          <select class="fi" name="ent_sh1_pos" style="margin-top:.2rem">
+            <option value="">—</option><option value="aliado">🟢 Aliado</option>
+            <option value="neutro">🟡 Neutro</option><option value="resistencia">🔴 Resistencia</option>
+          </select>
+        </div>
+        <div style="grid-column:1/-1"><input class="fi" type="text" name="ent_sh1_accion" placeholder="Acción a tomar…"></div>
+      </div>
+      <div class="sh-card">
+        <div><div class="sh-lbl">Dept./Rol</div><input class="fi" type="text" name="ent_sh2_rol" placeholder="Ej. Legal…" style="margin-top:.2rem"></div>
+        <div><div class="sh-lbl">Posición</div>
+          <select class="fi" name="ent_sh2_pos" style="margin-top:.2rem">
+            <option value="">—</option><option value="aliado">🟢 Aliado</option>
+            <option value="neutro">🟡 Neutro</option><option value="resistencia">🔴 Resistencia</option>
+          </select>
+        </div>
+        <div style="grid-column:1/-1"><input class="fi" type="text" name="ent_sh2_accion" placeholder="Acción a tomar…"></div>
+      </div>
+    </div>
+
+    <div class="block" data-block="ent5">
+      <div class="block-bar"></div>
+      <p class="block-num">B5 · Urgencia</p>
+      <h3 class="block-title">Urgencia Competitiva</h3>
+      <div class="fg"><label class="fl">Ventana de oportunidad</label>
+        <div class="chips" data-rg="ent_b5_ventana">
+          <button class="chip" data-val="3m">&lt;3m</button><button class="chip" data-val="6m">3-6m</button>
+          <button class="chip" data-val="12m">6-12m</button><button class="chip" data-val="mas">&gt;1 año</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">¿Qué hace la competencia?</label><textarea class="fi" name="ent_b5_competencia" rows="2" placeholder="Señales de mercado…"></textarea></div>
+      <div class="fg"><label class="fl">Urgencia</label>
+        <div class="sl-row">
+          <span class="sl-lbl">Urgencia (1-10)</span>
+          <div class="sl-track" id="sl-ent-urgencia"><div class="sl-fill" id="sf-ent-urgencia" style="width:50%"></div></div>
+          <span class="sl-val" id="sv-ent-urgencia">5</span>
+          <input type="range" name="ent_b5_urgencia" id="r-ent-urgencia" min="1" max="10" value="5" class="sr-only">
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Riesgo de no actuar</label><textarea class="fi" name="ent_b5_riesgo" rows="2" placeholder="¿Qué ocurre si no actuamos?"></textarea></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-3">
+    <div class="block" data-block="ent6">
+      <div class="block-bar"></div>
+      <p class="block-num">B6 · Hoja de Ruta</p>
+      <h3 class="block-title">Hoja de Ruta de Adopción</h3>
+      <div class="road-item"><div class="road-dot">1</div><div><div class="road-title">Piloto</div><input class="fi" type="text" name="ent_b6_piloto" placeholder="Alcance, duración, criterio…" style="margin-top:.25rem"></div></div>
+      <div class="road-item"><div class="road-dot">2</div><div><div class="road-title">Expansión</div><input class="fi" type="text" name="ent_b6_expansion" placeholder="Qué departamentos, qué escala…" style="margin-top:.25rem"></div></div>
+      <div class="road-item"><div class="road-dot">3</div><div><div class="road-title">Escala</div><input class="fi" type="text" name="ent_b6_escala" placeholder="Producción completa…" style="margin-top:.25rem"></div></div>
+      <div class="fg" style="margin-top:.6rem"><label class="fl">Gate de decisión entre fases</label><textarea class="fi" name="ent_b6_gate" rows="2" placeholder="¿Qué métricas permiten avanzar?"></textarea></div>
+    </div>
+
+    <div class="block" data-block="ent7">
+      <div class="block-bar"></div>
+      <p class="block-num">B7 · Cambio</p>
+      <h3 class="block-title">Gestión del Cambio</h3>
+      <div class="fg"><label class="fl">Responsable del cambio</label><input class="fi" type="text" name="ent_b7_lider" placeholder="CHRO / Change Manager…"></div>
+      <div class="fg"><label class="fl">Resistencias principales</label><textarea class="fi" name="ent_b7_resistencias" rows="2" placeholder="Miedo a sustitución, carga adicional…"></textarea></div>
+      <div class="fg"><label class="fl">Plan de comunicación interna</label><textarea class="fi" name="ent_b7_comun" rows="2" placeholder="Mensajes clave, canales, frecuencia…"></textarea></div>
+      <div class="fg"><label class="fl">Palancas activadas</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="ent_b7_incentivos"> Incentivos</label>
+          <label class="ci"><input type="checkbox" name="ent_b7_embajadores"> Embajadores</label>
+          <label class="ci"><input type="checkbox" name="ent_b7_early"> Early adopters</label>
+          <label class="ci"><input type="checkbox" name="ent_b7_liderazgo"> Liderazgo visible</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="ent8">
+      <div class="block-bar"></div>
+      <p class="block-num">B8 · Habilitación</p>
+      <h3 class="block-title">Habilitación y Cultura</h3>
+      <div class="fg"><label class="fl">Plan de formación por perfil</label><textarea class="fi" name="ent_b8_formacion" rows="2" placeholder="Usuarios: prompting / IT: APIs / Directivos: ROI…"></textarea></div>
+      <div class="fg"><label class="fl">Infraestructura de habilitación</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="ent_b8_sandbox"> Sandbox IA</label>
+          <label class="ci"><input type="checkbox" name="ent_b8_comunidad"> Comunidad práctica</label>
+          <label class="ci"><input type="checkbox" name="ent_b8_biblioteca"> Biblioteca prompts</label>
+          <label class="ci"><input type="checkbox" name="ent_b8_soporte"> Help desk IA</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Acciones de cultura IA</label><textarea class="fi" name="ent_b8_cultura" rows="2" placeholder="Newsletter, demos semanales, reconocimientos…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-2">
+    <div class="block" data-block="ent9">
+      <div class="block-bar"></div>
+      <p class="block-num">B9 · Métricas</p>
+      <h3 class="block-title">Métricas de Adopción</h3>
+      <div class="kpi-item">
+        <div class="kpi-head"><input class="fi" type="text" name="ent_kpi1_n" value="% usuarios activos" style="padding:.18rem .4rem;font-size:.74rem;width:165px"><span class="kpi-pct" id="ek1p">0%</span></div>
+        <div class="kpi-bg"><div class="kpi-fill" id="ek1f" style="width:0%"></div></div>
+        <input type="range" name="ent_kpi1" id="ent_kpi1" min="0" max="100" value="0" style="width:100%;margin-top:.28rem;accent-color:var(--ac)">
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-head"><input class="fi" type="text" name="ent_kpi2_n" value="NPS interno" style="padding:.18rem .4rem;font-size:.74rem;width:165px"><span class="kpi-pct" id="ek2p">0%</span></div>
+        <div class="kpi-bg"><div class="kpi-fill" id="ek2f" style="width:0%"></div></div>
+        <input type="range" name="ent_kpi2" id="ent_kpi2" min="0" max="100" value="0" style="width:100%;margin-top:.28rem;accent-color:var(--ac)">
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-head"><input class="fi" type="text" name="ent_kpi3_n" value="Horas ahorradas/semana" style="padding:.18rem .4rem;font-size:.74rem;width:195px"><span class="kpi-pct" id="ek3p">0%</span></div>
+        <div class="kpi-bg"><div class="kpi-fill" id="ek3f" style="width:0%"></div></div>
+        <input type="range" name="ent_kpi3" id="ent_kpi3" min="0" max="100" value="0" style="width:100%;margin-top:.28rem;accent-color:var(--ac)">
+      </div>
+    </div>
+
+    <div class="block" data-block="ent10">
+      <div class="block-bar"></div>
+      <p class="block-num">B10 · Revisión</p>
+      <h3 class="block-title">Cadencia de Revisión</h3>
+      <div class="fg"><label class="fl">¿Quién revisa el portfolio de agentes?</label><input class="fi" type="text" name="ent_b10_quien" placeholder="Comité AI, Steering Committee…"></div>
+      <div class="fg"><label class="fl">Frecuencia ejecutiva</label>
+        <div class="chips" data-rg="ent_b10_freq">
+          <button class="chip" data-val="mensual">Mensual</button>
+          <button class="chip" data-val="trimestral">Trimestral</button>
+          <button class="chip" data-val="semestral">Semestral</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">¿Qué puede pausar el programa?</label><textarea class="fi" name="ent_b10_para" rows="2" placeholder="Incidente, nueva regulación, piloto negativo…"></textarea></div>
+      <div class="fg"><label class="fl">Guardarraíles regulatorios</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="ent_b10_gdpr"> GDPR</label>
+          <label class="ci"><input type="checkbox" name="ent_b10_aiact"> EU AI Act</label>
+          <label class="ci"><input type="checkbox" name="ent_b10_bias"> Revisión sesgos</label>
+          <label class="ci"><input type="checkbox" name="ent_b10_rollback"> Plan rollback</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /panel enterprise -->
+
+
+<!-- ════════════════════ PANEL CLOUD ════════════════════ -->
+<div class="panel" id="panel-cloud" data-t="cloud" role="tabpanel">
+  <div class="panel-hero">
+    <div>
+      <p class="panel-eyebrow"><span>Fase 2 · Cloud</span> · Diseño del Agente</p>
+      <h2 class="panel-title">Agent Canvas <em>Cloud Edition</em></h2>
+      <p class="panel-sub">Para agentes con Azure, AWS, GCP, Copilot Studio, LangChain o APIs gestionadas.</p>
+    </div>
+    <div class="panel-stat"><span class="big" id="cpct">0%</span><span class="lbl">completado</span></div>
+  </div>
+
+  <div class="canvas-grid-3">
+    <div class="block" data-block="cl1">
+      <div class="block-bar"></div>
+      <p class="block-num">B1 · Segmento</p>
+      <h3 class="block-title">Segmento de Usuarios</h3>
+      <div class="fg"><label class="fl">¿Para quién es este agente?</label><textarea class="fi" name="cl_b1_para_quien" rows="2" placeholder="Perfil, departamento, rol…"></textarea></div>
+      <div class="fg"><label class="fl">Problema que resuelve</label><textarea class="fi" name="cl_b1_problema" rows="2" placeholder="¿Qué tarea o dolor elimina?"></textarea></div>
+      <div class="fg"><label class="fl">Volumen de usuarios</label>
+        <div class="chips" data-rg="cl_b1_volumen">
+          <button class="chip" data-val="1-10">1-10</button><button class="chip" data-val="11-100">11-100</button>
+          <button class="chip" data-val="100+">100+</button><button class="chip" data-val="miles">Miles</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="cl2">
+      <div class="block-bar"></div>
+      <p class="block-num">B2 · Propuesta</p>
+      <h3 class="block-title">Propuesta de Valor</h3>
+      <div class="fg"><label class="fl">¿Qué hace este agente mejor que un humano o app?</label><textarea class="fi" name="cl_b2_propuesta" rows="2" placeholder="Velocidad, disponibilidad 24/7, personalización…"></textarea></div>
+      <div class="fg"><label class="fl">KPI de éxito principal</label><input class="fi" type="text" name="cl_b2_kpi" placeholder="Ej. CSAT >4.5 / tiempo respuesta <2s…"></div>
+      <div class="fg"><label class="fl">Beneficio medible</label><textarea class="fi" name="cl_b2_beneficio" rows="2" placeholder="Horas ahorradas, coste evitado, conversiones…"></textarea></div>
+    </div>
+
+    <div class="block" data-block="cl3">
+      <div class="block-bar"></div>
+      <p class="block-num">B3 · Canales</p>
+      <h3 class="block-title">Canales de Interacción</h3>
+      <div class="fg"><label class="fl">Interfaz principal</label>
+        <div class="chips" data-rg="cl_b3_interfaz">
+          <button class="chip" data-val="chat">Chat web</button><button class="chip" data-val="api">API REST</button>
+          <button class="chip" data-val="teams">Teams/Slack</button><button class="chip" data-val="voice">Voz</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Integración con sistemas existentes</label><textarea class="fi" name="cl_b3_integracion" rows="2" placeholder="CRM, ERP, ticketing, BD…"></textarea></div>
+      <div class="fg"><label class="fl">Canales adicionales</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="cl_b3_email"> Email</label>
+          <label class="ci"><input type="checkbox" name="cl_b3_mobile"> Mobile</label>
+          <label class="ci"><input type="checkbox" name="cl_b3_widget"> Widget embed</label>
+          <label class="ci"><input type="checkbox" name="cl_b3_webhook"> Webhook</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-2">
+    <div class="block" data-block="cl4">
+      <div class="block-bar"></div>
+      <p class="block-num">B4 · Personalidad</p>
+      <h3 class="block-title">Relación y Personalidad</h3>
+      <div class="fg"><label class="fl">Nombre del agente</label><input class="fi" type="text" name="cl_b4_nombre" placeholder="Ej. Aria, Nexus, AssistIA…"></div>
+      <div class="fg"><label class="fl">Tono de comunicación</label>
+        <div class="chips" data-rg="cl_b4_tono">
+          <button class="chip" data-val="formal">Formal</button><button class="chip" data-val="profesional">Profesional</button>
+          <button class="chip" data-val="amigable">Amigable</button><button class="chip" data-val="tecnico">Técnico</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Comportamiento en fallback</label><textarea class="fi" name="cl_b4_fallback" rows="2" placeholder="¿Qué hace cuando no sabe?"></textarea></div>
+      <div class="fg"><label class="fl">Idiomas</label>
+        <div class="chips" data-rg="cl_b4_idioma">
+          <button class="chip" data-val="es">Español</button><button class="chip" data-val="en">Inglés</button>
+          <button class="chip" data-val="multi">Multilingüe</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="cl5">
+      <div class="block-bar"></div>
+      <p class="block-num">B5 · KPIs</p>
+      <h3 class="block-title">Fuentes de Valor (KPIs)</h3>
+      <div class="fg"><label class="fl">Métricas de calidad</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="cl_b5_csat"> CSAT</label>
+          <label class="ci"><input type="checkbox" name="cl_b5_fcr"> FCR</label>
+          <label class="ci"><input type="checkbox" name="cl_b5_latencia"> Latencia</label>
+          <label class="ci"><input type="checkbox" name="cl_b5_precision"> Precisión</label>
+          <label class="ci"><input type="checkbox" name="cl_b5_escalacion"> Tasa escalación</label>
+          <label class="ci"><input type="checkbox" name="cl_b5_cost"> Coste/interacción</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">KPI norteño (north star)</label><input class="fi" type="text" name="cl_b5_northstar" placeholder="La métrica que lo define todo…"></div>
+      <div class="fg"><label class="fl">Target a 3 meses</label><textarea class="fi" name="cl_b5_target" rows="2" placeholder="Valor objetivo y fecha…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-3">
+    <div class="block" data-block="cl6">
+      <div class="block-bar"></div>
+      <p class="block-num">B6 · Recursos</p>
+      <h3 class="block-title">Recursos Clave</h3>
+      <div class="fg"><label class="fl">Modelo base</label>
+        <div class="chips" data-rg="cl_b6_modelo">
+          <button class="chip" data-val="gpt4o">GPT-4o</button><button class="chip" data-val="claude">Claude</button>
+          <button class="chip" data-val="gemini">Gemini</button><button class="chip" data-val="otro">Otro</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Fuentes de conocimiento</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="cl_b6_rag"> RAG / Vector DB</label>
+          <label class="ci"><input type="checkbox" name="cl_b6_finetuning"> Fine-tuning</label>
+          <label class="ci"><input type="checkbox" name="cl_b6_tools"> Tool calling</label>
+          <label class="ci"><input type="checkbox" name="cl_b6_memory"> Memory</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Cloud provider</label>
+        <div class="chips" data-rg="cl_b6_cloud">
+          <button class="chip" data-val="azure">Azure</button><button class="chip" data-val="aws">AWS</button>
+          <button class="chip" data-val="gcp">GCP</button><button class="chip" data-val="multi">Multi-cloud</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="cl7">
+      <div class="block-bar"></div>
+      <p class="block-num">B7 · Actividades</p>
+      <h3 class="block-title">Actividades Clave</h3>
+      <div class="fg"><label class="fl">Control Flow Pattern</label>
+        <div class="chips" data-rg="cl_b7_flow">
+          <button class="chip" data-val="react">ReAct</button><button class="chip" data-val="plan">Plan&Exec</button>
+          <button class="chip" data-val="reflect">Reflexion</button><button class="chip" data-val="multi">Multi-agente</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Skills / capacidades del agente</label><textarea class="fi" name="cl_b7_skills" rows="2" placeholder="Búsqueda, generación, resumen, clasificación…"></textarea></div>
+      <div class="fg"><label class="fl">Pipeline principal</label><textarea class="fi" name="cl_b7_pipeline" rows="2" placeholder="Flujo de datos: input → proceso → output…"></textarea></div>
+    </div>
+
+    <div class="block" data-block="cl8">
+      <div class="block-bar"></div>
+      <p class="block-num">B8 · Socios</p>
+      <h3 class="block-title">Socios e Integraciones</h3>
+      <div class="fg"><label class="fl">APIs externas</label><textarea class="fi" name="cl_b8_apis" rows="2" placeholder="APIs que consume el agente…"></textarea></div>
+      <div class="fg"><label class="fl">Servidores MCP</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="cl_b8_mcp_fs"> Filesystem</label>
+          <label class="ci"><input type="checkbox" name="cl_b8_mcp_db"> Database</label>
+          <label class="ci"><input type="checkbox" name="cl_b8_mcp_web"> Web search</label>
+          <label class="ci"><input type="checkbox" name="cl_b8_mcp_code"> Code exec</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Proveedores críticos</label><textarea class="fi" name="cl_b8_proveedores" rows="2" placeholder="Plataformas, licencias, integraciones clave…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-2">
+    <div class="block" data-block="cl9">
+      <div class="block-bar"></div>
+      <p class="block-num">B9 · Costes y Riesgos</p>
+      <h3 class="block-title">Estructura de Costes y Riesgos</h3>
+      <div class="fg"><label class="fl">Coste estimado (mensual)</label><input class="fi" type="text" name="cl_b9_coste" placeholder="Tokens, infra, licencias, mantenimiento…"></div>
+      <div class="fg"><label class="fl">Riesgos técnicos</label><textarea class="fi" name="cl_b9_riesgos_tec" rows="2" placeholder="Latencia, hallucinations, dependencia vendor…"></textarea></div>
+      <div class="fg"><label class="fl">Riesgos de negocio</label><textarea class="fi" name="cl_b9_riesgos_neg" rows="2" placeholder="Adopción baja, cambio de requisitos, ROI tardío…"></textarea></div>
+    </div>
+
+    <div class="block" data-block="cl10">
+      <div class="block-bar"></div>
+      <p class="block-num">B10 · Guardarraíles</p>
+      <h3 class="block-title">Guardarraíles</h3>
+      <div class="fg"><label class="fl">Controles de seguridad</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="cl_b10_prompt_inj"> Anti-prompt injection</label>
+          <label class="ci"><input type="checkbox" name="cl_b10_pii"> Anonimización PII</label>
+          <label class="ci"><input type="checkbox" name="cl_b10_rag_conf"> RAG confidence</label>
+          <label class="ci"><input type="checkbox" name="cl_b10_hitl"> Human-in-the-loop</label>
+          <label class="ci"><input type="checkbox" name="cl_b10_event"> Event sourcing</label>
+          <label class="ci"><input type="checkbox" name="cl_b10_gdpr"> GDPR</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Política de escalación</label><textarea class="fi" name="cl_b10_escalacion" rows="2" placeholder="¿Cuándo deriva a humano? ¿Cómo?"></textarea></div>
+    </div>
+  </div>
+</div><!-- /panel cloud -->
+
+
+<!-- ════════════════════ PANEL ON-PREM ════════════════════ -->
+<div class="panel" id="panel-onprem" data-t="onprem" role="tabpanel">
+  <div class="panel-hero">
+    <div>
+      <p class="panel-eyebrow"><span>Fase 2 · On-Prem</span> · Diseño del Agente</p>
+      <h2 class="panel-title">Agent Canvas <em>On-Prem Edition</em></h2>
+      <p class="panel-sub">Para agentes con Ollama, vLLM o LM Studio en entornos air-gap o alta privacidad.</p>
+    </div>
+    <div class="panel-stat"><span class="big" id="opct">0%</span><span class="lbl">completado</span></div>
+  </div>
+
+  <div class="canvas-grid-3">
+    <div class="block" data-block="op1">
+      <div class="block-bar"></div>
+      <p class="block-num">B1 · Segmento</p>
+      <h3 class="block-title">Segmento de Usuarios</h3>
+      <div class="fg"><label class="fl">¿Para quién es este agente?</label><textarea class="fi" name="op_b1_para_quien" rows="2" placeholder="Perfil, departamento, equipo…"></textarea></div>
+      <div class="fg"><label class="fl">Requisito de privacidad</label>
+        <div class="chips" data-rg="op_b1_privacidad">
+          <button class="chip" data-val="alta">Alta</button><button class="chip" data-val="muy-alta">Muy alta</button>
+          <button class="chip" data-val="air-gap">Air-gap</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Regulación aplicable</label><input class="fi" type="text" name="op_b1_regulacion" placeholder="GDPR, HIPAA, ENS, secreto industrial…"></div>
+    </div>
+
+    <div class="block" data-block="op2">
+      <div class="block-bar"></div>
+      <p class="block-num">B2 · Propuesta</p>
+      <h3 class="block-title">Propuesta de Valor</h3>
+      <div class="fg"><label class="fl">¿Qué justifica la infraestructura on-prem?</label><textarea class="fi" name="op_b2_justificacion" rows="2" placeholder="Datos sensibles, latencia, coste tokens, soberanía…"></textarea></div>
+      <div class="fg"><label class="fl">Ventaja vs. cloud</label><textarea class="fi" name="op_b2_ventaja" rows="2" placeholder="Sin envío de datos al exterior, cumplimiento…"></textarea></div>
+    </div>
+
+    <div class="block" data-block="op3">
+      <div class="block-bar"></div>
+      <p class="block-num">B3 · Canales</p>
+      <h3 class="block-title">Canales</h3>
+      <div class="fg"><label class="fl">Interfaz de acceso</label>
+        <div class="chips" data-rg="op_b3_interfaz">
+          <button class="chip" data-val="api">API interna</button><button class="chip" data-val="cli">CLI</button>
+          <button class="chip" data-val="intranet">Intranet web</button><button class="chip" data-val="ide">IDE plugin</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Segmentación de red</label><textarea class="fi" name="op_b3_red" rows="2" placeholder="VPN, VLAN, red aislada, proxy…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-3">
+    <div class="block" data-block="op6">
+      <div class="block-bar"></div>
+      <p class="block-num">B6 · Recursos</p>
+      <h3 class="block-title">Recursos Clave (Hardware)</h3>
+      <div class="fg"><label class="fl">Modelo LLM local</label>
+        <div class="chips" data-rg="op_b6_modelo">
+          <button class="chip" data-val="llama3">Llama 3</button><button class="chip" data-val="mistral">Mistral</button>
+          <button class="chip" data-val="phi3">Phi-3</button><button class="chip" data-val="otro">Otro</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Runtime de inferencia</label>
+        <div class="chips" data-rg="op_b6_runtime">
+          <button class="chip" data-val="ollama">Ollama</button><button class="chip" data-val="vllm">vLLM</button>
+          <button class="chip" data-val="lmstudio">LM Studio</button><button class="chip" data-val="llamacpp">llama.cpp</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">GPU disponible</label>
+        <div class="chips" data-rg="op_b6_gpu">
+          <button class="chip" data-val="a100">A100</button><button class="chip" data-val="h100">H100</button>
+          <button class="chip" data-val="rtx4090">RTX 4090</button><button class="chip" data-val="cpu">Solo CPU</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Hardware personalizado</label><input class="fi" type="text" name="op_b6_hw_custom" placeholder="Describe tu configuración GPU/CPU/RAM…"></div>
+    </div>
+
+    <div class="block" data-block="op7">
+      <div class="block-bar"></div>
+      <p class="block-num">B7 · Actividades</p>
+      <h3 class="block-title">Actividades Clave</h3>
+      <div class="fg"><label class="fl">Control Flow Pattern</label>
+        <div class="chips" data-rg="op_b7_flow">
+          <button class="chip" data-val="react">ReAct</button><button class="chip" data-val="chain">Chain</button>
+          <button class="chip" data-val="rag">RAG puro</button><button class="chip" data-val="multi">Multi-agente</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Optimización del modelo</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="op_b7_quant"> Quantization (GGUF)</label>
+          <label class="ci"><input type="checkbox" name="op_b7_lora"> LoRA fine-tuning</label>
+          <label class="ci"><input type="checkbox" name="op_b7_rag"> RAG local</label>
+          <label class="ci"><input type="checkbox" name="op_b7_cache"> KV-cache</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="op8">
+      <div class="block-bar"></div>
+      <p class="block-num">B8 · Infraestructura</p>
+      <h3 class="block-title">Infraestructura y Socios</h3>
+      <div class="fg"><label class="fl">Stack de despliegue</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="op_b8_docker"> Docker/Podman</label>
+          <label class="ci"><input type="checkbox" name="op_b8_k8s"> Kubernetes</label>
+          <label class="ci"><input type="checkbox" name="op_b8_bare"> Bare metal</label>
+          <label class="ci"><input type="checkbox" name="op_b8_vm"> VM</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Servidores MCP on-prem</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="op_b8_mcp_fs"> Filesystem</label>
+          <label class="ci"><input type="checkbox" name="op_b8_mcp_db"> Database local</label>
+          <label class="ci"><input type="checkbox" name="op_b8_mcp_git"> Git local</label>
+          <label class="ci"><input type="checkbox" name="op_b8_mcp_kb"> Knowledge base</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-2">
+    <div class="block" data-block="op9">
+      <div class="block-bar"></div>
+      <p class="block-num">B9 · Costes y Riesgos</p>
+      <h3 class="block-title">Estructura de Costes y Riesgos</h3>
+      <div class="fg"><label class="fl">CAPEX estimado (hardware)</label><input class="fi" type="text" name="op_b9_capex" placeholder="Servidores, GPUs, almacenamiento…"></div>
+      <div class="fg"><label class="fl">OPEX mensual</label><input class="fi" type="text" name="op_b9_opex" placeholder="Electricidad, refrigeración, mantenimiento…"></div>
+      <div class="fg"><label class="fl">Riesgos específicos on-prem</label><textarea class="fi" name="op_b9_riesgos" rows="2" placeholder="Disponibilidad, disaster recovery, obsolescencia HW…"></textarea></div>
+    </div>
+
+    <div class="block" data-block="op10">
+      <div class="block-bar"></div>
+      <p class="block-num">B10 · Guardarraíles</p>
+      <h3 class="block-title">Guardarraíles y Privacidad</h3>
+      <div class="fg"><label class="fl">Controles de seguridad</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="op_b10_no_egress"> Sin salida de datos</label>
+          <label class="ci"><input type="checkbox" name="op_b10_encrypt"> Cifrado en reposo</label>
+          <label class="ci"><input type="checkbox" name="op_b10_audit"> Auditoría local</label>
+          <label class="ci"><input type="checkbox" name="op_b10_hitl"> Human-in-the-loop</label>
+          <label class="ci"><input type="checkbox" name="op_b10_event"> Event sourcing</label>
+          <label class="ci"><input type="checkbox" name="op_b10_rbac"> RBAC</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Plan de continuidad</label><textarea class="fi" name="op_b10_continuidad" rows="2" placeholder="Backup, failover, SLA interno…"></textarea></div>
+    </div>
+  </div>
+</div><!-- /panel onprem -->
+
+
+<!-- ════════════════════ PANEL MCP ════════════════════ -->
+<div class="panel" id="panel-mcp" data-t="mcp" role="tabpanel">
+  <div class="panel-hero">
+    <div>
+      <p class="panel-eyebrow"><span>Fase 3 · Arquitectura</span> · MCP Canvas</p>
+      <h2 class="panel-title">Arquitectura <em>MCP</em></h2>
+      <p class="panel-sub">Diseña tu capa de Model Context Protocol: servidores, transporte, seguridad y observabilidad.</p>
+    </div>
+    <div class="panel-stat"><span class="big" id="mpct">0%</span><span class="lbl">completado</span></div>
+  </div>
+
+  <div class="canvas-grid-3">
+    <div class="block" data-block="mcp1">
+      <div class="block-bar"></div>
+      <p class="block-num">M1 · Contexto</p>
+      <h3 class="block-title">Contexto del Sistema MCP</h3>
+      <div class="fg"><label class="fl">¿Qué expone este servidor MCP?</label><textarea class="fi" name="mcp_m1_expone" rows="2" placeholder="Herramientas, recursos, prompts…"></textarea></div>
+      <div class="fg"><label class="fl">Tipo de servidor</label>
+        <div class="chips" data-rg="mcp_m1_tipo">
+          <button class="chip" data-val="tools">Tools server</button><button class="chip" data-val="resources">Resources</button>
+          <button class="chip" data-val="prompts">Prompts</button><button class="chip" data-val="mixto">Mixto</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Cliente MCP</label>
+        <div class="chips" data-rg="mcp_m1_cliente">
+          <button class="chip" data-val="claude">Claude</button><button class="chip" data-val="cursor">Cursor</button>
+          <button class="chip" data-val="custom">Custom</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="mcp2">
+      <div class="block-bar"></div>
+      <p class="block-num">M2 · Herramientas</p>
+      <h3 class="block-title">Herramientas (Tools)</h3>
+      <div class="fg"><label class="fl">Lista de tools expuestas</label><textarea class="fi" name="mcp_m2_tools" rows="3" placeholder="tool_name: descripción breve (una por línea)…"></textarea></div>
+      <div class="fg"><label class="fl">Tipo de operaciones</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="mcp_m2_read"> Read</label>
+          <label class="ci"><input type="checkbox" name="mcp_m2_write"> Write</label>
+          <label class="ci"><input type="checkbox" name="mcp_m2_exec"> Exec/Run</label>
+          <label class="ci"><input type="checkbox" name="mcp_m2_search"> Search</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="mcp3">
+      <div class="block-bar"></div>
+      <p class="block-num">M3 · Transporte</p>
+      <h3 class="block-title">Transporte y Protocolo</h3>
+      <div class="fg"><label class="fl">Mecanismo de transporte</label>
+        <div class="chips" data-rg="mcp_m3_transporte">
+          <button class="chip" data-val="stdio">stdio</button><button class="chip" data-val="http-sse">HTTP+SSE</button>
+          <button class="chip" data-val="ws">WebSocket</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Lenguaje de implementación</label>
+        <div class="chips" data-rg="mcp_m3_lang">
+          <button class="chip" data-val="python">Python</button><button class="chip" data-val="ts">TypeScript</button>
+          <button class="chip" data-val="go">Go</button><button class="chip" data-val="rust">Rust</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Endpoint / comando</label><input class="fi" type="text" name="mcp_m3_endpoint" placeholder="http://localhost:3000 / npx server.js…"></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-2">
+    <div class="block" data-block="mcp4">
+      <div class="block-bar"></div>
+      <p class="block-num">M4 · Recursos</p>
+      <h3 class="block-title">Recursos y Prompts</h3>
+      <div class="fg"><label class="fl">Recursos expuestos (URI)</label><textarea class="fi" name="mcp_m4_resources" rows="2" placeholder="file:///, db:///, api://… (uno por línea)"></textarea></div>
+      <div class="fg"><label class="fl">Prompts/templates del servidor</label><textarea class="fi" name="mcp_m4_prompts" rows="2" placeholder="Nombres de prompt templates expuestos…"></textarea></div>
+      <div class="fg"><label class="fl">Capacidades del servidor</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="mcp_m4_sampling"> Sampling</label>
+          <label class="ci"><input type="checkbox" name="mcp_m4_roots"> Roots</label>
+          <label class="ci"><input type="checkbox" name="mcp_m4_progress"> Progress</label>
+          <label class="ci"><input type="checkbox" name="mcp_m4_logging"> Logging</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" data-block="mcp5">
+      <div class="block-bar"></div>
+      <p class="block-num">M5 · Seguridad</p>
+      <h3 class="block-title">Seguridad y Control</h3>
+      <div class="fg"><label class="fl">Autenticación</label>
+        <div class="chips" data-rg="mcp_m5_auth">
+          <button class="chip" data-val="none">Sin auth (local)</button><button class="chip" data-val="apikey">API Key</button>
+          <button class="chip" data-val="oauth">OAuth 2.0</button><button class="chip" data-val="mtls">mTLS</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Controles de seguridad</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="mcp_m5_rate"> Rate limiting</label>
+          <label class="ci"><input type="checkbox" name="mcp_m5_allow"> Allowlist tools</label>
+          <label class="ci"><input type="checkbox" name="mcp_m5_sand"> Sandboxing</label>
+          <label class="ci"><input type="checkbox" name="mcp_m5_audit"> Audit log</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Política de confirmación humana</label><textarea class="fi" name="mcp_m5_confirm" rows="2" placeholder="¿Qué tools requieren aprobación explícita?"></textarea></div>
+    </div>
+  </div>
+
+  <div class="canvas-grid-2">
+    <div class="block" data-block="mcp6">
+      <div class="block-bar"></div>
+      <p class="block-num">M6 · Observabilidad</p>
+      <h3 class="block-title">Observabilidad y Logging</h3>
+      <div class="fg"><label class="fl">¿Qué se registra?</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="mcp_m6_calls"> Todas las tool calls</label>
+          <label class="ci"><input type="checkbox" name="mcp_m6_errors"> Errores</label>
+          <label class="ci"><input type="checkbox" name="mcp_m6_latency"> Latencia</label>
+          <label class="ci"><input type="checkbox" name="mcp_m6_cost"> Coste tokens</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Destino de logs</label><input class="fi" type="text" name="mcp_m6_destino" placeholder="stdout / Datadog / CloudWatch / ELK…"></div>
+      <div class="fg"><label class="fl">Alertas definidas</label><textarea class="fi" name="mcp_m6_alertas" rows="2" placeholder="Error rate >5%, latencia >2s, tool blocked…"></textarea></div>
+    </div>
+
+    <div class="block" data-block="mcp7">
+      <div class="block-bar"></div>
+      <p class="block-num">M7 · Testing</p>
+      <h3 class="block-title">Testing y Despliegue</h3>
+      <div class="fg"><label class="fl">Estrategia de testing</label>
+        <div class="cg">
+          <label class="ci"><input type="checkbox" name="mcp_m7_unit"> Unit tests tools</label>
+          <label class="ci"><input type="checkbox" name="mcp_m7_integ"> Integration tests</label>
+          <label class="ci"><input type="checkbox" name="mcp_m7_mock"> Mock MCP client</label>
+          <label class="ci"><input type="checkbox" name="mcp_m7_e2e"> E2E con LLM</label>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Entorno de despliegue</label>
+        <div class="chips" data-rg="mcp_m7_deploy">
+          <button class="chip" data-val="local">Local</button><button class="chip" data-val="docker">Docker</button>
+          <button class="chip" data-val="k8s">Kubernetes</button><button class="chip" data-val="serverless">Serverless</button>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Versionado del servidor</label><input class="fi" type="text" name="mcp_m7_version" placeholder="semver: 1.0.0 / estrategia de migración…"></div>
+    </div>
+  </div>
+</div><!-- /panel mcp -->
+
+<!-- EXPORT PANEL -->
+<div id="expPanel" class="exp-panel" style="max-width:1400px;margin:0 auto 1rem;padding-left:1.5rem;padding-right:1.5rem;" role="region">
+  <div>
+    <p class="exp-title">Exportar tablero completo</p>
+    <p class="exp-sub">JSON con los 4 canvases · Word con todos los bloques</p>
+  </div>
+  <div class="exp-btns">
+    <button id="btnExpJson" class="btn-ghost">↓ JSON completo</button>
+    <button id="btnImpJson" class="btn-ghost">↑ Importar JSON</button>
+    <button id="btnExpWord" class="btn-primary">↓ Word (todos los canvases)</button>
+  </div>
+  <input type="file" id="jsonFile" accept=".json" class="sr-only">
+</div>
+
+</main>
+
+<!-- SHARE MODAL -->
+<div id="shareModal" class="modal-ov" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+  <div class="modal-box">
+    <h2 class="modal-title" id="shareTitle">Compartir tablero</h2>
+    <p class="modal-sub">El estado completo de los 4 canvases está codificado en la URL.</p>
+    <textarea id="shareUrl" class="modal-url" readonly></textarea>
+    <div class="modal-acts">
+      <button id="btnCopy" class="btn-primary">Copiar enlace</button>
+      <button id="btnCloseModal" class="btn-ghost">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<footer role="contentinfo">
+  <div class="foot-inner">
+    <span>Agent Canvas Board</span><span class="fsep">·</span>
+    <span class="foot-brand">QMetrika Labs</span><span class="fsep">·</span>
+    <span>MIT License</span><span class="fsep">·</span>
+    <span style="font-family:var(--mono)">4 canvases integrados</span>
+  </div>
+</footer>
+
+<script>
+'use strict';
+const STORAGE_KEY = 'agentCanvas_board_v1';
+let saveTimer = null;
+
+// ── TAB SWITCHING ──
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+const phaseItems = document.querySelectorAll('.ph[data-goto]');
+
+function switchTab(id) {
+  tabs.forEach(t => { t.classList.toggle('active', t.dataset.t === id); t.setAttribute('aria-selected', t.dataset.t === id); });
+  panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  phaseItems.forEach(p => p.classList.toggle('active-phase', p.dataset.ph === id || (id==='cloud'&&p.dataset.ph==='cloud') || (id==='onprem'&&p.dataset.ph==='onprem')));
+  // sync phase bar
+  document.querySelectorAll('.ph').forEach(p => p.classList.remove('active-phase'));
+  const map = {enterprise:'enterprise',cloud:'cloud',onprem:'onprem',mcp:'mcp'};
+  const phEl = document.querySelector('.ph[data-ph="'+map[id]+'"]');
+  if (phEl) phEl.classList.add('active-phase');
+}
+
+tabs.forEach(t => t.addEventListener('click', () => switchTab(t.dataset.t)));
+phaseItems.forEach(p => p.addEventListener('click', () => switchTab(p.dataset.goto)));
+
+// ── CHIP RADIO GROUPS ──
+document.querySelectorAll('[data-rg]').forEach(group => {
+  group.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      group.querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
+      chip.classList.add('sel');
+      scheduleAutoSave(); updateProgress();
+    });
+  });
+});
+
+// ── SLIDERS ──
+function wireSlider(rId, fillId, valId) {
+  const r = document.getElementById(rId);
+  const f = document.getElementById(fillId);
+  const v = document.getElementById(valId);
+  if (!r) return;
+  function upd() { const pct = ((r.value-r.min)/(r.max-r.min))*100; f.style.width=pct+'%'; v.textContent=r.value; }
+  r.addEventListener('input', () => { upd(); scheduleAutoSave(); updateProgress(); });
+  const track = f.parentElement;
+  track.addEventListener('click', e => {
+    const rect = track.getBoundingClientRect();
+    const pct = Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+    r.value = Math.round(pct*(r.max-r.min)+parseFloat(r.min));
+    upd(); scheduleAutoSave(); updateProgress();
+  });
+  upd();
+}
+wireSlider('r-ent-urgencia','sf-ent-urgencia','sv-ent-urgencia');
+
+// ── KPI BARS ──
+[['ent_kpi1','ek1f','ek1p'],['ent_kpi2','ek2f','ek2p'],['ent_kpi3','ek3f','ek3p']].forEach(([rid,fid,pid]) => {
+  const r = document.getElementById(rid);
+  const f = document.getElementById(fid);
+  const p = document.getElementById(pid);
+  if (!r) return;
+  function upd() { f.style.width=r.value+'%'; p.textContent=r.value+'%'; }
+  r.addEventListener('input', () => { upd(); scheduleAutoSave(); updateProgress(); });
+  upd();
+});
+
+// ── ALL INPUTS ──
+document.querySelectorAll('input,textarea,select').forEach(el => {
+  if (el.type==='file'||el.type==='range') return;
+  el.addEventListener('input', () => { scheduleAutoSave(); updateProgress(); });
+});
+
+// ── PROGRESS ──
+function blockFilled(block) {
+  const inputs = block.querySelectorAll('input[type=text],input[type=range],textarea,select');
+  const checks = block.querySelectorAll('input[type=checkbox]:checked');
+  const chips = block.querySelectorAll('.chip.sel');
+  let ok = false;
+  inputs.forEach(i => { if (i.type==='range') { if (+i.value>0) ok=true; } else if (i.value.trim()) ok=true; });
+  if (checks.length||chips.length) ok=true;
+  return ok;
+}
+
+function panelPct(panelId) {
+  const panel = document.getElementById(panelId);
+  const blocks = panel.querySelectorAll('[data-block]');
+  let filled = 0;
+  blocks.forEach(b => { if (blockFilled(b)) filled++; });
+  return blocks.length ? Math.round((filled/blocks.length)*100) : 0;
+}
+
+function updateProgress() {
+  const pcts = {enterprise: panelPct('panel-enterprise'), cloud: panelPct('panel-cloud'), onprem: panelPct('panel-onprem'), mcp: panelPct('panel-mcp')};
+  document.getElementById('epct').textContent = pcts.enterprise+'%';
+  document.getElementById('cpct').textContent = pcts.cloud+'%';
+  document.getElementById('opct').textContent = pcts.onprem+'%';
+  document.getElementById('mpct').textContent = pcts.mcp+'%';
+  ['enterprise','cloud','onprem','mcp'].forEach(k => {
+    document.getElementById('tpct-'+k).textContent = pcts[k]+'%';
+  });
+  const total = Math.round((pcts.enterprise+pcts.cloud+pcts.onprem+pcts.mcp)/4);
+  document.getElementById('totalFill').style.width = total+'%';
+  document.getElementById('totalPct').textContent = total+'%';
+  document.getElementById('totalBar').setAttribute('aria-valuenow', total);
+}
+
+// ── SAVE ──
+function scheduleAutoSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveState, 300); }
+function showSaved() {
+  const el = document.getElementById('saveInd');
+  el.classList.add('visible');
+  setTimeout(() => el.classList.remove('visible'), 2000);
+}
+
+// ── STATE ──
+function collectState() {
+  const state = { project: document.getElementById('projectName').value, fields: {}, chips: {}, checks: [], sliders: {} };
+  document.querySelectorAll('[name]').forEach(el => {
+    if (el.type==='checkbox') { if(el.checked) state.checks.push(el.name); }
+    else if (el.type==='range') { state.sliders[el.name]=el.value; }
+    else { state.fields[el.name]=el.value; }
+  });
+  document.querySelectorAll('[data-rg]').forEach(g => {
+    const sel = g.querySelector('.chip.sel');
+    if (sel) state.chips[g.dataset.rg] = sel.dataset.val;
+  });
+  return state;
+}
+
+function applyState(state) {
+  if (!state) return;
+  if (state.project) document.getElementById('projectName').value = state.project;
+  if (state.fields) Object.entries(state.fields).forEach(([n,v]) => {
+    const el = document.querySelector('[name="'+n+'"]');
+    if (el && el.type!=='checkbox' && el.type!=='range') el.value=v;
+  });
+  if (state.sliders) Object.entries(state.sliders).forEach(([n,v]) => {
+    const el = document.querySelector('[name="'+n+'"]');
+    if (el) { el.value=v; el.dispatchEvent(new Event('input')); }
+  });
+  if (state.checks) state.checks.forEach(n => {
+    const el = document.querySelector('[name="'+n+'"]');
+    if (el) el.checked=true;
+  });
+  if (state.chips) Object.entries(state.chips).forEach(([gid,val]) => {
+    const g = document.querySelector('[data-rg="'+gid+'"]');
+    if (!g) return;
+    g.querySelectorAll('.chip').forEach(c => c.classList.toggle('sel', c.dataset.val===val));
+  });
+  updateProgress();
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState())); showSaved(); } catch(e){}
+}
+function loadState() {
+  try { const s=localStorage.getItem(STORAGE_KEY); if(s) applyState(JSON.parse(s)); } catch(e){}
+}
+
+document.getElementById('btnSave').addEventListener('click', saveState);
+document.getElementById('projectName').addEventListener('input', () => scheduleAutoSave());
+
+// ── EXPORT PANEL ──
+document.getElementById('btnExp').addEventListener('click', () => {
+  document.getElementById('expPanel').classList.toggle('visible');
+});
+
+// ── JSON EXPORT ──
+document.getElementById('btnExpJson').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(collectState(),null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=(document.getElementById('projectName').value||'canvas-board')+'.json'; a.click();
+});
+document.getElementById('btnImpJson').addEventListener('click', () => document.getElementById('jsonFile').click());
+document.getElementById('jsonFile').addEventListener('change', e => {
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev => { try { applyState(JSON.parse(ev.target.result)); saveState(); } catch(err){alert('JSON inválido');} };
+  reader.readAsText(file); e.target.value='';
+});
+
+// ── WORD EXPORT ──
+document.getElementById('btnExpWord').addEventListener('click', () => {
+  const s = collectState();
+  const pname = s.project||'Proyecto IA';
+  const date = new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'});
+  const esc = t => (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const h1 = t => `<h1 style="font-size:20pt;color:#92400E;border-bottom:3px solid #F59E0B;padding-bottom:8pt;margin-top:0">${esc(t)}</h1>`;
+  const h2 = (t,color) => `<h2 style="font-size:14pt;color:${color||'#1C1917'};margin-top:18pt;border-bottom:1px solid #E7E5E4;padding-bottom:4pt">${esc(t)}</h2>`;
+  const h3 = t => `<h3 style="font-size:11pt;color:#44403C;margin-top:10pt">${esc(t)}</h3>`;
+  const f  = (label,name) => { const v=s.fields[name]||''; return v?`<p style="margin:3pt 0;font-size:10pt"><strong>${esc(label)}:</strong> ${esc(v)}</p>`:''};
+
+  const w = `<html><head><meta charset="UTF-8">
+<style>body{font-family:Calibri,sans-serif;margin:40pt;color:#1C1917}p{margin:3pt 0;font-size:10pt}</style>
+</head><body>
+${h1('Agent Canvas Board — '+pname)}
+<p style="color:#6B7280;font-size:9pt">${esc(date)} · QMetrika Labs · 4 canvases integrados</p>
+
+${h2('FASE 1 — ENTERPRISE AI ADOPTION CANVAS','#92400E')}
+${h3('B1. Mandato Ejecutivo')}
+${f('Sponsor','ent_b1_sponsor')}${f('Mandato formal','ent_b1_mandato')}
+${h3('B2. Gobernanza')}
+${f('¿Quién decide qué agentes se construyen?','ent_b2_decide')}
+${h3('B3. Propuesta de Valor Organizativa')}
+${f('Nueva capacidad','ent_b3_capacidad')}${f('Ventaja competitiva','ent_b3_diferencial')}
+${h3('B5. Urgencia Competitiva')}
+${f('Competencia','ent_b5_competencia')}${f('Riesgo de no actuar','ent_b5_riesgo')}
+${h3('B6. Hoja de Ruta')}
+${f('Piloto','ent_b6_piloto')}${f('Expansión','ent_b6_expansion')}${f('Escala','ent_b6_escala')}${f('Gates','ent_b6_gate')}
+${h3('B7. Gestión del Cambio')}
+${f('Responsable','ent_b7_lider')}${f('Resistencias','ent_b7_resistencias')}${f('Comunicación','ent_b7_comun')}
+${h3('B8. Habilitación')}
+${f('Formación','ent_b8_formacion')}${f('Cultura IA','ent_b8_cultura')}
+${h3('B10. Revisión')}
+${f('¿Quién revisa?','ent_b10_quien')}${f('¿Qué puede parar el programa?','ent_b10_para')}
+
+${h2('FASE 2A — CLOUD EDITION','#312E81')}
+${h3('B1. Segmento')}${f('Para quién','cl_b1_para_quien')}${f('Problema','cl_b1_problema')}
+${h3('B2. Propuesta de Valor')}${f('Valor diferencial','cl_b2_propuesta')}${f('KPI principal','cl_b2_kpi')}
+${h3('B3. Canales')}${f('Integración','cl_b3_integracion')}
+${h3('B4. Personalidad')}${f('Nombre del agente','cl_b4_nombre')}${f('Fallback','cl_b4_fallback')}
+${h3('B5. KPIs')}${f('North star','cl_b5_northstar')}${f('Target 3 meses','cl_b5_target')}
+${h3('B7. Actividades')}${f('Skills','cl_b7_skills')}${f('Pipeline','cl_b7_pipeline')}
+${h3('B8. Socios')}${f('APIs externas','cl_b8_apis')}${f('Proveedores','cl_b8_proveedores')}
+${h3('B9. Costes')}${f('Coste mensual estimado','cl_b9_coste')}${f('Riesgos técnicos','cl_b9_riesgos_tec')}
+${h3('B10. Guardarraíles')}${f('Política de escalación','cl_b10_escalacion')}
+
+${h2('FASE 2B — ON-PREM EDITION','#064E3B')}
+${h3('B1. Segmento')}${f('Para quién','op_b1_para_quien')}${f('Regulación','op_b1_regulacion')}
+${h3('B2. Propuesta')}${f('Justificación on-prem','op_b2_justificacion')}${f('Ventaja vs cloud','op_b2_ventaja')}
+${h3('B6. Hardware')}${f('Hardware personalizado','op_b6_hw_custom')}
+${h3('B9. Costes')}${f('CAPEX','op_b9_capex')}${f('OPEX mensual','op_b9_opex')}${f('Riesgos','op_b9_riesgos')}
+${h3('B10. Guardarraíles')}${f('Plan de continuidad','op_b10_continuidad')}
+
+${h2('FASE 3 — MCP CANVAS','#164E63')}
+${h3('M1. Contexto')}${f('¿Qué expone el servidor MCP?','mcp_m1_expone')}
+${h3('M2. Herramientas')}${f('Tools expuestas','mcp_m2_tools')}
+${h3('M3. Transporte')}${f('Endpoint / comando','mcp_m3_endpoint')}
+${h3('M4. Recursos')}${f('Recursos (URI)','mcp_m4_resources')}${f('Prompts','mcp_m4_prompts')}
+${h3('M5. Seguridad')}${f('Política de confirmación humana','mcp_m5_confirm')}
+${h3('M6. Observabilidad')}${f('Destino de logs','mcp_m6_destino')}${f('Alertas','mcp_m6_alertas')}
+${h3('M7. Testing')}${f('Versión del servidor','mcp_m7_version')}
+
+<hr style="border:none;border-top:1px solid #E7E5E4;margin:20pt 0">
+<p style="color:#9CA3AF;font-size:9pt">Agent Canvas Board · ${esc(date)} · QMetrika Labs</p>
+</body></html>`;
+
+  const blob=new Blob(['﻿'+w],{type:'application/msword'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=pname.replace(/\s+/g,'-').toLowerCase()+'-canvas-board.doc'; a.click();
+});
+
+// ── SHARE ──
+function encodeState(s) {
+  try { return '#board='+btoa(unescape(encodeURIComponent(JSON.stringify(s)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); } catch(e){return '';}
+}
+function decodeHash(h) {
+  if (!h.startsWith('#board=')) return null;
+  try { return JSON.parse(decodeURIComponent(escape(atob(h.slice(7).replace(/-/g,'+').replace(/_/g,'/'))))); } catch(e){return null;}
+}
+document.getElementById('btnShare').addEventListener('click', () => {
+  const url = location.href.split('#')[0]+encodeState(collectState());
+  document.getElementById('shareUrl').value=url;
+  document.getElementById('shareModal').classList.add('visible');
+});
+document.getElementById('btnCopy').addEventListener('click', () => {
+  navigator.clipboard.writeText(document.getElementById('shareUrl').value).then(() => {
+    const b=document.getElementById('btnCopy'); b.textContent='✓ Copiado';
+    setTimeout(()=>b.textContent='Copiar enlace',2000);
+  });
+});
+document.getElementById('btnCloseModal').addEventListener('click', () => document.getElementById('shareModal').classList.remove('visible'));
+document.getElementById('shareModal').addEventListener('click', e => { if(e.target===e.currentTarget) e.currentTarget.classList.remove('visible'); });
+
+// ── INIT ──
+(function init() {
+  const hash = location.hash;
+  if (hash.startsWith('#board=')) { const s=decodeHash(hash); if(s){applyState(s);return;} }
+  loadState();
+})();
+updateProgress();
+</script>
+</body>
+</html>

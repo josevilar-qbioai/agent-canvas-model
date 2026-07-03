@@ -3,123 +3,264 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agent Canvas Model — QMetrika Labs</title>
-<meta name="description" content="Framework de diseño de agentes IA. Adapta el Business Model Canvas a 10 bloques para planificar, diseñar y desplegar agentes en producción.">
+<title>Q · Agent Canvas Model — QMetrika Labs</title>
+<meta name="description" content="Framework de diseño de agentes IA en 3 fases: gobernanza organizativa, diseño técnico y arquitectura MCP. Sin código. Con exportación a Word.">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:   #252830;
-  --sf:   #2C2F34;
-  --sf2:  #32363B;
-  --bd:   #3C4047;
-  --bd2:  #494E55;
-  --tx:   #F0F2F5;
-  --tx2:  #9BA3AD;
-  --mu:   #5C646E;
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'Inter', system-ui, sans-serif;
+  --bg:      #252830;
+  --sf:      #2C2F34;
+  --sf2:     #32363B;
+  --bd:      #3C4047;
+  --bd2:     #494E55;
+  --tx:      #F0F2F5;
+  --tx2:     #9BA3AD;
+  --mu:      #5C646E;
+  --mono:    'JetBrains Mono', monospace;
+  --sans:    'Inter', system-ui, sans-serif;
   --indigo:  #6366F1;
   --emerald: #10B981;
   --cyan:    #06B6D4;
   --amber:   #F59E0B;
+  --board:   #8B5CF6;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--sans); background: var(--bg); color: var(--tx); min-height: 100vh; line-height: 1.5; }
+a { text-decoration: none; color: inherit; }
 
+/* ── HEADER ── */
 header {
   background: var(--sf); border-bottom: 1px solid var(--bd);
   padding: 0 2rem; height: 54px;
   display: flex; align-items: center; gap: .75rem;
+  position: sticky; top: 0; z-index: 100;
 }
-.q-logo {
-  width: 26px; height: 26px; background: var(--indigo); border-radius: 6px;
-  display: grid; place-items: center;
-  font-family: var(--mono); font-size: .78rem; font-weight: 700; color: #fff;
-}
-.logo-name { font-size: .82rem; font-weight: 600; color: var(--tx); }
+.logo-name { font-size: .85rem; font-weight: 700; letter-spacing: -.01em; }
+.logo-sep { color: var(--mu); margin: 0 .1rem; font-weight: 300; }
+.logo-sub { font-size: .85rem; font-weight: 400; color: var(--tx2); }
 .logo-badge {
   font-family: var(--mono); font-size: .6rem; letter-spacing: .04em;
-  color: var(--indigo); background: rgba(99,102,241,.12);
-  border: 1px solid rgba(99,102,241,.3); padding: .16rem .5rem; border-radius: 4px;
+  color: var(--board); background: rgba(139,92,246,.12);
+  border: 1px solid rgba(139,92,246,.3); padding: .16rem .5rem; border-radius: 4px;
 }
-.header-right { margin-left: auto; }
-.gh-link {
+.header-right { margin-left: auto; display: flex; gap: .6rem; }
+.nav-link {
   font-size: .75rem; color: var(--tx2); text-decoration: none;
-  border: 1px solid var(--bd2); padding: .3rem .75rem; border-radius: 5px;
+  border: 1px solid var(--bd2); padding: .28rem .75rem; border-radius: 5px;
   transition: all .15s; font-family: var(--mono);
 }
-.gh-link:hover { border-color: var(--indigo); color: var(--indigo); }
+.nav-link:hover { border-color: var(--board); color: var(--board); }
+.nav-link.primary { background: var(--board); border-color: var(--board); color: #fff; font-weight: 600; }
+.nav-link.primary:hover { opacity: .88; }
 
+/* ── HERO ── */
 .hero {
-  max-width: 860px; margin: 0 auto;
-  padding: 5rem 2rem 4rem; text-align: center;
+  max-width: 760px; margin: 0 auto;
+  padding: 4.5rem 2rem 3rem; text-align: center;
 }
 .eyebrow {
-  font-family: var(--mono); font-size: .68rem; color: var(--mu);
-  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.25rem;
+  font-family: var(--mono); font-size: .67rem; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1.1rem;
 }
-.eyebrow span { color: var(--indigo); }
+.eyebrow span { color: var(--board); }
 h1 {
-  font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.1;
-  letter-spacing: -.025em; margin-bottom: 1rem;
+  font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.12;
+  letter-spacing: -.025em; margin-bottom: .85rem;
 }
-h1 em { color: var(--indigo); font-style: normal; }
-.sub {
-  font-size: 1rem; color: var(--tx2); max-width: 520px;
-  margin: 0 auto 3.5rem; line-height: 1.7;
+h1 em { color: var(--board); font-style: normal; }
+.tagline {
+  font-size: .92rem; color: var(--tx2); font-style: italic;
+  margin-bottom: 1.1rem; opacity: .75; letter-spacing: .01em;
+}
+.hero-sub {
+  font-size: .95rem; color: var(--tx2); max-width: 500px;
+  margin: 0 auto 2.5rem; line-height: 1.7;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--board); color: #fff; font-weight: 700;
+  padding: .7rem 1.6rem; border-radius: 8px; font-size: .88rem;
+  transition: opacity .15s; text-decoration: none;
+}
+.hero-cta:hover { opacity: .88; }
+.hero-cta-sub {
+  display: block; font-size: .73rem; color: var(--tx2); margin-top: .6rem;
+  font-family: var(--mono);
 }
 
-.cards {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
-  max-width: 1200px; margin: 0 auto 4rem; padding: 0 2rem;
+/* ── PHASES SECTION ── */
+.phases-wrap {
+  max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem;
 }
-@media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
-@media (min-width: 701px) and (max-width: 1024px) { .cards { grid-template-columns: 1fr 1fr; } }
+.section-label {
+  font-family: var(--mono); font-size: .62rem; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .12em;
+  text-align: center; margin-bottom: 2rem;
+}
+.phases-grid {
+  display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; align-items: start; gap: 0;
+}
+@media (max-width: 720px) {
+  .phases-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .phase-arrow { display: none; }
+}
+.phase-arrow {
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 2.2rem; color: var(--mu); font-size: 1.2rem;
+}
+.phase {
+  background: var(--sf); border: 1px solid var(--bd);
+  border-radius: 10px; padding: 1.6rem 1.4rem; position: relative; overflow: hidden;
+}
+.phase::before {
+  content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px;
+}
+.phase-1::before { background: var(--amber); }
+.phase-2::before { background: linear-gradient(90deg, var(--indigo), var(--emerald)); }
+.phase-3::before { background: var(--cyan); }
+
+.phase-num {
+  font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em;
+  margin-bottom: .4rem;
+}
+.phase-1 .phase-num { color: var(--amber); }
+.phase-2 .phase-num { color: var(--indigo); }
+.phase-3 .phase-num { color: var(--cyan); }
+
+.phase-title { font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+.phase-desc { font-size: .8rem; color: var(--tx2); line-height: 1.65; margin-bottom: 1rem; }
+
+.phase-blocks { display: flex; flex-direction: column; gap: .3rem; }
+.phase-block {
+  display: flex; align-items: flex-start; gap: .5rem;
+  font-size: .76rem; color: var(--tx2);
+}
+.phase-block-dot {
+  width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: .45rem;
+}
+.phase-1 .phase-block-dot { background: var(--amber); }
+.phase-2 .phase-block-dot { background: var(--indigo); }
+.phase-3 .phase-block-dot { background: var(--cyan); }
+
+.phase-links { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.1rem; }
+.phase-link {
+  font-family: var(--mono); font-size: .67rem; font-weight: 600;
+  padding: .28rem .7rem; border-radius: 5px; border: 1px solid;
+  text-decoration: none; transition: all .15s;
+}
+.phase-1 .phase-link { color: var(--amber); border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.07); }
+.phase-1 .phase-link:hover { background: rgba(245,158,11,.15); }
+.phase-2 .phase-link.cloud { color: var(--indigo); border-color: rgba(99,102,241,.35); background: rgba(99,102,241,.07); }
+.phase-2 .phase-link.cloud:hover { background: rgba(99,102,241,.15); }
+.phase-2 .phase-link.onprem { color: var(--emerald); border-color: rgba(16,185,129,.35); background: rgba(16,185,129,.07); }
+.phase-2 .phase-link.onprem:hover { background: rgba(16,185,129,.15); }
+.phase-3 .phase-link { color: var(--cyan); border-color: rgba(6,182,212,.35); background: rgba(6,182,212,.07); }
+.phase-3 .phase-link:hover { background: rgba(6,182,212,.15); }
+
+/* ── BOARD CTA ── */
+.board-wrap {
+  max-width: 1100px; margin: 0 auto 1.5rem; padding: 0 2rem;
+}
+.board-card {
+  background: var(--sf); border: 1px solid rgba(139,92,246,.4);
+  border-radius: 12px; padding: 1.4rem 1.75rem;
+  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  transition: border-color .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(139,92,246,.1), 0 4px 24px rgba(0,0,0,.3);
+}
+.board-card:hover { border-color: var(--board); box-shadow: 0 0 0 1px var(--board), 0 8px 40px rgba(0,0,0,.5); }
+.board-glow {
+  position: absolute; top: -60px; right: -60px; width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(139,92,246,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.board-icon {
+  width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(139,92,246,.15); border: 1px solid rgba(139,92,246,.3);
+  display: grid; place-items: center; font-size: 1.5rem;
+}
+.board-body { flex: 1; min-width: 0; }
+.board-sup {
+  font-family: var(--mono); font-size: .6rem; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--board); margin-bottom: .3rem;
+}
+.board-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .3rem; }
+.board-desc { font-size: .82rem; color: var(--tx2); line-height: 1.6; margin-bottom: .6rem; }
+.board-phases {
+  display: flex; align-items: center; gap: .3rem; flex-wrap: wrap;
+  font-family: var(--mono); font-size: .62rem;
+}
+.bph { padding: .18rem .55rem; border-radius: 20px; border: 1px solid; }
+.bph-ent { color: var(--amber);   border-color: rgba(245,158,11,.4);  background: rgba(245,158,11,.08); }
+.bph-cl  { color: var(--indigo);  border-color: rgba(99,102,241,.4);  background: rgba(99,102,241,.08); }
+.bph-op  { color: var(--emerald); border-color: rgba(16,185,129,.4);  background: rgba(16,185,129,.08); }
+.bph-mcp { color: var(--cyan);    border-color: rgba(6,182,212,.4);   background: rgba(6,182,212,.08); }
+.bph-arr { color: var(--mu); }
+.board-btn {
+  background: var(--board); color: #fff; font-weight: 700;
+  padding: .6rem 1.4rem; border-radius: 7px; font-size: .83rem;
+  white-space: nowrap; transition: opacity .15s; text-decoration: none; display: inline-block;
+}
+.board-btn:hover { opacity: .88; }
+
+/* ── INDIVIDUAL CARDS ── */
+.cards-section {
+  max-width: 1100px; margin: 0 auto 4rem; padding: 0 2rem;
+}
+.cards-section-label {
+  font-family: var(--mono); font-size: .6rem; color: var(--mu);
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1rem;
+  text-align: center;
+}
+.cards {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: .85rem;
+}
+@media (max-width: 700px) { .cards { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 440px) { .cards { grid-template-columns: 1fr; } }
 
 .card {
   background: var(--sf); border: 1px solid var(--bd);
-  border-radius: 10px; padding: 1.75rem 1.5rem;
-  text-decoration: none; color: inherit;
-  display: flex; flex-direction: column; gap: .6rem;
+  border-radius: 9px; padding: 1.2rem 1.1rem;
+  display: flex; flex-direction: column; gap: .45rem;
   transition: border-color .2s, transform .2s, box-shadow .2s;
   position: relative; overflow: hidden;
 }
 .card::before {
-  content: ''; position: absolute;
-  left: 0; top: 0; bottom: 0; width: 2px;
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
 }
-.card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.5); }
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,.45); }
+.card-enterprise::before { background: var(--amber); }
 .card-cloud::before      { background: var(--indigo); }
 .card-onprem::before     { background: var(--emerald); }
 .card-mcp::before        { background: var(--cyan); }
-.card-enterprise::before { background: var(--amber); }
-.card-cloud:hover      { border-color: var(--indigo); }
-.card-onprem:hover     { border-color: var(--emerald); }
-.card-mcp:hover        { border-color: var(--cyan); }
-.card-enterprise:hover { border-color: var(--amber); }
+.card-enterprise:hover   { border-color: var(--amber); }
+.card-cloud:hover        { border-color: var(--indigo); }
+.card-onprem:hover       { border-color: var(--emerald); }
+.card-mcp:hover          { border-color: var(--cyan); }
 
 .card-label {
-  font-family: var(--mono); font-size: .62rem;
+  font-family: var(--mono); font-size: .58rem;
   text-transform: uppercase; letter-spacing: .1em;
 }
+.card-enterprise .card-label { color: var(--amber); }
 .card-cloud      .card-label { color: var(--indigo); }
 .card-onprem     .card-label { color: var(--emerald); }
 .card-mcp        .card-label { color: var(--cyan); }
-.card-enterprise .card-label { color: var(--amber); }
-.card h2 { font-size: .95rem; font-weight: 600; color: var(--tx); }
-.card p  { font-size: .82rem; color: var(--tx2); line-height: 1.6; flex: 1; }
+.card h3 { font-size: .88rem; font-weight: 600; }
+.card p  { font-size: .76rem; color: var(--tx2); line-height: 1.55; flex: 1; }
 .card-cta {
-  margin-top: .5rem; font-family: var(--mono); font-size: .75rem; font-weight: 500;
-  display: flex; align-items: center; gap: .35rem;
+  margin-top: .3rem; font-family: var(--mono); font-size: .7rem; font-weight: 500;
 }
+.card-enterprise .card-cta { color: var(--amber); }
 .card-cloud      .card-cta { color: var(--indigo); }
 .card-onprem     .card-cta { color: var(--emerald); }
 .card-mcp        .card-cta { color: var(--cyan); }
-.card-enterprise .card-cta { color: var(--amber); }
 
+/* ── FEATURES ── */
 .features-wrap {
   max-width: 860px; margin: 0 auto 5rem; padding: 0 2rem; text-align: center;
 }
@@ -127,109 +268,185 @@ h1 em { color: var(--indigo); font-style: normal; }
   font-family: var(--mono); font-size: .62rem; color: var(--mu);
   text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1rem;
 }
-.tags { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+.tags { display: flex; flex-wrap: wrap; gap: .45rem; justify-content: center; }
 .tag {
-  font-size: .75rem; padding: .3rem .8rem; border-radius: 20px;
+  font-size: .73rem; padding: .28rem .75rem; border-radius: 20px;
   border: 1px solid var(--bd2); color: var(--tx2); background: var(--sf);
 }
 
+/* ── FOOTER ── */
 footer {
   background: var(--sf); border-top: 1px solid var(--bd);
   padding: 1.25rem 2rem; text-align: center;
   font-size: .72rem; color: var(--mu);
   display: flex; align-items: center; justify-content: center; gap: .75rem; flex-wrap: wrap;
 }
-footer a { color: var(--indigo); text-decoration: none; }
+footer a { color: var(--indigo); }
 footer a:hover { text-decoration: underline; }
 .sep { opacity: .4; }
-.tagline {
-  font-size: .95rem; color: var(--tx2); font-style: italic;
-  margin-bottom: 1.75rem; letter-spacing: .01em; opacity: .75;
-}
-.q-logo-svg { display:block; flex-shrink:0; }
-.q-logo-img { width:32px; height:32px; object-fit:contain; flex-shrink:0; }
-.hero-video-wrap {
-  width: 120px; height: 120px;
-  margin: 0 auto 1.5rem;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
-.hero-video {
-  width: 120px; height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  opacity: .9;
-}
 </style>
 </head>
 <body>
 
 <header>
-  <img src="assets/logo-q.png" class="q-logo-img" alt="QMetrika" width="32" height="32">
-  <span class="logo-name">Agent Canvas Model</span>
+  <span class="logo-name">Q</span><span class="logo-sep">·</span><span class="logo-sub">Agent Canvas Model</span>
   <span class="logo-badge">v4.0 · 2026</span>
-  <div class="header-right">
-    <a href="https://github.com/josevilar-qbioai/agent-canvas-model" class="gh-link" target="_blank" rel="noopener">GitHub →</a>
-  </div>
+  <nav class="header-right" aria-label="Navegación principal">
+    <a href="https://github.com/josevilar-qbioai/agent-canvas-model" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+    <a href="board/" class="nav-link primary">Abrir tablero →</a>
+  </nav>
 </header>
 
 <main>
+
+  <!-- ── HERO ── -->
   <div class="hero">
-    <div class="hero-video-wrap">
-      <video class="hero-video" autoplay muted loop playsinline preload="auto"
-             aria-label="QMetrika logo animation">
-        <source src="assets/video-q-metrika.mp4" type="video/mp4">
-      </video>
-    </div>
     <p class="eyebrow"><span>QMetrika Labs</span> · Agent Canvas Model</p>
-    <h1>Diseña tu agente IA<br>antes de <em>programarlo</em></h1>
+    <h1>El framework para diseñar<br>agentes IA <em>antes de programarlos</em></h1>
     <p class="tagline">Primero la quietud del pensamiento, luego la técnica.</p>
-    <p class="sub">Adaptación del Business Model Canvas para planificar, diseñar y desplegar agentes en producción. 10 bloques. Sin código. Con exportación a Word.</p>
+    <p class="hero-sub">3 fases, 4 canvas, 10 bloques cada uno. Alinea negocio y tecnología antes de escribir una línea de código.</p>
+    <a href="board/" class="hero-cta">Abrir el tablero integrado →</a>
+    <span class="hero-cta-sub">o explora cada canvas por separado ↓</span>
   </div>
 
-  <div class="cards">
-    <a href="cloud/" class="card card-cloud">
-      <div class="card-label">Cloud Edition</div>
-      <h2>Agentes en Cloud</h2>
-      <p>Para agentes con Azure, AWS, GCP, Copilot Studio, LangChain o APIs gestionadas.</p>
-      <div class="card-cta">Abrir canvas →</div>
-    </a>
-    <a href="onprem/" class="card card-onprem">
-      <div class="card-label">On-Prem Edition</div>
-      <h2>Modelos locales</h2>
-      <p>Para agentes con Ollama, vLLM o LM Studio en entornos air-gap o alta privacidad.</p>
-      <div class="card-cta">Abrir canvas →</div>
-    </a>
-    <a href="mcp/" class="card card-mcp">
-      <div class="card-label">MCP Canvas</div>
-      <h2>Arquitectura MCP</h2>
-      <p>Diseña tu capa de Model Context Protocol: servidores, transporte, seguridad y observabilidad.</p>
-      <div class="card-cta">Abrir canvas →</div>
-    </a>
-    <a href="enterprise/" class="card card-enterprise">
-      <div class="card-label">Enterprise Adoption</div>
-      <h2>Adopción Empresarial</h2>
-      <p>Mandato ejecutivo, gobernanza, gestión del cambio y hoja de ruta antes de construir.</p>
-      <div class="card-cta">Abrir canvas →</div>
+  <!-- ── FASES ── -->
+  <div class="phases-wrap">
+    <p class="section-label">Cómo funciona · 3 fases de diseño</p>
+    <div class="phases-grid">
+
+      <!-- FASE 1 -->
+      <div class="phase phase-1">
+        <p class="phase-num">Fase 1 · Estratégica</p>
+        <h2 class="phase-title">Gobernanza y Adopción</h2>
+        <p class="phase-desc">Antes de elegir tecnología, define quién patrocina el programa, cómo se gobierna y cómo gestionar el cambio organizativo.</p>
+        <div class="phase-blocks">
+          <div class="phase-block"><span class="phase-block-dot"></span>Mandato ejecutivo y sponsor</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Modelo de gobernanza (AI Office / CoE)</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Mapa de stakeholders y resistencias</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Hoja de ruta de adopción (3 fases)</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Gestión del cambio y habilitación</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Métricas organizativas y cadencia de revisión</div>
+        </div>
+        <div class="phase-links">
+          <a href="enterprise/" class="phase-link">Enterprise Adoption Canvas →</a>
+        </div>
+      </div>
+
+      <div class="phase-arrow" aria-hidden="true">→</div>
+
+      <!-- FASE 2 -->
+      <div class="phase phase-2">
+        <p class="phase-num">Fase 2 · Técnica</p>
+        <h2 class="phase-title">Diseño del Agente</h2>
+        <p class="phase-desc">Define quién usa el agente, qué valor entrega, qué tecnología necesita y cómo garantizar su operación segura.</p>
+        <div class="phase-blocks">
+          <div class="phase-block"><span class="phase-block-dot"></span>Segmento de usuarios y propuesta de valor</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Canales, personalidad y tono</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>KPIs y fuentes de valor</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Modelo base, Control Flow Pattern</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Socios, integraciones y costes</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Guardarraíles de seguridad y ética</div>
+        </div>
+        <div class="phase-links">
+          <a href="cloud/" class="phase-link cloud">Cloud Edition →</a>
+          <a href="onprem/" class="phase-link onprem">On-Prem Edition →</a>
+        </div>
+      </div>
+
+      <div class="phase-arrow" aria-hidden="true">→</div>
+
+      <!-- FASE 3 -->
+      <div class="phase phase-3">
+        <p class="phase-num">Fase 3 · Arquitectura</p>
+        <h2 class="phase-title">Capa MCP</h2>
+        <p class="phase-desc">Diseña la capa de Model Context Protocol: qué expone el servidor, cómo se transporta, con qué seguridad y cómo se observa.</p>
+        <div class="phase-blocks">
+          <div class="phase-block"><span class="phase-block-dot"></span>Herramientas (tools) expuestas</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Recursos y prompts del servidor</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Transporte: stdio / HTTP+SSE / WebSocket</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Autenticación y control de acceso</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Observabilidad y logging</div>
+          <div class="phase-block"><span class="phase-block-dot"></span>Testing y estrategia de despliegue</div>
+        </div>
+        <div class="phase-links">
+          <a href="mcp/" class="phase-link">MCP Canvas →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── TABLERO INTEGRADO ── -->
+  <div class="board-wrap">
+    <a href="board/" class="board-card">
+      <div class="board-glow" aria-hidden="true"></div>
+      <div class="board-icon" aria-hidden="true">⊞</div>
+      <div class="board-body">
+        <p class="board-sup">Recomendado · Tablero Integrado</p>
+        <h2 class="board-title">Canvas Board — Las 3 fases en un solo espacio</h2>
+        <p class="board-desc">Los 4 canvas en pestañas. Mismo proyecto, mismo enlace, exportación a Word de todo a la vez. El punto de entrada recomendado para cualquier iniciativa de IA.</p>
+        <div class="board-phases">
+          <span class="bph bph-ent">① Enterprise</span>
+          <span class="bph-arr">→</span>
+          <span class="bph bph-cl">② Cloud</span>
+          <span class="bph-arr">·</span>
+          <span class="bph bph-op">② On-Prem</span>
+          <span class="bph-arr">→</span>
+          <span class="bph bph-mcp">③ MCP</span>
+        </div>
+      </div>
+      <a href="board/" class="board-btn">Abrir tablero →</a>
     </a>
   </div>
 
+  <!-- ── CANVASES INDIVIDUALES ── -->
+  <div class="cards-section">
+    <p class="cards-section-label">O accede a cada canvas por separado</p>
+    <div class="cards">
+      <a href="enterprise/" class="card card-enterprise">
+        <div class="card-label">Fase 1 · Enterprise</div>
+        <h3>Adopción Empresarial</h3>
+        <p>Mandato, gobernanza, cambio y hoja de ruta antes de construir.</p>
+        <div class="card-cta">Abrir →</div>
+      </a>
+      <a href="cloud/" class="card card-cloud">
+        <div class="card-label">Fase 2 · Cloud</div>
+        <h3>Agentes en Cloud</h3>
+        <p>Azure, AWS, GCP, Copilot Studio, LangChain, APIs gestionadas.</p>
+        <div class="card-cta">Abrir →</div>
+      </a>
+      <a href="onprem/" class="card card-onprem">
+        <div class="card-label">Fase 2 · On-Prem</div>
+        <h3>Modelos Locales</h3>
+        <p>Ollama, vLLM, LM Studio. Entornos air-gap y alta privacidad.</p>
+        <div class="card-cta">Abrir →</div>
+      </a>
+      <a href="mcp/" class="card card-mcp">
+        <div class="card-label">Fase 3 · Arquitectura</div>
+        <h3>MCP Canvas</h3>
+        <p>Model Context Protocol: servidores, transporte, seguridad.</p>
+        <div class="card-cta">Abrir →</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FEATURES ── -->
   <div class="features-wrap">
-    <p class="features-label">Funcionalidades v4.0</p>
+    <p class="features-label">Funcionalidades</p>
     <div class="tags">
-      <span class="tag">💾 Auto-guardado</span>
-      <span class="tag">🔗 Compartir por enlace</span>
+      <span class="tag">💾 Auto-guardado localStorage</span>
+      <span class="tag">🔗 Compartir por URL hash</span>
       <span class="tag">📂 Importar / Exportar JSON</span>
       <span class="tag">📄 Exportar Word PRD+ADR</span>
-      <span class="tag">♿ WCAG 2.2 AA</span>
-      <span class="tag">⌨️ Navegación por teclado</span>
       <span class="tag">⚡ Control Flow Pattern</span>
-      <span class="tag">🔌 MCP checkbox</span>
+      <span class="tag">🔌 MCP Architecture Canvas</span>
       <span class="tag">🔒 Event Sourcing</span>
+      <span class="tag">🏢 Enterprise Governance</span>
       <span class="tag">🖥️ Air-gap ready</span>
+      <span class="tag">♿ WCAG 2.2 AA</span>
     </div>
   </div>
+
 </main>
 
 <footer>
