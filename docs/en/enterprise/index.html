@@ -254,11 +254,12 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
     <span class="logo-name">Agent Canvas</span>
     <span class="logo-edition">Enterprise Adoption</span>
   </div>
-  <div class="header-actions" role="toolbar" aria-label="Acciones del canvas">
+  <div class="header-actions" role="toolbar" aria-label="Canvas actions">
+    <a href="../" class="btn-ghost" style="text-decoration:none;font-size:.75rem;" aria-label="Back to home">← Home</a>
     <a href="../../enterprise/" style="font-family:var(--mono,monospace);font-size:.85rem;font-weight:600;padding:.38rem .75rem;border:1.5px solid var(--board,#8B5CF6);border-radius:6px;color:var(--board,#8B5CF6);background:transparent;text-decoration:none;white-space:nowrap;letter-spacing:.03em;" title="Spanish version">ES</a><a href="./" style="font-family:var(--mono,monospace);font-size:.85rem;font-weight:700;padding:.38rem .75rem;border:1.5px solid var(--board,#8B5CF6);border-radius:6px;color:#fff;background:var(--board,#8B5CF6);text-decoration:none;white-space:nowrap;letter-spacing:.03em;" aria-current="page">EN</a>
-    <label for="canvasName" class="sr-only">Name del proyecto</label>
+    <label for="canvasName" class="sr-only">Project name</label>
     <input id="canvasName" name="canvasName" type="text"
-           placeholder="Name del proyecto IA…"
+           placeholder="AI project name…"
            aria-label="Name del proyecto">
     <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
     <button id="btnExport" class="btn-ghost" aria-controls="exportPanel">Export ▾</button>
@@ -487,7 +488,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
             <button class="chip" role="radio" aria-checked="false" data-val="3m">&lt;3 months</button>
             <button class="chip" role="radio" aria-checked="false" data-val="6m">3–6 months</button>
             <button class="chip" role="radio" aria-checked="false" data-val="12m">6–12 months</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="mas">&gt;1 año</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="mas">&gt;1 year</button>
           </div>
         </div>
         <div class="field-group">

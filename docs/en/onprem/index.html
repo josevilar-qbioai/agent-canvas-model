@@ -567,13 +567,13 @@ footer {
   </div>
 </header>
 
-<div class="boot" role="region" aria-label="Presentación">
+<div class="boot" role="region" aria-label="Introduction">
   <div class="boot-pre">
     <span>#</span> Agent Canvas v4 — On-Prem Edition<br>
     <span>#</span> Ollama · vLLM · TGI · Hardware dedicado · Sin datos al exterior · auto-save activado
   </div>
   <h1>Agent Canvas <em>v4</em><br>On-Prem Edition</h1>
-  <p class="boot-desc">Framework de diseño para agentes IA con modelos locales. Soberanía total de datos. Sin dependencia de proveedor cloud. Completa los 10 blocks — empieza por ★.</p>
+  <p class="boot-desc">AI agent design framework with local models. Full data sovereignty. No cloud provider dependency. Complete the 10 blocks — start with ★.</p>
   <div class="boot-stats">
     <div class="boot-stat"><span class="val">10</span><span class="lbl">BLOQUES</span></div>
     <div class="boot-stat"><span class="val">6a</span><span class="lbl">HARDWARE FIRST</span></div>
@@ -592,7 +592,7 @@ footer {
 <div class="canvas-wrap">
 
   <div class="canvas-bar">
-    <div class="canvas-label"><strong>canvas.json</strong> · modo edición · auto-save activado</div>
+    <div class="canvas-label"><strong>canvas.json</strong> · edit mode · auto-save on</div>
     <div class="prog-wrap">
       <div class="prog-text" id="progText" aria-live="polite">0/10 blocks</div>
       <div class="prog-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -607,7 +607,7 @@ footer {
     <div class="block b8" data-block="b8" role="region" aria-labelledby="b8-title">
       <div class="block-accent" aria-hidden="true"></div>
       <div class="block-num" id="b8-title">// 8 · INFRAESTRUCTURA &amp; INTEGRACIONES ON-PREM</div>
-      <div class="block-title">Con qué sistemas locales conecta el agente</div>
+      <div class="block-title">What local systems the agent connects to</div>
       <div class="field-group">
         <div class="field-label" id="b8-stack-label">Serving stack</div>
         <div class="gpu-chips" id="stackChips" role="radiogroup" aria-labelledby="b8-stack-label">
@@ -619,7 +619,7 @@ footer {
       </div>
       <div class="divider"></div>
       <div class="field-group">
-        <div class="field-label" id="b8-orch-label">Orquestación / Framework</div>
+        <div class="field-label" id="b8-orch-label">Orchestration / Framework</div>
         <div class="check-grid" role="group" aria-labelledby="b8-orch-label">
           <label class="check-item"><input type="checkbox" value="LangChain / LangGraph"> LangChain / LangGraph</label>
           <label class="check-item"><input type="checkbox" value="LlamaIndex"> LlamaIndex</label>
@@ -656,14 +656,14 @@ footer {
     <div class="block b7" data-block="b7" role="region" aria-labelledby="b7-title">
       <div class="block-accent" aria-hidden="true"></div>
       <div class="block-num" id="b7-title">// 7 · ACTIVIDADES CLAVE (SKILLS + AGENCIA)</div>
-      <div class="block-title">Qué capacidades tiene el agente local</div>
+      <div class="block-title">What capabilities the local agent has</div>
       <div class="field-group">
         <div class="field-label" id="b7-ag-label">Nivel de agencia</div>
         <div class="ag-row" role="radiogroup" aria-labelledby="b7-ag-label">
           <button class="ag-btn" type="button" role="radio" aria-checked="false">Informativo</button>
           <button class="ag-btn" type="button" role="radio" aria-checked="false">Sugeridor</button>
           <button class="ag-btn" type="button" role="radio" aria-checked="false">Supervisor</button>
-          <button class="ag-btn" type="button" role="radio" aria-checked="false">Autónomo</button>
+          <button class="ag-btn" type="button" role="radio" aria-checked="false">Autonomous</button>
         </div>
       </div>
       <div class="divider"></div>
@@ -678,11 +678,11 @@ footer {
       </div>
       <div class="divider"></div>
       <div class="field-group">
-        <div class="field-label" id="b7-flow-label">Patrón de Flujo de Control</div>
+        <div class="field-label" id="b7-flow-label">Control Flow Pattern</div>
         <div class="check-grid" role="group" aria-labelledby="b7-flow-label">
-          <label class="check-item"><input type="checkbox" value="Secuencial (Pipeline rígido)"> Secuencial</label>
+          <label class="check-item"><input type="checkbox" value="Sequential (Rigid Pipeline)"> Sequential</label>
           <label class="check-item"><input type="checkbox" value="Enrutador (Router / Intent Classifier)"> Enrutador</label>
-          <label class="check-item"><input type="checkbox" value="Agente Autónomo (ReAct / Loop)"> ReAct Loop</label>
+          <label class="check-item"><input type="checkbox" value="Autonomous Agent (ReAct / Loop)"> ReAct Loop</label>
           <label class="check-item"><input type="checkbox" value="Multi-agente (Orquestador-Trabajadores)"> Multi-agente</label>
         </div>
       </div>
@@ -692,7 +692,7 @@ footer {
         <div class="skill-list">
           <div class="skill-card">
             <div class="skill-card-title">// Skill Informativa</div>
-            <textarea class="field-input" name="b7_skill1" rows="2" placeholder="¿Qué responde este skill?"></textarea>
+            <textarea class="field-input" name="b7_skill1" rows="2" placeholder="What does this skill respond to?"></textarea>
           </div>
           <div class="skill-card">
             <div class="skill-card-title">// Skill Transaccional</div>
@@ -721,20 +721,20 @@ footer {
       <div class="block-title" style="color:var(--green)">¿Qué problema resuelve con datos que no pueden salir del perímetro?</div>
       <div class="field-group">
         <label class="field-label" for="b2_problema">Problema central</label>
-        <textarea class="field-input" id="b2_problema" name="b2_problema" rows="3" placeholder="¿Qué proceso manual, lento o inseguro existe hoy?"></textarea>
+        <textarea class="field-input" id="b2_problema" name="b2_problema" rows="3" placeholder="What manual, slow or insecure process exists today?"></textarea>
       </div>
       <div class="field-group">
-        <label class="field-label" for="b2_dato_critico">Dato crítico que no puede salir del perímetro</label>
+        <label class="field-label" for="b2_dato_critico">Critical data that cannot leave the perimeter</label>
         <textarea class="field-input" id="b2_dato_critico" name="b2_dato_critico" rows="2" placeholder="PII, secreto industrial, datos de defensa, salud..."></textarea>
       </div>
       <div class="divider"></div>
       <div class="field-group">
-        <div class="field-label" id="b2-why-label">¿Por qué on-prem y no cloud?</div>
+        <div class="field-label" id="b2-why-label">Why on-prem and not cloud?</div>
         <div class="check-grid" role="group" aria-labelledby="b2-why-label">
           <label class="check-item"><input type="checkbox" value="Normativa (ENS, defensa, salud)"> Normativa</label>
           <label class="check-item"><input type="checkbox" value="Privacidad total de datos"> Privacidad total</label>
           <label class="check-item"><input type="checkbox" value="Coste (volumen alto de inferencias)"> Coste / volumen</label>
-          <label class="check-item"><input type="checkbox" value="Soberanía / independencia de proveedor"> Soberanía</label>
+          <label class="check-item"><input type="checkbox" value="Sovereignty / vendor independence"> Sovereignty</label>
           <label class="check-item"><input type="checkbox" value="Latencia (red interna < 50ms)"> Latencia &lt;50ms</label>
         </div>
       </div>
@@ -745,16 +745,16 @@ footer {
           <label class="check-item"><input type="checkbox" value="Privacidad total — cero datos al exterior"> Privacidad total</label>
           <label class="check-item"><input type="checkbox" value="Ahorro vs. cloud en volumen alto"> Ahorro vs. cloud</label>
           <label class="check-item"><input type="checkbox" value="Latencia controlada en red interna"> Latencia controlada</label>
-          <label class="check-item"><input type="checkbox" value="Autonomía operativa total"> Autonomía operativa</label>
+          <label class="check-item"><input type="checkbox" value="Full operational autonomy"> Full operational autonomy</label>
         </div>
       </div>
       <div class="field-group">
-        <label class="field-label" for="b2_metrica">Métrica de impacto principal</label>
-        <input type="text" class="field-input" id="b2_metrica" name="b2_metrica" placeholder="Ej: reducción de carga manual, ahorro €/año vs cloud">
+        <label class="field-label" for="b2_metrica">Main impact metric</label>
+        <input type="text" class="field-input" id="b2_metrica" name="b2_metrica" placeholder="E.g. manual workload reduction, savings €/yr vs cloud">
       </div>
       <div class="field-group">
         <label class="field-label" for="b2_alternativa">Alternativa actual (sin agente)</label>
-        <textarea class="field-input" id="b2_alternativa" name="b2_alternativa" rows="2" placeholder="¿Cómo lo hace el usuario hoy?"></textarea>
+        <textarea class="field-input" id="b2_alternativa" name="b2_alternativa" rows="2" placeholder="How does the user do it today?"></textarea>
       </div>
     </div>
 
@@ -766,21 +766,21 @@ footer {
       <div class="field-group">
         <div class="field-label" id="b4-rol-label">Rol</div>
         <div class="check-grid" role="group" aria-labelledby="b4-rol-label">
-          <label class="check-item"><input type="checkbox" value="Asistente técnico"> Asistente técnico</label>
+          <label class="check-item"><input type="checkbox" value="Technical assistant"> Technical assistant</label>
           <label class="check-item"><input type="checkbox" value="Experto de dominio"> Experto de dominio</label>
           <label class="check-item"><input type="checkbox" value="Operador"> Operador</label>
         </div>
       </div>
       <div class="field-group">
         <label class="field-label" for="b4_tono">Tono</label>
-        <input type="text" class="field-input" id="b4_tono" name="b4_tono" placeholder="profesional, técnico, basado en evidencia">
+        <input type="text" class="field-input" id="b4_tono" name="b4_tono" placeholder="professional, technical, evidence-based">
       </div>
       <div class="field-group">
         <div class="field-label" id="b4-fb-label">Fallback / error</div>
         <div class="check-grid" role="group" aria-labelledby="b4-fb-label">
           <label class="check-item"><input type="checkbox" value="Escala a humano"> Escala a humano</label>
           <label class="check-item"><input type="checkbox" value="Respuesta predefinida local"> Respuesta predefinida</label>
-          <label class="check-item"><input type="checkbox" value="Reintento automático"> Reintento automático</label>
+          <label class="check-item"><input type="checkbox" value="Automatic retry"> Automatic retry</label>
         </div>
       </div>
       <div class="field-group">
@@ -796,12 +796,12 @@ footer {
       <div class="block-title" style="color:var(--amber)">¿Para quién es este agente local?</div>
       <div class="seg-card" aria-label="Segmento primario">
         <div class="seg-name" contenteditable="true" aria-label="Nombre segmento primario">Segmento primario</div>
-        <div class="seg-desc" contenteditable="true" aria-label="Descripción segmento primario">Define el usuario principal...</div>
+        <div class="seg-desc" contenteditable="true" aria-label="Primary segment description">Define el usuario principal...</div>
         <div class="seg-pill" style="background:var(--amber-d);color:var(--amber);border:1px solid var(--amber)">★ PRIMARIO</div>
       </div>
       <div class="seg-card" aria-label="Segmento secundario">
         <div class="seg-name" contenteditable="true" aria-label="Nombre segmento secundario">Segmento secundario</div>
-        <div class="seg-desc" contenteditable="true" aria-label="Descripción segmento secundario">Stakeholder o usuario secundario...</div>
+        <div class="seg-desc" contenteditable="true" aria-label="Secondary segment description">Stakeholder o usuario secundario...</div>
         <div class="seg-pill" style="background:var(--bg4);color:var(--muted);border:1px solid var(--border)">SECUNDARIO</div>
       </div>
       <div class="divider"></div>
@@ -819,7 +819,7 @@ footer {
         <textarea class="field-input" id="b1_jtbd" name="b1_jtbd" rows="3" placeholder="Cuando... quiero... para..."></textarea>
       </div>
       <div class="field-group">
-        <label class="field-label" for="b1_barreras">Barreras de adopción</label>
+        <label class="field-label" for="b1_barreras">Adoption barriers</label>
         <textarea class="field-input" id="b1_barreras" name="b1_barreras" rows="2" placeholder="Resistencia al cambio, confianza en IA local..."></textarea>
       </div>
     </div>
@@ -828,13 +828,13 @@ footer {
     <div class="block b3" data-block="b3" role="region" aria-labelledby="b3-title">
       <div class="block-accent" aria-hidden="true"></div>
       <div class="block-num" id="b3-title">// 3 · CANALES</div>
-      <div class="block-title">¿Cómo llega el agente al usuario?</div>
+      <div class="block-title">How does the agent reach the user?</div>
       <div class="check-grid" role="group" aria-label="Channels de entrega">
         <label class="check-item"><input type="checkbox" value="Portal web (intranet)"> Portal web (intranet)</label>
-        <label class="check-item"><input type="checkbox" value="Teams on-prem / híbrido"> Teams on-prem</label>
+        <label class="check-item"><input type="checkbox" value="Teams on-prem / hybrid"> Teams on-prem</label>
         <label class="check-item"><input type="checkbox" value="Cliente de escritorio"> Cliente de escritorio</label>
         <label class="check-item"><input type="checkbox" value="API REST interna"> API REST interna</label>
-        <label class="check-item"><input type="checkbox" value="CLI (para técnicos)"> CLI (para técnicos)</label>
+        <label class="check-item"><input type="checkbox" value="CLI (for technical users)"> CLI (for technical users)</label>
       </div>
       <div class="field-group" style="margin-top:.6rem">
         <div class="field-label" id="b3-proto-label">Protocolo</div>
@@ -873,7 +873,7 @@ footer {
         <input type="text" class="field-input" name="b6a_model_other" style="margin-top:5px" placeholder="Otro modelo: DeepSeek, Gemma, Command-R...">
       </div>
       <div class="field-group">
-        <div class="field-label" id="b6a-quant-label">Cuantización</div>
+        <div class="field-label" id="b6a-quant-label">Quantization</div>
         <div class="quant-row" id="quantRow" role="radiogroup" aria-labelledby="b6a-quant-label">
           <button class="q-btn" type="button" role="radio" aria-checked="false">FP16</button>
           <button class="q-btn" type="button" role="radio" aria-checked="false">Q8</button>
@@ -904,7 +904,7 @@ footer {
           <label class="check-item"><input type="checkbox" value="Documentos (PDF, MD, HTML)"> Documentos PDF / MD</label>
           <label class="check-item"><input type="checkbox" value="BBDD SQL estructurada"> BBDD SQL estructurada</label>
           <label class="check-item"><input type="checkbox" value="APIs internas"> APIs internas</label>
-          <label class="check-item"><input type="checkbox" value="Código fuente"> Código fuente</label>
+          <label class="check-item"><input type="checkbox" value="Source code"> Source code</label>
         </div>
       </div>
       <div class="field-group">
@@ -920,12 +920,12 @@ footer {
         <div class="field-label" id="b6b-ing-label">Pipeline de ingesta</div>
         <div class="check-grid" role="group" aria-labelledby="b6b-ing-label">
           <label class="check-item"><input type="checkbox" value="Manual"> Manual</label>
-          <label class="check-item"><input type="checkbox" value="Automático (schedule)"> Automático (schedule)</label>
+          <label class="check-item"><input type="checkbox" value="Automatic (schedule)"> Automatic (schedule)</label>
           <label class="check-item"><input type="checkbox" value="Trigger por evento"> Trigger por evento</label>
         </div>
       </div>
       <div class="field-group">
-        <div class="field-label" id="b6b-cls-label">Clasificación datos sensibles</div>
+        <div class="field-label" id="b6b-cls-label">Sensitive data classification</div>
         <div class="check-grid" role="group" aria-labelledby="b6b-cls-label">
           <label class="check-item"><input type="checkbox" value="PII"> PII</label>
           <label class="check-item"><input type="checkbox" value="Confidencial"> Confidencial</label>
@@ -953,7 +953,7 @@ footer {
         </div>
         <div class="tco-card">
           <div class="tco-title">OPEX (anual)</div>
-          <textarea class="field-input" name="b9_opex" rows="4" placeholder="Electricidad: ___€/año&#10;Personal: ___€/año&#10;Actualiz. modelos: ___€/año&#10;Mantenimiento: ___€/año"></textarea>
+          <textarea class="field-input" name="b9_opex" rows="4" placeholder="Electricity: ___€/yr&#10;Staff: ___€/yr&#10;Model updates: ___€/yr&#10;Maintenance: ___€/yr"></textarea>
         </div>
         <div class="tco-card">
           <div class="tco-title">Riesgos on-prem</div>
@@ -976,7 +976,7 @@ footer {
       </div>
       <div class="field-group" style="margin-top:.5rem">
         <label class="field-label" for="b9_breakeven">Break-even estimado vs. cloud (meses)</label>
-        <input type="text" class="field-input" id="b9_breakeven" name="b9_breakeven" placeholder="Ej: 18 meses — cálculo: €CAPEX / (€/mes-cloud - €/mes-onprem)">
+        <input type="text" class="field-input" id="b9_breakeven" name="b9_breakeven" placeholder="E.g. 18 months — calc: €CAPEX / (€/mo-cloud - €/mo-onprem)">
       </div>
     </div>
 
@@ -984,7 +984,7 @@ footer {
     <div class="block b5" data-block="b5" role="region" aria-labelledby="b5-title">
       <div class="block-accent" aria-hidden="true"></div>
       <div class="block-num" id="b5-title">// 5 · FUENTES DE VALOR (KPIs)</div>
-      <div class="block-title">¿Cómo demostramos que el TCO vale la pena?</div>
+      <div class="block-title">How do we prove the TCO is worth it?</div>
       <div class="kpi-list">
         <div>
           <div class="kpi-head">
@@ -1012,7 +1012,7 @@ footer {
         </div>
         <div>
           <div class="kpi-head">
-            <span class="kpi-lbl">KPI 4 — Ahorro vs. cloud (€/año)</span>
+            <span class="kpi-lbl">KPI 4 — Savings vs. cloud (€/yr)</span>
             <span class="kpi-pct" id="p4pct">0%</span>
           </div>
           <div class="kpi-bar-bg"><div class="kpi-bar" id="p4bar" style="width:0%;background:var(--amber)"></div></div>
@@ -1038,14 +1038,14 @@ footer {
             <label class="check-item"><input type="checkbox" value="Filtro prompt injection"> Filtro prompt injection</label>
             <label class="check-item"><input type="checkbox" value="Logs auditables locales"> Logs auditables locales</label>
             <label class="check-item"><input type="checkbox" value="Auth LDAP / SSO"> Auth LDAP / SSO</label>
-            <label class="check-item"><input type="checkbox" value="TLS en tráfico interno"> TLS interno</label>
+            <label class="check-item"><input type="checkbox" value="TLS on internal traffic"> Internal TLS</label>
             <label class="check-item"><input type="checkbox" value="API del modelo protegida"> API modelo protegida</label>
           </div>
           <div class="field-group" style="margin-top:5px">
             <label class="field-label" for="b10_ai_act">Nivel riesgo EU AI Act</label>
             <select class="field-input" id="b10_ai_act" name="b10_ai_act">
               <option value="">-- seleccionar --</option>
-              <option>Mínimo riesgo</option>
+              <option>Minimal risk</option>
               <option>Riesgo limitado</option>
               <option>Alto riesgo</option>
             </select>
@@ -1058,17 +1058,17 @@ footer {
             <label class="check-item"><input type="checkbox" value="Umbral confianza RAG"> Umbral confianza RAG</label>
             <label class="check-item"><input type="checkbox" value="Agente cita la fuente"> Agente cita fuente</label>
             <label class="check-item"><input type="checkbox" value="LLM-as-judge local"> LLM-as-judge local</label>
-            <label class="check-item"><input type="checkbox" value="Test regresión en updates"> Test regresión</label>
+            <label class="check-item"><input type="checkbox" value="Regression test on updates"> Regression test</label>
           </div>
           <div class="field-group" style="margin-top:5px">
-            <label class="field-label" for="b10_hallu">Tasa alucinación máx.</label>
+            <label class="field-label" for="b10_hallu">Max. hallucination rate</label>
             <input type="text" class="field-input" id="b10_hallu" name="b10_hallu" placeholder="< __%">
           </div>
         </div>
         <div class="guard-card">
           <div class="guard-title">⚖️ Ético / Normativo</div>
-          <div class="check-grid" role="group" aria-label="Guardrails éticos">
-            <label class="check-item"><input type="checkbox" value="Auditoría de sesgos"> Auditoría de sesgos</label>
+          <div class="check-grid" role="group" aria-label="Ethical guardrails">
+            <label class="check-item"><input type="checkbox" value="Bias audit"> Bias audit</label>
             <label class="check-item"><input type="checkbox" value="No decide sobre personas"> No decide sobre personas</label>
             <label class="check-item"><input type="checkbox" value="GDPR: PII no en logs"> GDPR: PII no en logs</label>
             <label class="check-item"><input type="checkbox" value="ENS / normativa sectorial"> ENS / sectorial</label>
@@ -1097,11 +1097,11 @@ footer {
   </div><!-- /canvas-grid -->
 
   <!-- EXPORT PANEL -->
-  <div class="export-panel" id="exportPanel" role="region" aria-label="Panel de exportación" aria-live="polite">
+  <div class="export-panel" id="exportPanel" role="region" aria-label="Export panel" aria-live="polite">
     <div>
       <div class="export-pre">$ agent-canvas --export --edition=onprem-v4</div>
       <div class="export-title">Canvas On-Prem completado</div>
-      <div class="export-sub">Diseño listo para exportar y compartir con el equipo de infraestructura.</div>
+      <div class="export-sub">Design ready to export and share with the infrastructure team.</div>
     </div>
     <div class="export-actions">
       <button id="btnWordPanel" class="btn-term primary">$ generate --doc</button>
@@ -1357,7 +1357,7 @@ function loadSaved() {
 
 // ── Reset ────────────────────────────────────────────────
 function resetAll() {
-  if (!confirm('¿Reiniciar el canvas? Se perderán todos los datos.')) return;
+  if (!confirm('Reset canvas? All data will be lost.')) return;
   localStorage.removeItem(STORAGE_KEY);
   document.querySelectorAll('input[name]:not([type=checkbox]):not([type=range]),textarea[name],select[name]').forEach(el => el.value = '');
   document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
@@ -1398,7 +1398,7 @@ function importJSON() {
   const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json';
   inp.onchange = async e => {
     try { applyState(JSON.parse(await e.target.files[0].text())); trackProgress(); saveNow(); showToast('// canvas importado'); }
-    catch(er) { alert('JSON inválido'); }
+    catch(er) { alert('Invalid JSON'); }
   };
   inp.click();
 }
@@ -1491,7 +1491,7 @@ function exportWord() {
   <hr style="border:none;border-top:3px solid #3FB950;margin:10pt 0">
   ${sec('PARTE I — PRD: PRODUCT REQUIREMENTS DOCUMENT','#14532D')}
   ${h2('1. User Segment')}
-  <table><tr><th>Segmento</th><th>Descripción</th></tr>
+  <table><tr><th>Segment</th><th>Description</th></tr>
   <tr><td><strong>★ ${esc(s1n)}</strong></td><td>${esc(s1d)}</td></tr>
   <tr><td>${esc(s2n)}</td><td>${esc(s2d)}</td></tr></table>
   ${b1c.length ? h3('Control de Acceso')+ulList(b1c) : ''}
@@ -1513,10 +1513,10 @@ function exportWord() {
   ${['1','2','3'].map(n => getVal('b5_kpi'+n+'_name') ? '<p>KPI '+n+': '+esc(getVal('b5_kpi'+n+'_name'))+'</p>' : '').join('')}
   ${getVal('b5_roi') ? '<p><strong>ROI:</strong> '+esc(getVal('b5_roi'))+'</p>' : ''}
   ${sec('PARTE II — ADR: ARCHITECTURE DECISION RECORD','#0F172A')}
-  ${h2('6a. Hardware & Cómputo')}
+  ${h2('6a. Hardware & Compute')}
   <p><strong>GPU:</strong> ${esc(getChip('gpuChips'))} ${getVal('b6a_gpu_other')?'/ '+esc(getVal('b6a_gpu_other')):''}</p>
   <p><strong>Modelo LLM:</strong> ${esc(modelName)}</p>
-  <p><strong>Cuantización:</strong> ${esc(document.querySelector('#quantRow .q-btn.sel')?.textContent||'—')}</p>
+  <p><strong>Quantization:</strong> ${esc(document.querySelector('#quantRow .q-btn.sel')?.textContent||'—')}</p>
   ${getVal('b6a_ram') ? '<p><strong>RAM servidor:</strong> '+esc(getVal('b6a_ram'))+'</p>' : ''}
   ${h2('6b. Recursos de Conocimiento')}
   ${b6bc.length ? ulList(b6bc) : ''}
@@ -1535,7 +1535,7 @@ function exportWord() {
   ${b9c.length ? h3('Riesgos y normativa')+ulList(b9c) : ''}
   ${getVal('b9_breakeven') ? '<p><strong>Break-even:</strong> '+esc(getVal('b9_breakeven'))+'</p>' : ''}
   ${h2('10. Guardrails')}
-  <table><tr><th>Categoría</th><th>Controles activos</th></tr>${guardsHtml}</table>
+  <table><tr><th>Category</th><th>Active controls</th></tr>${guardsHtml}</table>
   ${getVal('b10_ai_act') ? '<p><strong>Riesgo EU AI Act:</strong> '+esc(getVal('b10_ai_act'))+'</p>' : ''}
   ${getVal('b10_hallu') ? '<p><strong>Tasa alucinación máx:</strong> '+esc(getVal('b10_hallu'))+'</p>' : ''}
   ${getVal('b10_sla') ? '<p><strong>SLA disponibilidad:</strong> '+esc(getVal('b10_sla'))+'</p>' : ''}

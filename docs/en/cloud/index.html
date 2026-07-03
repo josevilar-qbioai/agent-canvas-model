@@ -540,13 +540,13 @@ footer {
     <span class="logo-name">Agent Canvas</span>
     <span class="logo-edition">Cloud Edition</span>
   </div>
-  <div class="header-actions" role="toolbar" aria-label="Acciones del canvas">
-    <a href="../" class="btn-ghost" style="text-decoration:none;font-size:.75rem;" aria-label="Volver a la página de inicio">← Home</a>
+  <div class="header-actions" role="toolbar" aria-label="Canvas actions">
+    <a href="../" class="btn-ghost" style="text-decoration:none;font-size:.75rem;" aria-label="Back to home">← Home</a>
     <a href="../../cloud/" style="font-family:var(--mono,monospace);font-size:.85rem;font-weight:600;padding:.38rem .75rem;border:1.5px solid var(--board,#8B5CF6);border-radius:6px;color:var(--board,#8B5CF6);background:transparent;text-decoration:none;white-space:nowrap;letter-spacing:.03em;" title="Spanish version">ES</a><a href="./" style="font-family:var(--mono,monospace);font-size:.85rem;font-weight:700;padding:.38rem .75rem;border:1.5px solid var(--board,#8B5CF6);border-radius:6px;color:#fff;background:var(--board,#8B5CF6);text-decoration:none;white-space:nowrap;letter-spacing:.03em;" aria-current="page">EN</a>
     <label for="canvasName" class="sr-only">Nombre del canvas</label>
     <input id="canvasName" name="canvasName" type="text"
       placeholder="Nombre del proyecto…"
-      aria-label="Nombre del proyecto"
+      aria-label="Project name"
       style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:white;border-radius:6px;padding:.3rem .7rem;font-size:.8rem;width:180px">
     <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
     <button id="btnSave" class="btn-ghost" aria-label="Guardar canvas localmente">💾 Save</button>
@@ -573,12 +573,12 @@ footer {
   </div>
 </div>
 
-<div class="hero" role="region" aria-label="Presentación del canvas">
+<div class="hero" role="region" aria-label="Canvas introduction">
   <div class="hero-eyebrow" aria-hidden="true">Microsoft Copilot Studio · LangChain · Azure OpenAI · MCP</div>
   <h1>Agent Canvas <span>v4</span><br>Cloud Edition</h1>
-  <p class="hero-sub">Framework de diseño para agentes IA en entornos cloud. Completa los 10 blocks en el orden indicado por ★.</p>
-  <div class="hero-stats" aria-label="Estadísticas del framework">
-    <div class="hero-stat"><strong>10</strong><span>Bloques de diseño</span></div>
+  <p class="hero-sub">AI agent design framework for cloud environments. Complete the 10 blocks in the order indicated by ★.</p>
+  <div class="hero-stats" aria-label="Framework statistics">
+    <div class="hero-stat"><strong>10</strong><span>Design blocks</span></div>
     <div class="hero-stat"><strong>★→1</strong><span>Orden recomendado</span></div>
     <div class="hero-stat"><strong>v4</strong><span>Con persistencia y compartir</span></div>
   </div>
@@ -588,8 +588,8 @@ footer {
 <div class="canvas-wrap">
   <div class="canvas-header">
     <div>
-      <div class="canvas-title">Canvas de Diseño</div>
-      <div class="canvas-subtitle" id="canvasSubtitle">Completa cada bloque haciendo clic · Los cambios se guardan automáticamente</div>
+      <div class="canvas-title">Design Canvas</div>
+      <div class="canvas-subtitle" id="canvasSubtitle">Click each block to fill it in · Changes are saved automatically</div>
     </div>
     <div>
       <div class="progress-label" id="progressLabel" aria-live="polite">0 / 10 blocks completed</div>
@@ -599,14 +599,14 @@ footer {
     </div>
   </div>
 
-  <div class="canvas-grid" role="main" aria-label="Bloques del canvas de diseño">
+  <div class="canvas-grid" role="main" aria-label="Canvas design blocks">
 
     <!-- BLOCK 8: SOCIOS / INTEGRACIONES -->
     <div class="block b8" data-block="b8" data-collapsible="true"
       role="region" aria-labelledby="b8-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
       <div class="block-num" id="b8-title">8 · Partners / Integrations</div>
-      <div class="block-title">🔌 Con qué sistemas conecta el agente</div>
+      <div class="block-title">🔌 What systems the agent connects to</div>
       <div data-stop-toggle>
         <div class="field-group">
           <div class="field-label" id="b8-llm-label">Plataforma LLM</div>
@@ -619,7 +619,7 @@ footer {
         </div>
         <div class="divider"></div>
         <div class="field-group">
-          <div class="field-label" id="b8-orch-label">Orquestación / Framework</div>
+          <div class="field-label" id="b8-orch-label">Orchestration / Framework</div>
           <div class="check-grid" role="group" aria-labelledby="b8-orch-label">
             <label class="check-item"><input type="checkbox" value="Microsoft Copilot Studio"> Microsoft Copilot Studio</label>
             <label class="check-item"><input type="checkbox" value="LangChain / LangGraph"> LangChain / LangGraph</label>
@@ -663,16 +663,16 @@ footer {
             <button class="ag-btn" role="radio" aria-checked="false">Informativo</button>
             <button class="ag-btn" role="radio" aria-checked="false">Sugeridor</button>
             <button class="ag-btn" role="radio" aria-checked="false">Supervisor</button>
-            <button class="ag-btn" role="radio" aria-checked="false">Autónomo</button>
+            <button class="ag-btn" role="radio" aria-checked="false">Autonomous</button>
           </div>
         </div>
         <div class="divider"></div>
         <div class="field-group">
-          <div class="field-label" id="b7-flow-label">Patrón de Flujo de Control</div>
+          <div class="field-label" id="b7-flow-label">Control Flow Pattern</div>
           <div class="check-grid" role="group" aria-labelledby="b7-flow-label">
-            <label class="check-item"><input type="checkbox" value="Secuencial (Pipeline rígido)"> Secuencial (Pipeline rígido)</label>
+            <label class="check-item"><input type="checkbox" value="Sequential (Rigid Pipeline)"> Sequential (Rigid Pipeline)</label>
             <label class="check-item"><input type="checkbox" value="Enrutador (Router / Intent Classifier)"> Enrutador (Router / Intent Classifier)</label>
-            <label class="check-item"><input type="checkbox" value="Agente Autónomo (ReAct / Loop)"> Agente Autónomo (ReAct / Loop)</label>
+            <label class="check-item"><input type="checkbox" value="Autonomous Agent (ReAct / Loop)"> Autonomous Agent (ReAct / Loop)</label>
             <label class="check-item"><input type="checkbox" value="Multi-agente (Orquestador-Trabajadores)"> Multi-agente (Orquestador-Trabajadores)</label>
           </div>
         </div>
@@ -683,20 +683,20 @@ footer {
             <div class="skill-card">
               <div class="skill-card-title">Skill Informativa</div>
               <textarea class="field-input" name="b7_skill_informativa" rows="2"
-                placeholder="Describe qué responde este skill…"
-                aria-label="Skill Informativa: descripción"></textarea>
+                placeholder="Describe what this skill responds to…"
+                aria-label="Informative Skill: description"></textarea>
             </div>
             <div class="skill-card">
               <div class="skill-card-title">Skill Transaccional</div>
               <textarea class="field-input" name="b7_skill_transaccional" rows="2"
-                placeholder="Pasos y condiciones de ejecución…"
-                aria-label="Skill Transaccional: descripción"></textarea>
+                placeholder="Execution steps and conditions…"
+                aria-label="Transactional Skill: description"></textarea>
             </div>
             <div class="skill-card" style="border-left-color:#059669">
               <div class="skill-card-title">Skill Administrativa</div>
               <textarea class="field-input" name="b7_skill_administrativa" rows="2"
                 placeholder="Operaciones sobre sistemas…"
-                aria-label="Skill Administrativa: descripción"></textarea>
+                aria-label="Administrative Skill: description"></textarea>
             </div>
           </div>
         </div>
@@ -715,47 +715,47 @@ footer {
     <div class="block b2" data-block="b2" data-collapsible="true"
       role="region" aria-labelledby="b2-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b2-title">★ 2 · Value Proposition — Empieza aquí</div>
+      <div class="block-num" id="b2-title">★ 2 · Value Proposition — Start here</div>
       <div class="block-title" style="color:var(--blue)">💎 What problem does it solve?</div>
       <div data-stop-toggle>
         <div class="field-group">
           <label class="field-label" for="b2_problema">Problema central</label>
           <textarea class="field-input" id="b2_problema" name="b2_problema" rows="3"
-            placeholder="¿Qué tarea manual, lenta o propensa a errores existe hoy?"
+            placeholder="What manual, slow or error-prone task exists today?"
             aria-describedby="b2-title"></textarea>
         </div>
         <div class="field-group">
           <label class="field-label" for="b2_alternativa">Alternativa actual (sin agente)</label>
           <textarea class="field-input" id="b2_alternativa" name="b2_alternativa" rows="2"
-            placeholder="¿Cómo lo hace el usuario hoy?"></textarea>
+            placeholder="How does the user do it today?"></textarea>
         </div>
         <div class="divider"></div>
         <div class="field-group">
-          <div class="field-label" id="b2-ben-label">Beneficios clave &amp; Métrica de impacto</div>
+          <div class="field-label" id="b2-ben-label">Key benefits &amp; Impact metric</div>
           <div class="check-grid" role="group" aria-labelledby="b2-ben-label">
             <label class="check-item"><input type="checkbox" value="↓ Esfuerzo manual (carga reducida)"> ↓ Esfuerzo manual (carga reducida)</label>
             <label class="check-item"><input type="checkbox" value="⚡ Inmediatez (elimina tiempos de espera)"> ⚡ Inmediatez (elimina tiempos de espera)</label>
-            <label class="check-item"><input type="checkbox" value="✓ Reducción de errores"> ✓ Reducción de errores</label>
+            <label class="check-item"><input type="checkbox" value="✓ Error reduction"> ✓ Error reduction</label>
             <label class="check-item"><input type="checkbox" value="📈 Productividad del personal"> 📈 Productividad del personal</label>
             <label class="check-item"><input type="checkbox" value="💰 Ahorro de costes directos"> 💰 Ahorro de costes directos</label>
           </div>
           <input type="text" class="field-input" name="b2_metrica" style="margin-top:5px"
-            placeholder="Métrica: Ej: −40% tiempo de resolución o −60% consultas manuales"
-            aria-label="Métrica de impacto principal">
+            placeholder="Metric: E.g. −40% resolution time or −60% manual queries"
+            aria-label="Main impact metric">
         </div>
         <div class="field-group">
-          <label class="field-label" for="b2_dato_critico">Dato crítico que justifica el agente</label>
+          <label class="field-label" for="b2_dato_critico">Critical data that justifies the agent</label>
           <textarea class="field-input" id="b2_dato_critico" name="b2_dato_critico" rows="2"
             placeholder="Ej: la tarea X consume Y horas/semana al equipo"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b2_ventaja">¿Por qué el agente es mejor que la alternativa?</label>
+          <label class="field-label" for="b2_ventaja">Why is the agent better than the alternative?</label>
           <textarea class="field-input" id="b2_ventaja" name="b2_ventaja" rows="2"
-            placeholder="Disponibilidad 24/7, consistencia, sin formación técnica…"></textarea>
+            placeholder="24/7 availability, consistency, no technical training needed…"></textarea>
         </div>
         <div class="field-group">
           <div class="field-label">Stack Cloud</div>
-          <div class="tag-wrap" aria-label="Tecnologías del stack cloud">
+          <div class="tag-wrap" aria-label="Cloud stack technologies">
             <span class="tag" style="color:var(--blue);border-color:#BFDBFE">Copilot Studio</span>
             <span class="tag" style="color:var(--teal);border-color:#A5F3FC">Azure OpenAI</span>
             <span class="tag" style="color:#7C3AED;border-color:#DDD6FE">Power Platform</span>
@@ -775,8 +775,8 @@ footer {
           <div class="field-label" id="b4-rol-label">Rol del agente</div>
           <div class="check-grid" role="group" aria-labelledby="b4-rol-label">
             <label class="check-item"><input type="checkbox" value="Asistente experto"> Asistente experto</label>
-            <label class="check-item"><input type="checkbox" value="Tutor / guía"> Tutor / guía</label>
-            <label class="check-item"><input type="checkbox" value="Operador técnico"> Operador técnico</label>
+            <label class="check-item"><input type="checkbox" value="Tutor / guide"> Tutor / guide</label>
+            <label class="check-item"><input type="checkbox" value="Technical operator"> Technical operator</label>
           </div>
         </div>
         <div class="field-group">
@@ -785,12 +785,12 @@ footer {
             placeholder="Ej: educado, profesional, basado en evidencia">
         </div>
         <div class="field-group">
-          <div class="field-label" id="b4-fb-label">Gestión de errores / Fallback</div>
+          <div class="field-label" id="b4-fb-label">Error handling / Fallback</div>
           <div class="check-grid" role="group" aria-labelledby="b4-fb-label">
             <label class="check-item"><input type="checkbox" value="Escala a humano"> Escala a humano</label>
             <label class="check-item"><input type="checkbox" value="Respuesta predefinida"> Respuesta predefinida</label>
             <label class="check-item"><input type="checkbox" value="Cita la fuente oficial"> Cita la fuente oficial</label>
-            <label class="check-item"><input type="checkbox" value="Reintento automático"> Reintento automático</label>
+            <label class="check-item"><input type="checkbox" value="Automatic retry"> Automatic retry</label>
           </div>
         </div>
         <div class="field-group">
@@ -804,7 +804,7 @@ footer {
     <div class="block b1" data-block="b1" data-collapsible="true"
       role="region" aria-labelledby="b1-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b1-title">★ 1 · User Segment — Empieza aquí</div>
+      <div class="block-num" id="b1-title">★ 1 · User Segment — Start here</div>
       <div class="block-title" style="color:var(--amber)">👥 ¿Para quién es?</div>
       <div data-stop-toggle>
         <div class="seg-cards" role="list" aria-label="Segmentos de usuarios">
@@ -813,7 +813,7 @@ footer {
               aria-label="Nombre segmento primario" role="textbox"
               data-default="Segmento primario">Segmento primario</div>
             <div class="seg-desc" contenteditable="true"
-              aria-label="Descripción segmento primario" role="textbox"
+              aria-label="Primary segment description" role="textbox"
               data-default="Define el usuario principal...">Define el usuario principal...</div>
             <div class="seg-pill" style="background:#FFFBEB;color:var(--amber);border:1px solid #FDE68A">★ Primario</div>
           </div>
@@ -822,7 +822,7 @@ footer {
               aria-label="Nombre segmento secundario" role="textbox"
               data-default="Segmento secundario">Segmento secundario</div>
             <div class="seg-desc" contenteditable="true"
-              aria-label="Descripción segmento secundario" role="textbox"
+              aria-label="Secondary segment description" role="textbox"
               data-default="Usuario secundario o stakeholder...">Usuario secundario o stakeholder...</div>
             <div class="seg-pill" style="background:#F8FAFC;color:var(--muted);border:1px solid var(--border)">Secundario</div>
           </div>
@@ -834,7 +834,7 @@ footer {
             <label class="check-item"><input type="checkbox" value="Azure Active Directory"> Azure Active Directory</label>
             <label class="check-item"><input type="checkbox" value="SSO / OIDC"> SSO / OIDC</label>
             <label class="check-item"><input type="checkbox" value="Roles por departamento"> Roles por departamento</label>
-            <label class="check-item"><input type="checkbox" value="Sin autenticación (público)"> Sin autenticación (público)</label>
+            <label class="check-item"><input type="checkbox" value="No authentication (public)"> No authentication (public)</label>
           </div>
         </div>
         <div class="field-group">
@@ -843,7 +843,7 @@ footer {
             placeholder="Cuando… quiero… para…"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b1_barreras">Barreras de adopción</label>
+          <label class="field-label" for="b1_barreras">Adoption barriers</label>
           <textarea class="field-input" id="b1_barreras" name="b1_barreras" rows="2"
             placeholder="Resistencia al cambio, curva de aprendizaje…"></textarea>
         </div>
@@ -857,11 +857,11 @@ footer {
       <div class="block-num" id="b3-title">3 · Channels</div>
       <div class="block-title">📡 How does it reach the user?</div>
       <div data-stop-toggle>
-        <div class="check-grid" role="group" aria-label="Channels de distribución">
+        <div class="check-grid" role="group" aria-label="Distribution channels">
           <label class="check-item"><input type="checkbox" value="Microsoft Teams"> Microsoft Teams [★ Principal]</label>
           <label class="check-item"><input type="checkbox" value="M365 Copilot Chat"> M365 Copilot Chat</label>
           <label class="check-item"><input type="checkbox" value="Portal web / intranet"> Portal web / intranet</label>
-          <label class="check-item"><input type="checkbox" value="Correo electrónico"> Correo electrónico</label>
+          <label class="check-item"><input type="checkbox" value="Email"> Email</label>
           <label class="check-item"><input type="checkbox" value="API REST (headless)"> API REST (headless)</label>
           <label class="check-item"><input type="checkbox" value="WhatsApp / Telegram"> WhatsApp / Telegram</label>
         </div>
@@ -886,9 +886,9 @@ footer {
             </div>
           </div>
           <div class="field-group">
-            <div class="field-label" id="b6-data-label">Clasificación datos</div>
+            <div class="field-label" id="b6-data-label">Data classification</div>
             <div class="check-grid" role="group" aria-labelledby="b6-data-label">
-              <label class="check-item"><input type="checkbox" value="Público"> Público</label>
+              <label class="check-item"><input type="checkbox" value="Public"> Public</label>
               <label class="check-item"><input type="checkbox" value="Interno / Confidencial"> Interno / Confidencial</label>
               <label class="check-item"><input type="checkbox" value="Restringido (PII)"> Restringido (PII)</label>
             </div>
@@ -1050,14 +1050,14 @@ footer {
             <label class="check-item"><input type="checkbox" value="Filtro prompt injection"> Filtro prompt injection</label>
             <label class="check-item"><input type="checkbox" value="Datos en tenant corporativo"> Datos en tenant corporativo</label>
             <label class="check-item"><input type="checkbox" value="RBAC / AAD aplicado"> RBAC / AAD aplicado</label>
-            <label class="check-item"><input type="checkbox" value="Sanitización de outputs"> Sanitización de outputs</label>
+            <label class="check-item"><input type="checkbox" value="Output sanitization"> Output sanitization</label>
           </div>
           <div class="field-group" style="margin-top:6px">
             <label class="field-label" for="b10_riesgo_aiact">Nivel riesgo EU AI Act</label>
             <select class="field-input" id="b10_riesgo_aiact" name="b10_riesgo_aiact"
-              aria-label="Nivel de riesgo según EU AI Act">
+              aria-label="Risk level per EU AI Act">
               <option value="">-- seleccionar --</option>
-              <option>Mínimo riesgo</option>
+              <option>Minimal risk</option>
               <option>Riesgo limitado</option>
               <option>Alto riesgo</option>
             </select>
@@ -1067,12 +1067,12 @@ footer {
           <div class="guard-card-title">✅ Calidad</div>
           <div class="check-grid">
             <label class="check-item"><input type="checkbox" value="Umbral de confianza RAG"> Umbral de confianza RAG</label>
-            <label class="check-item"><input type="checkbox" value="Citación de fuentes"> Citación de fuentes</label>
+            <label class="check-item"><input type="checkbox" value="Source citation"> Source citation</label>
             <label class="check-item"><input type="checkbox" value="LLM-as-judge activo"> LLM-as-judge activo</label>
             <label class="check-item"><input type="checkbox" value="Feedback 👍/👎 usuario"> Feedback 👍/👎 usuario</label>
           </div>
           <div class="field-group" style="margin-top:6px">
-            <label class="field-label" for="b10_alucin">Tasa alucinación máx. aceptable</label>
+            <label class="field-label" for="b10_alucin">Max. acceptable hallucination rate</label>
             <input type="text" class="field-input" id="b10_alucin" name="b10_alucin"
               placeholder="Ej: &lt; 2%">
           </div>
@@ -1080,7 +1080,7 @@ footer {
         <div class="guard-card" role="group" aria-label="Guardrails Éticos y de Cumplimiento">
           <div class="guard-card-title">⚖️ Ético / Cumplimiento</div>
           <div class="check-grid">
-            <label class="check-item"><input type="checkbox" value="Auditoría de sesgos"> Auditoría de sesgos</label>
+            <label class="check-item"><input type="checkbox" value="Bias audit"> Bias audit</label>
             <label class="check-item"><input type="checkbox" value="Transparencia IA activa"> Transparencia IA activa</label>
             <label class="check-item"><input type="checkbox" value="GDPR: PII no persiste"> GDPR: PII no persiste</label>
             <label class="check-item"><input type="checkbox" value="Validado por DPO"> Validado por DPO</label>
@@ -1090,7 +1090,7 @@ footer {
           <div class="guard-card-title">⚙️ Operacional</div>
           <div class="check-grid">
             <label class="check-item"><input type="checkbox" value="Presupuesto tokens definido"> Presupuesto tokens definido</label>
-            <label class="check-item"><input type="checkbox" value="Latencia máx. definida"> Latencia máx. definida</label>
+            <label class="check-item"><input type="checkbox" value="Max. latency defined"> Max. latency defined</label>
             <label class="check-item"><input type="checkbox" value="Rate limiting activo"> Rate limiting activo</label>
             <label class="check-item"><input type="checkbox" value="Circuit breaker configurado"> Circuit breaker configurado</label>
             <label class="check-item"><input type="checkbox" value="Registro inmutable / Event Sourcing"> Registro inmutable / Event Sourcing</label>
@@ -1106,9 +1106,9 @@ footer {
 
   </div><!-- /canvas-grid -->
 
-  <div class="export-panel" id="exportPanel" role="region" aria-label="Panel de exportación" aria-live="polite">
+  <div class="export-panel" id="exportPanel" role="region" aria-label="Export panel" aria-live="polite">
     <div class="export-title">Canvas completado</div>
-    <div class="export-sub">Tu canvas está listo para exportar o compartir con el equipo.</div>
+    <div class="export-sub">Your canvas is ready to export or share with your team.</div>
     <div class="export-actions">
       <button id="btnWordPanel" class="btn-primary" style="background:var(--green)"
         aria-label="Generar documento Word con PRD y ADR">📄 Generar Doc Word (PRD+ADR)</button>
@@ -1313,7 +1313,7 @@ function importJSON() {
       // Re-run progress
       document.dispatchEvent(new CustomEvent('canvas:stateLoaded'));
     } catch (err) {
-      alert('❌ JSON inválido o formato no compatible.');
+      alert('❌ Invalid JSON or incompatible format.');
     }
   };
   input.click();
@@ -1566,7 +1566,7 @@ function exportWord() {
 <hr style="border:none;border-top:3px solid #2563EB;margin:10pt 0">
 ${sec('PARTE I — PRD: PRODUCT REQUIREMENTS DOCUMENT','#1D4ED8')}
 ${h2('1. User Segment')}
-<table><tr><th>Segmento</th><th>Descripción</th></tr>
+<table><tr><th>Segment</th><th>Description</th></tr>
 <tr><td><strong>★ ${esc(s1n)}</strong></td><td>${esc(s1d)}</td></tr>
 <tr><td>${esc(s2n)}</td><td>${esc(s2d)}</td></tr></table>
 ${b1c.length?h3('Control de Acceso / RBAC')+ulList(b1c):''}
@@ -1574,30 +1574,30 @@ ${Object.keys(b1t).length?h3('Jobs-to-be-done & Barreras')+kvTable(b1t):''}
 ${h2('2. Problema y Value Proposition')}
 ${kvTable(b2t)}
 ${benefits.length?h3('Beneficios clave')+ulList(benefits):''}
-${onpremR.length?h3('Justificación On-Prem')+ulList(onpremR):''}
+${onpremR.length?h3('On-Prem Justification')+ulList(onpremR):''}
 ${h2('3. Channels de Entrega')}
 ${ulList(b3c)}
 ${h2('4. Personalidad y Experiencia de Usuario')}
 ${kvTable(b4t)}
 ${b4c.length?h3('Controles de experiencia')+ulList(b4c):''}
-${h2('5. KPIs y Métricas de Éxito')}
+${h2('5. KPIs and Success Metrics')}
 ${kvTable(b5t)}
 ${sec('PARTE II — ADR: ARCHITECTURE DECISION RECORD','#0F172A')}
 ${h2('6. Recursos e Infraestructura')}
 ${gpuSel!=='—'?`<p><strong>GPU:</strong> ${esc(gpuSel)}</p>`:''}
 ${mdlSel!=='—'?`<p><strong>Modelo LLM:</strong> ${esc(mdlSel.trim())}</p>`:''}
-${qSel!=='—'?`<p><strong>Cuantización:</strong> ${esc(qSel)}</p>`:''}
-${b6c.length?h3('Tecnologías y datos')+ulList(b6c):''}
+${qSel!=='—'?`<p><strong>Quantization:</strong> ${esc(qSel)}</p>`:''}
+${b6c.length?h3('Technologies and data')+ulList(b6c):''}
 ${Object.keys(b6t).length?kvTable(b6t):''}
 ${h2('7. Key Activities — Skills & Flujo de Control')}
 <p><strong>Nivel de agencia:</strong> ${esc(agLvl)}</p>
-${flowPat.length?h3('Patrón de flujo de control')+ulList(flowPat):''}
+${flowPat.length?h3('Control flow pattern')+ulList(flowPat):''}
 ${agType.length?h3('Tipo de agencia / Contexto')+ulList(agType):''}
 ${Object.keys(b7t).length?h3('Skills definidas')+kvTable(b7t):''}
 ${h2('8. Socios, Integraciones y Protocolo')}
 ${llmPlat.length?h3('Plataforma LLM')+ulList(llmPlat):''}
 ${stSel!=='—'?`<p><strong>Serving stack:</strong> ${esc(stSel)}</p>`:''}
-${fworks.length?h3('Orquestación / Framework')+ulList(fworks):''}
+${fworks.length?h3('Orchestration / Framework')+ulList(fworks):''}
 ${dataSrc.length?h3('Fuentes de datos')+ulList(dataSrc):''}
 ${obsrv.length?h3('Observabilidad')+ulList(obsrv):''}
 ${network.length?h3('Red / Conectividad')+ulList(network):''}
@@ -1607,7 +1607,7 @@ ${Object.keys(b9t).length?kvTable(b9t):''}
 ${risks.length?h3('Riesgos identificados')+ulList(risks):''}
 ${regs.length?h3('Normativa aplicable')+ulList(regs):''}
 ${h2('10. Guardrails')}
-<table><tr><th>Categoría</th><th>Controles activos</th></tr>
+<table><tr><th>Category</th><th>Active controls</th></tr>
 ${b10g.filter(g=>g.checks.length).map(g=>`<tr><td>${esc(g.title)}</td><td>${g.checks.map(c=>`• ${esc(c)}`).join('<br>')}</td></tr>`).join('')}
 </table>
 ${Object.keys(b10t).length?kvTable(b10t):''}
@@ -1663,7 +1663,7 @@ function setKpi(n, val) {
 
 // ── Reset all ────────────────────────────────────────────────────────────
 function resetAll() {
-  if (!confirm('¿Reiniciar el canvas? Se perderán todos los datos locales.')) return;
+  if (!confirm('Reset canvas? All local data will be lost.')) return;
 
   document.querySelectorAll('input[type=text][name], textarea[name], select[name]')
     .forEach(el => { el.value = ''; });

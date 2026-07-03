@@ -539,10 +539,10 @@ footer {
     <span class="logo-edition">MCP Canvas</span>
   </div>
   <div class="header-actions" role="toolbar" aria-label="Acciones">
-    <a href="../" class="btn-ghost" style="text-decoration:none;font-size:.75rem;" aria-label="Volver a la página de inicio">← Home</a>
+    <a href="../" class="btn-ghost" style="text-decoration:none;font-size:.75rem;" aria-label="Back to home">← Home</a>
     <a href="../../mcp/" style="font-family:var(--mono,monospace);font-size:.85rem;font-weight:600;padding:.38rem .75rem;border:1.5px solid var(--board,#8B5CF6);border-radius:6px;color:var(--board,#8B5CF6);background:transparent;text-decoration:none;white-space:nowrap;letter-spacing:.03em;" title="Spanish version">ES</a><a href="./" style="font-family:var(--mono,monospace);font-size:.85rem;font-weight:700;padding:.38rem .75rem;border:1.5px solid var(--board,#8B5CF6);border-radius:6px;color:#fff;background:var(--board,#8B5CF6);text-decoration:none;white-space:nowrap;letter-spacing:.03em;" aria-current="page">EN</a>
     <label for="canvasName" class="sr-only">Nombre del canvas</label>
-    <input id="canvasName" type="text" placeholder="Nombre del proyecto MCP…" aria-label="Nombre del proyecto">
+    <input id="canvasName" type="text" placeholder="Nombre del proyecto MCP…" aria-label="Project name">
     <span id="saveIndicator" class="save-indicator" aria-live="polite">✓ guardado</span>
     <button id="btnSave" class="btn-ghost">💾 Save</button>
     <button id="btnImportJSON" class="btn-import">📂 Import</button>
@@ -567,12 +567,12 @@ footer {
 </div>
 
 <!-- HERO -->
-<div class="hero" role="region" aria-label="Presentación">
+<div class="hero" role="region" aria-label="Introduction">
   <div class="hero-eyebrow">Model Context Protocol · Tools · Resources · Prompts · stdio · SSE</div>
   <h1>MCP Architecture<br><span>Canvas</span></h1>
-  <p class="hero-sub">Diseña la capa MCP de tu agente antes de escribir código. Decide qué servidores construir, qué exponen y cómo se conectan.</p>
+  <p class="hero-sub">Design the MCP layer of your agent before writing code. Decide what servers to build, what they expose, and how they connect.</p>
   <div class="hero-stats">
-    <div class="hero-stat"><strong>6</strong><span>Bloques de diseño</span></div>
+    <div class="hero-stat"><strong>6</strong><span>Design blocks</span></div>
     <div class="hero-stat"><strong>★→1</strong><span>Orden recomendado</span></div>
     <div class="hero-stat"><strong>MCP</strong><span>Capa de herramientas</span></div>
   </div>
@@ -599,7 +599,7 @@ footer {
        PHASE 1 — CONTEXTO
   ════════════════════════════════════════════ -->
   <div class="canvas-section">
-    <span class="phase-label">① Contexto — Quién y por qué</span>
+    <span class="phase-label">① Context — Who and why</span>
     <div class="grid-1-2">
 
       <!-- B1: HOST -->
@@ -607,10 +607,10 @@ footer {
         role="region" aria-labelledby="b1-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
         <div class="block-num" id="b1-title">★ 1 · Agente Host</div>
-        <div class="block-title">🤖 ¿Qué agente consume estos servidores?</div>
+        <div class="block-title">🤖 What agent consumes these servers?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
-          <div class="block-sub">Define el host o cliente que iniciará conexiones MCP.</div>
+          <div class="block-sub">Define the host or client that will initiate MCP connections.</div>
           <div class="field-group">
             <div class="field-label" id="b1-host-label">Host MCP</div>
             <div class="check-grid" role="group" aria-labelledby="b1-host-label">
@@ -623,8 +623,8 @@ footer {
             </div>
           </div>
           <div class="field-group">
-            <label class="field-label" for="b1_proto">Versión protocolo MCP</label>
-            <select class="field-input" id="b1_proto" name="b1_proto" aria-label="Versión protocolo MCP">
+            <label class="field-label" for="b1_proto">MCP protocol version</label>
+            <select class="field-input" id="b1_proto" name="b1_proto" aria-label="MCP protocol version">
               <option value="">-- seleccionar --</option>
               <option>2024-11-05 (estable)</option>
               <option>2025-03-26 (recomendada)</option>
@@ -634,14 +634,14 @@ footer {
           <div class="field-group">
             <label class="field-label" for="b1_concurrencia">Agentes concurrentes esperados</label>
             <input type="text" class="field-input" id="b1_concurrencia" name="b1_concurrencia"
-              placeholder="Ej: 1 agente por usuario, 10 simultáneos">
+              placeholder="E.g. 1 agent per user, 10 concurrent">
           </div>
           <div class="field-group">
             <div class="field-label" id="b1-scope-label">Alcance de los servidores</div>
             <div class="chip-group" role="radiogroup" aria-labelledby="b1-scope-label">
               <button class="chip" role="radio" aria-checked="false">Un agente los usa</button>
               <button class="chip" role="radio" aria-checked="false">Compartidos entre agentes</button>
-              <button class="chip" role="radio" aria-checked="false">Exposición pública</button>
+              <button class="chip" role="radio" aria-checked="false">Public exposure</button>
             </div>
           </div>
         </div>
@@ -651,20 +651,20 @@ footer {
       <div class="block b2" data-block="b2" data-collapsible="true"
         role="region" aria-labelledby="b2-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
-        <div class="block-num" id="b2-title">★ 2 · Decisión Arquitectónica</div>
+        <div class="block-num" id="b2-title">★ 2 · Architecture Decision</div>
         <div class="block-title" style="color:var(--violet-mid)">🧭 ¿Por qué MCP? ¿Qué granularidad?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
-          <div class="block-sub">La decisión más importante: qué hardcodear y qué exponer como servidor MCP independiente.</div>
+          <div class="block-sub">The most important decision: what to hardcode and what to expose as a standalone MCP server.</div>
           <div class="field-group">
-            <div class="field-label" id="b2-why-label">¿Por qué MCP en lugar de tools hardcodeadas?</div>
+            <div class="field-label" id="b2-why-label">Why MCP instead of hardcoded tools?</div>
             <div class="check-grid" role="group" aria-labelledby="b2-why-label">
-              <label class="check-item"><input type="checkbox" value="Reutilización entre agentes"> Reutilización entre agentes</label>
+              <label class="check-item"><input type="checkbox" value="Reuse across agents"> Reuse across agents</label>
               <label class="check-item"><input type="checkbox" value="Desacoplamiento backend"> Desacoplamiento backend</label>
-              <label class="check-item"><input type="checkbox" value="Fuente de datos dinámica"> Fuente de datos dinámica</label>
-              <label class="check-item"><input type="checkbox" value="Múltiples hosts/clientes"> Múltiples hosts/clientes</label>
+              <label class="check-item"><input type="checkbox" value="Dynamic data source"> Dynamic data source</label>
+              <label class="check-item"><input type="checkbox" value="Multiple hosts/clients"> Multiple hosts/clients</label>
               <label class="check-item"><input type="checkbox" value="Terceros pueden contribuir"> Terceros pueden contribuir</label>
-              <label class="check-item"><input type="checkbox" value="Separación de responsabilidades"> Separación de responsabilidades</label>
+              <label class="check-item"><input type="checkbox" value="Separation of concerns"> Separation of concerns</label>
             </div>
           </div>
           <div class="divider"></div>
@@ -673,11 +673,11 @@ footer {
             <div class="chip-group" role="radiogroup" aria-labelledby="b2-gran-label">
               <button class="chip" role="radio" aria-checked="false">Un servidor por fuente de datos</button>
               <button class="chip" role="radio" aria-checked="false">Un servidor por dominio funcional</button>
-              <button class="chip" role="radio" aria-checked="false">Servidor único monolítico</button>
+              <button class="chip" role="radio" aria-checked="false">Single monolithic server</button>
             </div>
           </div>
           <div class="field-group">
-            <label class="field-label" for="b2_razon_granularidad">Justificación de la estrategia elegida</label>
+            <label class="field-label" for="b2_razon_granularidad">Justification for chosen strategy</label>
             <textarea class="field-input" id="b2_razon_granularidad" name="b2_razon_granularidad" rows="2"
               placeholder="Ej: cada fuente de datos tiene credenciales y ciclo de vida propios…"></textarea>
           </div>
@@ -706,21 +706,21 @@ footer {
        PHASE 2 — SERVIDORES
   ════════════════════════════════════════════ -->
   <div class="canvas-section">
-    <span class="phase-label">② Diseño — Qué servidores construir</span>
+    <span class="phase-label">② Design — What servers to build</span>
 
     <!-- B3: INVENTARIO DE SERVIDORES -->
     <div class="block b3" data-block="b3"
       role="region" aria-labelledby="b3-title">
       <div class="block-accent" aria-hidden="true"></div>
       <div class="block-num" id="b3-title">3 · Inventario de Servidores MCP</div>
-      <div class="block-title">🗂️ ¿Qué servidores vas a construir o integrar?</div>
-      <div class="block-sub">Define cada servidor con su propósito, lo que expone y cómo ejecuta. Los Tools son acciones (efectos secundarios posibles); los Resources son datos legibles (URI).</div>
+      <div class="block-title">🗂️ What servers will you build or integrate?</div>
+      <div class="block-sub">Define each server with its purpose, what it exposes, and how it runs. Tools are actions (possible side effects); Resources are readable data (URI).</div>
 
       <div class="server-cards-list" id="serverList" aria-label="Lista de servidores MCP" role="list">
         <!-- Server cards inserted by JS -->
       </div>
-      <button class="btn-add-server" id="btnAddServer" aria-label="Añadir nuevo servidor MCP">
-        + Añadir servidor MCP
+      <button class="btn-add-server" id="btnAddServer" aria-label="Add new MCP server">
+        + Add MCP server
       </button>
     </div>
   </div>
@@ -729,7 +729,7 @@ footer {
        PHASE 3 — IMPLEMENTACIÓN
   ════════════════════════════════════════════ -->
   <div class="canvas-section">
-    <span class="phase-label">③ Implementación — Cómo conectar y proteger</span>
+    <span class="phase-label">③ Implementation — How to connect and secure</span>
     <div class="grid-2">
 
       <!-- B4: TRANSPORTE & RUNTIME -->
@@ -737,7 +737,7 @@ footer {
         role="region" aria-labelledby="b4-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
         <div class="block-num" id="b4-title">4 · Transporte &amp; Runtime</div>
-        <div class="block-title">🔌 ¿Cómo se conecta el cliente al servidor?</div>
+        <div class="block-title">🔌 How does the client connect to the server?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
           <div class="field-group">
@@ -746,18 +746,18 @@ footer {
               <div class="transport-card" data-transport="stdio" role="radio" aria-checked="false" tabindex="0">
                 <span class="transport-badge">stdio</span>
                 <div class="transport-card-title">Proceso local (stdio)</div>
-                <div class="transport-card-sub">El host lanza el servidor como subproceso. Máxima privacidad. Ideal para herramientas locales y desarrollo.</div>
+                <div class="transport-card-sub">The host launches the server as a subprocess. Maximum privacy. Ideal for local tools and development.</div>
               </div>
               <div class="transport-card" data-transport="sse" role="radio" aria-checked="false" tabindex="0">
                 <span class="transport-badge cyan">SSE / HTTP</span>
                 <div class="transport-card-title">Servidor remoto (SSE)</div>
-                <div class="transport-card-sub">El servidor corre como proceso HTTP independiente. Permite compartirlo entre múltiples clientes y desplegarlo en cloud.</div>
+                <div class="transport-card-sub">The server runs as a standalone HTTP process. Allows sharing across multiple clients and cloud deployment.</div>
               </div>
             </div>
           </div>
           <div class="divider"></div>
           <div class="field-group">
-            <div class="field-label" id="b4-runtime-label">Entorno de ejecución</div>
+            <div class="field-label" id="b4-runtime-label">Runtime environment</div>
             <div class="check-grid" role="group" aria-labelledby="b4-runtime-label">
               <label class="check-item"><input type="checkbox" value="Proceso local (dev)"> Proceso local (dev)</label>
               <label class="check-item"><input type="checkbox" value="npm / pip package"> npm / pip package</label>
@@ -770,15 +770,15 @@ footer {
           <div class="field-group">
             <div class="field-label" id="b4-lifecycle-label">Ciclo de vida del servidor</div>
             <div class="chip-group" role="radiogroup" aria-labelledby="b4-lifecycle-label">
-              <button class="chip" role="radio" aria-checked="false">On-demand (arranca con cada conversación)</button>
+              <button class="chip" role="radio" aria-checked="false">On-demand (starts with each conversation)</button>
               <button class="chip" role="radio" aria-checked="false">Always-on (proceso persistente)</button>
-              <button class="chip" role="radio" aria-checked="false">Serverless (por invocación)</button>
+              <button class="chip" role="radio" aria-checked="false">Serverless (per invocation)</button>
             </div>
           </div>
           <div class="field-group">
             <label class="field-label" for="b4_endpoint">Endpoint / comando de arranque</label>
             <input type="text" class="field-input mono-input" id="b4_endpoint" name="b4_endpoint"
-              placeholder="Ej: npx @myorg/mcp-server  ó  http://localhost:3000/mcp">
+              placeholder="E.g. npx @myorg/mcp-server  or  http://localhost:3000/mcp">
           </div>
         </div>
       </div>
@@ -788,11 +788,11 @@ footer {
         role="region" aria-labelledby="b5-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
         <div class="block-num" id="b5-title">5 · Seguridad &amp; Auth</div>
-        <div class="block-title">🔐 ¿Quién puede llamar a qué?</div>
+        <div class="block-title">🔐 Who can call what?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
           <div class="field-group">
-            <div class="field-label" id="b5-auth-label">Mecanismo de autenticación</div>
+            <div class="field-label" id="b5-auth-label">Authentication mechanism</div>
             <div class="chip-group" role="radiogroup" aria-labelledby="b5-auth-label">
               <button class="chip" role="radio" aria-checked="false">Sin auth (stdio local)</button>
               <button class="chip" role="radio" aria-checked="false">API Key en header</button>
@@ -801,12 +801,12 @@ footer {
             </div>
           </div>
           <div class="field-group">
-            <div class="field-label" id="b5-perm-label">Permisos por tipo de operación</div>
+            <div class="field-label" id="b5-perm-label">Permissions by operation type</div>
             <div class="check-grid" role="group" aria-labelledby="b5-perm-label">
               <label class="check-item"><input type="checkbox" value="Solo lectura (read-only tools)"> Solo lectura (read-only tools)</label>
-              <label class="check-item"><input type="checkbox" value="Escritura con confirmación humana"> Escritura con confirmación humana</label>
-              <label class="check-item"><input type="checkbox" value="Escritura autónoma permitida"> Escritura autónoma permitida</label>
-              <label class="check-item"><input type="checkbox" value="Eliminación nunca permitida"> Eliminación nunca permitida</label>
+              <label class="check-item"><input type="checkbox" value="Write with human confirmation"> Write with human confirmation</label>
+              <label class="check-item"><input type="checkbox" value="Autonomous write allowed"> Autonomous write allowed</label>
+              <label class="check-item"><input type="checkbox" value="Deletion never allowed"> Deletion never allowed</label>
             </div>
           </div>
           <div class="divider"></div>
@@ -823,7 +823,7 @@ footer {
             <div class="field-label" id="b5-data-label">Datos sensibles en tools</div>
             <div class="check-grid" role="group" aria-labelledby="b5-data-label">
               <label class="check-item"><input type="checkbox" value="PII pasa por los tools"> PII pasa por los tools</label>
-              <label class="check-item"><input type="checkbox" value="Credenciales en parámetros"> Credenciales en parámetros</label>
+              <label class="check-item"><input type="checkbox" value="Credentials in parameters"> Credentials in parameters</label>
               <label class="check-item"><input type="checkbox" value="Datos regulados (GDPR)"> Datos regulados (GDPR)</label>
               <label class="check-item"><input type="checkbox" value="Logging de inputs/outputs activado"> Logging de inputs/outputs activado</label>
             </div>
@@ -831,7 +831,7 @@ footer {
           <div class="field-group">
             <label class="field-label" for="b5_notas_auth">Notas de seguridad adicionales</label>
             <textarea class="field-input" id="b5_notas_auth" name="b5_notas_auth" rows="2"
-              placeholder="Rate limiting, expiración de tokens, auditoría…"></textarea>
+              placeholder="Rate limiting, token expiration, auditing…"></textarea>
           </div>
         </div>
       </div>
@@ -860,9 +860,9 @@ footer {
               <div class="check-grid" role="group" aria-labelledby="b6-test-label">
                 <label class="check-item"><input type="checkbox" value="MCP Inspector (pruebas manuales)"> MCP Inspector (pruebas manuales)</label>
                 <label class="check-item"><input type="checkbox" value="Tests unitarios de tools"> Tests unitarios de tools</label>
-                <label class="check-item"><input type="checkbox" value="Tests de integración agente-servidor"> Tests integración agente-servidor</label>
+                <label class="check-item"><input type="checkbox" value="Agent-server integration tests"> Agent-server integration tests</label>
                 <label class="check-item"><input type="checkbox" value="Tests de contrato (schema)"> Tests de contrato (schema)</label>
-                <label class="check-item"><input type="checkbox" value="Tests de regresión automáticos"> Tests de regresión automáticos</label>
+                <label class="check-item"><input type="checkbox" value="Automated regression tests"> Automated regression tests</label>
                 <label class="check-item"><input type="checkbox" value="Evaluaciones LLM-as-judge"> Evaluaciones LLM-as-judge</label>
               </div>
             </div>
@@ -870,9 +870,9 @@ footer {
               <div class="field-label" id="b6-cicd-label">CI/CD</div>
               <div class="check-grid" role="group" aria-labelledby="b6-cicd-label">
                 <label class="check-item"><input type="checkbox" value="GitHub Actions"> GitHub Actions</label>
-                <label class="check-item"><input type="checkbox" value="Tests automáticos en PR"> Tests automáticos en PR</label>
+                <label class="check-item"><input type="checkbox" value="Automated tests on PR"> Automated tests on PR</label>
                 <label class="check-item"><input type="checkbox" value="Docker build + push en CI"> Docker build + push en CI</label>
-                <label class="check-item"><input type="checkbox" value="Deploy automático a staging"> Deploy automático a staging</label>
+                <label class="check-item"><input type="checkbox" value="Auto deploy to staging"> Auto deploy to staging</label>
               </div>
             </div>
           </div>
@@ -888,7 +888,7 @@ footer {
               </div>
             </div>
             <div class="field-group">
-              <div class="field-label" id="b6-version-label">Versionado &amp; distribución</div>
+              <div class="field-label" id="b6-version-label">Versioning &amp; distribution</div>
               <div class="check-grid" role="group" aria-labelledby="b6-version-label">
                 <label class="check-item"><input type="checkbox" value="Semver (major.minor.patch)"> Semver (major.minor.patch)</label>
                 <label class="check-item"><input type="checkbox" value="CHANGELOG mantenido"> CHANGELOG mantenido</label>
@@ -897,7 +897,7 @@ footer {
               </div>
             </div>
             <div class="field-group">
-              <label class="field-label" for="b6_metricas">Métricas objetivo</label>
+              <label class="field-label" for="b6_metricas">Target metrics</label>
               <textarea class="field-input" id="b6_metricas" name="b6_metricas" rows="2"
                 placeholder="Ej: latencia p99 &lt; 500ms, disponibilidad &gt; 99.5%, tasa error &lt; 1%"></textarea>
             </div>
@@ -908,10 +908,10 @@ footer {
   </div><!-- /phase 4 -->
 
   <!-- EXPORT PANEL -->
-  <div class="export-panel" id="exportPanel" role="region" aria-label="Panel de exportación" aria-live="polite">
+  <div class="export-panel" id="exportPanel" role="region" aria-label="Export panel" aria-live="polite">
     <div class="export-panel-text">
       <div class="export-title">🎉 Canvas MCP completado</div>
-      <div class="export-sub">Diseño listo para revisar con el equipo o exportar como documento.</div>
+      <div class="export-sub">Design ready to review with your team or export as a document.</div>
     </div>
     <div class="export-actions">
       <button id="btnWordPanel" class="btn-primary">📄 Generar Documento</button>
@@ -950,9 +950,9 @@ function createServerCard(idx) {
     </div>
     <div class="server-grid">
       <div class="field-group" style="margin-bottom:0">
-        <label class="field-label" for="srv_${idx}_purpose">Propósito / responsabilidad</label>
+        <label class="field-label" for="srv_${idx}_purpose">Purpose / responsibility</label>
         <textarea class="field-input" id="srv_${idx}_purpose" name="srv_${idx}_purpose" rows="2"
-          placeholder="Qué problema resuelve este servidor…" oninput="trackProgress()"></textarea>
+          placeholder="What problem does this server solve…" oninput="trackProgress()"></textarea>
       </div>
       <div class="field-group" style="margin-bottom:0">
         <label class="field-label" for="srv_${idx}_source">Sistema que envuelve</label>
@@ -991,11 +991,11 @@ function createServerCard(idx) {
         </select>
       </div>
     </div>
-    <span class="server-section-label">🔧 Tools que expone (una por línea: nombre — descripción breve)</span>
+    <span class="server-section-label">🔧 Tools it exposes (one per line: name — brief description)</span>
     <textarea class="field-input mono-input" name="srv_${idx}_tools" rows="3"
-      placeholder="get_record — Obtiene un registro por ID&#10;search_items — Busca ítems por texto&#10;update_status — Actualiza el estado de un ítem"
+      placeholder="get_record — Gets a record by ID&#10;search_items — Searches items by text&#10;update_status — Updates an item status"
       aria-label="Tools del servidor ${idx}" oninput="trackProgress()"></textarea>
-    <span class="server-section-label">📦 Resources que expone (URI template — descripción)</span>
+    <span class="server-section-label">📦 Resources it exposes (URI template — description)</span>
     <textarea class="field-input mono-input" name="srv_${idx}_resources" rows="2"
       placeholder="db://tabla/{id} — Registro completo de la tabla&#10;file://docs/{path} — Documento de la base de conocimiento"
       aria-label="Resources del servidor ${idx}" oninput="trackProgress()"></textarea>
@@ -1173,7 +1173,7 @@ function loadSaved() {
 
 // ── Reset ─────────────────────────────────────────────────────
 function resetAll() {
-  if (!confirm('¿Reiniciar el canvas MCP? Se perderán todos los datos.')) return;
+  if (!confirm('Reset MCP canvas? All data will be lost.')) return;
   localStorage.removeItem(STORAGE_KEY);
   document.querySelectorAll('input[name]:not([type=checkbox]), textarea[name], select[name]').forEach(el => el.value = '');
   document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
@@ -1197,7 +1197,7 @@ function importJSON() {
   const inp = document.createElement('input'); inp.type='file'; inp.accept='.json';
   inp.onchange = async e => {
     try { applyState(JSON.parse(await e.target.files[0].text())); trackProgress(); saveNow(); }
-    catch(er) { alert('JSON inválido'); }
+    catch(er) { alert('Invalid JSON'); }
   };
   inp.click();
 }
@@ -1282,17 +1282,17 @@ function exportWord() {
   </div>
 
   ${sec('BLOQUE 1 — Agente Host','#0891B2')}
-  ${h2('Host y versión de protocolo')}
+  ${h2('Host and protocol version')}
   <p><b>Hosts:</b></p>${ul(getChecks('[data-block="b1"]'))}
-  <p><b>Versión MCP:</b> ${esc(getVal('b1_proto'))}</p>
+  <p><b>MCP Version:</b> ${esc(getVal('b1_proto'))}</p>
   <p><b>Concurrencia:</b> ${esc(getVal('b1_concurrencia'))}</p>
   <p><b>Alcance:</b> ${esc(getChips('[data-block="b1"]').join(', '))}</p>
 
-  ${sec('BLOQUE 2 — Decisión Arquitectónica','#7C3AED')}
-  ${h2('Por qué MCP y qué granularidad')}
+  ${sec('BLOCK 2 — Architecture Decision','#7C3AED')}
+  ${h2('Why MCP and what granularity')}
   <p><b>Motivaciones:</b></p>${ul(getChecks('[data-block="b2"]'))}
   <p><b>Estrategia de granularidad:</b> ${esc(getChips('[data-block="b2"]')[0]||'')}</p>
-  <p><b>Justificación:</b> ${esc(getVal('b2_razon_granularidad'))}</p>
+  <p><b>Justification:</b> ${esc(getVal('b2_razon_granularidad'))}</p>
   <p><b>Servidores de terceros evaluados:</b><br><code>${esc(getVal('b2_terceros'))}</code></p>
 
   ${sec('BLOQUE 3 — Inventario de Servidores','#059669')}
@@ -1300,21 +1300,21 @@ function exportWord() {
   ${serversHtml || '<p><em>Sin servidores definidos</em></p>'}
 
   ${sec('BLOQUE 4 — Transporte & Runtime','#10B981')}
-  ${h2('Protocolo de conexión y entorno de ejecución')}
+  ${h2('Connection protocol and runtime environment')}
   <p><b>Transporte seleccionado:</b> ${esc(getChips('[data-block="b4"]').join(', '))}</p>
   <p><b>Entornos:</b></p>${ul(getChecks('[data-block="b4"]'))}
   <p><b>Endpoint / comando:</b> <code>${esc(getVal('b4_endpoint'))}</code></p>
 
   ${sec('BLOQUE 5 — Seguridad & Auth','#D97706')}
-  ${h2('Autenticación, permisos y sandboxing')}
+  ${h2('Authentication, permissions and sandboxing')}
   <p><b>Auth:</b> ${esc(getChips('[data-block="b5"]')[0]||'')}</p>
   <p><b>Permisos:</b></p>${ul(getChecks('[data-block="b5"]'))}
   <p><b>Notas:</b> ${esc(getVal('b5_notas_auth'))}</p>
 
   ${sec('BLOQUE 6 — Testing, Despliegue & Observabilidad','#DC2626')}
-  ${h2('Calidad, CI/CD y métricas operacionales')}
+  ${h2('Quality, CI/CD and operational metrics')}
   <p><b>Testing:</b></p>${ul(getChecks('[data-block="b6"]'))}
-  <p><b>Métricas objetivo:</b> ${esc(getVal('b6_metricas'))}</p>
+  <p><b>Target metrics:</b> ${esc(getVal('b6_metricas'))}</p>
 
   
 
