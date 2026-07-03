@@ -6,8 +6,6 @@
 
 🚀 **[Demo en vivo → josevilar-qbioai.github.io/agent-canvas-model](https://josevilar-qbioai.github.io/agent-canvas-model)**
 
-🗂️ **[Canvas Board (los 4 en uno) → /board](https://josevilar-qbioai.github.io/agent-canvas-model/board/)**
-
 ---
 
 ## Framework en 3 fases
