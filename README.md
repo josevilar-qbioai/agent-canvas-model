@@ -4,7 +4,7 @@
 
 **AI Agent Design Framework** — An adaptation of the Business Model Canvas for planning, designing, and deploying AI agents in production.
 
-🚀 **[Live demo → josevilar-qbioai.github.io/agent-canvas-model](https://josevilar-qbioai.github.io/agent-canvas-model)**
+🚀 **[Live demo → josevilar-qbioai.github.io/agent-canvas-model/en/](https://josevilar-qbioai.github.io/agent-canvas-model/en/)**
 
 ---
 
