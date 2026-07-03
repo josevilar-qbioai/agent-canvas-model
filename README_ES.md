@@ -6,34 +6,51 @@
 
 🚀 **[Demo en vivo → josevilar-qbioai.github.io/agent-canvas-model](https://josevilar-qbioai.github.io/agent-canvas-model)**
 
----
-
-## Cuatro canvases
-
-| Canvas | Acento | Caso de uso |
-|--------|--------|-------------|
-| [**Enterprise Adoption**](https://josevilar-qbioai.github.io/agent-canvas-model/enterprise/) | Ámbar | Mandato ejecutivo, gobernanza, gestión del cambio, hoja de ruta — antes de construir |
-| [**Cloud Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/cloud/) | Índigo | Agentes en Azure, AWS, GCP, Copilot Studio, LangChain, APIs gestionadas |
-| [**On-Prem Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/onprem/) | Esmeralda | Modelos locales (Ollama, vLLM, LM Studio), air-gap, alta privacidad |
-| [**MCP Canvas**](https://josevilar-qbioai.github.io/agent-canvas-model/mcp/) | Cian | Capa de Model Context Protocol: servidores, transporte, seguridad, observabilidad |
-
-Los cuatro comparten el **sistema de diseño QMetrika Labs**: Inter + JetBrains Mono, fondo charcoal oscuro (`#252830`), color de acento por edición, WCAG 2.2 AA.
+🗂️ **[Canvas Board (los 4 en uno) → /board](https://josevilar-qbioai.github.io/agent-canvas-model/board/)**
 
 ---
 
-## Novedades en v4.0
+## Framework en 3 fases
+
+El framework sigue una secuencia deliberada — estrategia antes que tecnología:
+
+| Fase | Canvas | Acento | Propósito |
+|------|--------|--------|-----------|
+| **① Gobernanza** | [Enterprise Adoption](https://josevilar-qbioai.github.io/agent-canvas-model/enterprise/) | Ámbar | Mandato ejecutivo, gobernanza, mapa de stakeholders, gestión del cambio — antes de decidir tecnología |
+| **② Diseño** | [Cloud Edition](https://josevilar-qbioai.github.io/agent-canvas-model/cloud/) | Índigo | Agentes en Azure, AWS, GCP, Copilot Studio, LangChain, APIs gestionadas |
+| **② Diseño** | [On-Prem Edition](https://josevilar-qbioai.github.io/agent-canvas-model/onprem/) | Esmeralda | Modelos locales (Ollama, vLLM, LM Studio), air-gap, alta privacidad |
+| **③ Capa MCP** | [MCP Canvas](https://josevilar-qbioai.github.io/agent-canvas-model/mcp/) | Cian | Capa Model Context Protocol: servidores, transporte, seguridad, observabilidad |
+
+Los cuatro comparten el **sistema de diseño QMetrika Labs**: Inter + JetBrains Mono, fondo charcoal oscuro (`#252830`), color de acento por canvas, WCAG 2.2 AA.
+
+---
+
+## Canvas Board
+
+El **[Canvas Board](https://josevilar-qbioai.github.io/agent-canvas-model/board/)** integra los 4 canvas como pestañas en un único archivo HTML — un proyecto, un enlace, una exportación a Word que lo cubre todo.
+
+- Nombre de proyecto compartido entre todos los canvas
+- Color de acento por pestaña (Ámbar → Índigo/Esmeralda → Cian)
+- Exportación Word combinada (los 4 canvas en un documento)
+- Barra de progreso total de toda la iniciativa
+- Funciona offline, sin servidor, compatible con air-gap
+
+---
+
+## Novedades en v4.1
 
 | Novedad | Detalle |
 |---------|---------|
-| **MCP Architecture Canvas** | Nuevo canvas dedicado al diseño de la capa MCP |
+| **Canvas Board** | Los 4 canvas como pestañas en un único archivo HTML |
+| **Landing page de 3 fases** | La landing explica el flujo de trabajo antes de mostrar los canvas |
+| **MCP Architecture Canvas** | Canvas dedicado al diseño de la capa MCP |
+| **Enterprise Adoption Canvas** | Canvas de gobernanza y gestión del cambio para la Fase 1 |
 | **HTML standalone** | Cada canvas es un único archivo autocontenido — sin servidor, funciona con `file://` |
 | **Sistema de diseño unificado** | Branding común, fuente Inter, dark theme, acento por canvas |
 | **Auto-guardado localStorage** | Cambios guardados automáticamente con debounce de 300 ms |
-| **Compartir por URL hash** | Comparte el estado completo del canvas en `#canvas=`, `#onprem=`, `#mcp=` |
+| **Compartir por URL hash** | Comparte el estado completo del canvas en un hash de URL |
 | **Importar / Exportar JSON** | Serialización completa del estado para backup y traspaso |
 | **Exportar Word (PRD + ADR)** | Documento estructurado generado en un clic desde los datos del canvas |
-| **Enterprise Adoption Canvas** | Nuevo canvas Fase 3 para gobernanza organizativa y gestión del cambio |
-| **GitHub Pages** | Los cuatro canvases accesibles en una URL pública |
 | **WCAG 2.2 AA** | Skip link, `aria-*`, `role=`, `focus-visible`, etiquetas para lectores de pantalla |
 
 ---
@@ -90,28 +107,25 @@ agent-canvas-model/
 ├── agent-canvas-model.skill               # Skill instalable para Claude Desktop
 │
 ├── docs/                                   # Raíz de GitHub Pages
-│   ├── index.html                          # Landing page (dark, 3 tarjetas)
+│   ├── index.html                          # Landing page — explicación de las 3 fases
 │   ├── .nojekyll                           # Desactiva el procesado Jekyll
+│   ├── board/index.html                    # Canvas Board — los 4 canvas en pestañas ★
+│   ├── enterprise/index.html               # Enterprise Adoption Canvas (standalone)
 │   ├── cloud/index.html                    # Cloud Edition (standalone)
 │   ├── onprem/index.html                   # On-Prem Edition (standalone)
-│   ├── mcp/index.html                      # MCP Canvas (standalone)
-│   ├── guia-mejores-practicas.md           # Guía completa de mejores prácticas
-│   └── orden-de-trabajo.md                 # Orden sugerido para rellenar el canvas
+│   └── mcp/index.html                      # MCP Canvas (standalone)
 │
 ├── plantillas/                             # Plantillas fuente (español)
 │   ├── Agent_Canvas_Template.md            # Plantilla editable en Markdown
+│   ├── canvas_board.html                   # Canvas Board fuente ★
 │   ├── canvas_cloud_v4_standalone.html     # Cloud Edition v4 (standalone)
 │   ├── canvas_onprem_v4_standalone.html    # On-Prem Edition v4 (standalone)
-│   ├── canvas_mcp.html                     # MCP Canvas v1 (standalone)
-│   ├── canvas_cloud_v4.html                # Cloud Edition v4 (modular, ES6)
-│   ├── css/canvas-cloud.css                # CSS compartido (versión modular)
-│   └── js/                                 # Módulos ES6 (versión modular)
+│   ├── canvas_enterprise_adoption.html     # Enterprise Adoption Canvas (standalone)
+│   └── canvas_mcp.html                     # MCP Canvas (standalone)
 │
-├── ejemplos/                               # Ejemplos de uso
-│   ├── ejemplo-agente-soporte-IT.md
-│   └── ejemplo-agente-onboarding.md
-│
-└── en/                                     # Plantillas y docs en inglés
+└── ejemplos/                               # Ejemplos de uso
+    ├── ejemplo-agente-soporte-IT.md
+    └── ejemplo-agente-onboarding.md
 ```
 
 ---
@@ -170,4 +184,4 @@ Las contribuciones son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Desarrollado por **Jose Antonio Vilar** — QMetrika Labs — qmetrika[at]proton.me
 
-**Versión**: 4.0 (2026)
+**Versión**: 4.1 (2026)

@@ -6,34 +6,51 @@
 
 🚀 **[Live demo → josevilar-qbioai.github.io/agent-canvas-model](https://josevilar-qbioai.github.io/agent-canvas-model)**
 
+🗂️ **[Canvas Board (all 4 in one) → /board](https://josevilar-qbioai.github.io/agent-canvas-model/board/)**
+
 ---
 
-## Four Canvases
+## 3-Phase Framework
 
-| Canvas | Accent | Use case |
-|--------|--------|----------|
-| [**Enterprise Adoption**](https://josevilar-qbioai.github.io/agent-canvas-model/enterprise/) | Amber | Executive mandate, governance, change management, adoption roadmap — before you build |
-| [**Cloud Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/cloud/) | Indigo | Agents on Azure, AWS, GCP, Copilot Studio, LangChain, managed APIs |
-| [**On-Prem Edition**](https://josevilar-qbioai.github.io/agent-canvas-model/onprem/) | Emerald | Local models (Ollama, vLLM, LM Studio), air-gap, high-privacy environments |
-| [**MCP Canvas**](https://josevilar-qbioai.github.io/agent-canvas-model/mcp/) | Cyan | Model Context Protocol layer: servers, transport, security, observability |
+The framework follows a deliberate sequence — strategy before technology:
+
+| Phase | Canvas | Accent | Purpose |
+|-------|--------|--------|---------|
+| **① Governance** | [Enterprise Adoption](https://josevilar-qbioai.github.io/agent-canvas-model/enterprise/) | Amber | Executive mandate, governance, stakeholder map, change management — before any technical decision |
+| **② Agent Design** | [Cloud Edition](https://josevilar-qbioai.github.io/agent-canvas-model/cloud/) | Indigo | Agents on Azure, AWS, GCP, Copilot Studio, LangChain, managed APIs |
+| **② Agent Design** | [On-Prem Edition](https://josevilar-qbioai.github.io/agent-canvas-model/onprem/) | Emerald | Local models (Ollama, vLLM, LM Studio), air-gap, high-privacy environments |
+| **③ MCP Layer** | [MCP Canvas](https://josevilar-qbioai.github.io/agent-canvas-model/mcp/) | Cyan | Model Context Protocol layer: servers, transport, security, observability |
 
 All four share a unified **QMetrika Labs design system**: Inter + JetBrains Mono, dark charcoal base (`#252830`), per-canvas accent color, WCAG 2.2 AA.
 
 ---
 
-## What's New in v4.0
+## Canvas Board
+
+The **[Canvas Board](https://josevilar-qbioai.github.io/agent-canvas-model/board/)** integrates all 4 canvas as tabs in a single HTML file — one project, one link, one Word export covering everything.
+
+- Shared project name across all canvas
+- Per-tab accent color (Amber → Indigo/Emerald → Cyan)
+- Combined Word export (all 4 canvas in one document)
+- Total progress bar across the full initiative
+- Works offline, no server, air-gap ready
+
+---
+
+## What's New in v4.1
 
 | Feature | Detail |
 |---------|--------|
-| **MCP Architecture Canvas** | New dedicated canvas for designing the MCP layer |
+| **Canvas Board** | All 4 canvas as tabs in a single HTML file |
+| **3-phase landing page** | Landing explains the workflow before showing the canvas |
+| **MCP Architecture Canvas** | Dedicated canvas for designing the MCP layer |
+| **Enterprise Adoption Canvas** | Governance and change management canvas for Phase 1 |
 | **Standalone HTML** | Each canvas is a single self-contained file — no server, works via `file://` |
 | **Unified design system** | Common branding, Inter font, dark theme, per-canvas accent |
 | **localStorage auto-save** | Changes saved automatically with 300 ms debounce |
-| **URL hash sharing** | Share full canvas state via `#canvas=`, `#onprem=`, `#mcp=` encoded hash |
+| **URL hash sharing** | Share full canvas state via encoded URL hash |
 | **JSON import / export** | Full state serialization for backup and handoff |
 | **Word export (PRD + ADR)** | One-click structured document from canvas data |
-| **Enterprise Adoption Canvas** | New Phase 3 canvas for organizational governance and change management |
-| **GitHub Pages** | All four canvases live at a public URL |
 | **WCAG 2.2 AA** | Skip link, `aria-*`, `role=`, `focus-visible`, screen-reader labels |
 
 ---
@@ -90,30 +107,25 @@ agent-canvas-model/
 ├── agent-canvas-model.skill               # Installable skill for Claude Desktop
 │
 ├── docs/                                   # GitHub Pages root
-│   ├── index.html                          # Landing page (dark, 3 canvas cards)
+│   ├── index.html                          # Landing page — 3-phase framework overview
 │   ├── .nojekyll                           # Disables Jekyll processing
+│   ├── board/index.html                    # Canvas Board — all 4 canvas as tabs ★
 │   ├── enterprise/index.html               # Enterprise Adoption Canvas (standalone)
 │   ├── cloud/index.html                    # Cloud Edition (standalone)
 │   ├── onprem/index.html                   # On-Prem Edition (standalone)
-│   ├── mcp/index.html                      # MCP Canvas (standalone)
-│   ├── guia-mejores-practicas.md           # Best practices guide (ES)
-│   └── orden-de-trabajo.md                 # Suggested working order (ES)
+│   └── mcp/index.html                      # MCP Canvas (standalone)
 │
 ├── plantillas/                             # Source templates (Spanish)
 │   ├── Agent_Canvas_Template.md            # Editable Markdown template
+│   ├── canvas_board.html                   # Canvas Board source ★
 │   ├── canvas_cloud_v4_standalone.html     # Cloud Edition v4 (standalone)
 │   ├── canvas_onprem_v4_standalone.html    # On-Prem Edition v4 (standalone)
 │   ├── canvas_enterprise_adoption.html     # Enterprise Adoption Canvas (standalone)
-│   ├── canvas_mcp.html                     # MCP Canvas v1 (standalone)
-│   ├── canvas_cloud_v4.html                # Cloud Edition v4 (modular, ES6)
-│   ├── css/canvas-cloud.css                # Shared CSS (modular version)
-│   └── js/                                 # ES6 modules (modular version)
+│   └── canvas_mcp.html                     # MCP Canvas (standalone)
 │
-├── ejemplos/                               # Usage examples
-│   ├── ejemplo-agente-soporte-IT.md
-│   └── ejemplo-agente-onboarding.md
-│
-└── en/                                     # English templates and docs
+└── ejemplos/                               # Usage examples
+    ├── ejemplo-agente-soporte-IT.md
+    └── ejemplo-agente-onboarding.md
 ```
 
 ---
@@ -172,4 +184,4 @@ Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Developed by **Jose Antonio Vilar** — QMetrika Labs — qmetrika[at]proton.me
 
-**Version**: 4.0 (2026)
+**Version**: 4.1 (2026)
