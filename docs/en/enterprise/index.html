@@ -271,11 +271,11 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
 
 <!-- ── HERO ── -->
 <section class="hero" aria-labelledby="hero-title">
-  <p class="hero-eyebrow"><span>Fase Estratégica</span> · Enterprise AI Adoption Canvas</p>
-  <h1 id="hero-title">Adopción de IA<br><em>antes de construir</em></h1>
-  <p class="hero-sub">El canvas previo a cualquier desarrollo técnico. Define el mandato, la gobernanza, la gestión del cambio y la hoja de ruta organizativa antes de elegir tecnología.</p>
+  <p class="hero-eyebrow"><span>Strategic Phase</span> · Enterprise AI Adoption Canvas</p>
+  <h1 id="hero-title">AI Adoption<br><em>before you build</em></h1>
+  <p class="hero-sub">The prerequisite canvas for any technical development. Define mandate, governance, change management, and the organizational roadmap before choosing technology.</p>
 
-  <div class="hero-flow" role="list" aria-label="Flujo de canvases">
+  <div class="hero-flow" role="list" aria-label="Canvas flow">
     <span class="flow-step active" role="listitem">① Enterprise Adoption</span>
     <span class="flow-arrow" aria-hidden="true">→</span>
     <span class="flow-step" role="listitem">② Cloud / On-Prem</span>
@@ -284,119 +284,119 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
   </div>
 
   <div class="hero-stats">
-    <div class="hero-stat"><span class="val">10</span><span class="lbl">Bloques</span></div>
-    <div class="hero-stat"><span class="val" id="statPct">0%</span><span class="lbl">Completado</span></div>
-    <div class="hero-stat"><span class="val">Fase 3</span><span class="lbl">Madurez IA</span></div>
+    <div class="hero-stat"><span class="val">10</span><span class="lbl">Blocks</span></div>
+    <div class="hero-stat"><span class="val" id="statPct">0%</span><span class="lbl">Completed</span></div>
+    <div class="hero-stat"><span class="val">Phase 3</span><span class="lbl">AI Maturity</span></div>
   </div>
 </section>
 
 <!-- ── CANVAS ── -->
 <div class="canvas-wrap">
 
-  <div class="canvas-bar" role="complementary" aria-label="Progreso">
+  <div class="canvas-bar" role="complementary" aria-label="Progress">
     <span class="canvas-label">Enterprise AI Adoption Canvas · <strong>QMetrika Labs</strong></span>
     <div class="prog-wrap">
       <span class="prog-text" id="progText">0 / 10 blocks</span>
-      <div class="prog-bar" role="progressbar" aria-label="Progreso" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progBar">
+      <div class="prog-bar" role="progressbar" aria-label="Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progBar">
         <div class="prog-fill" id="progFill" style="width:0%"></div>
       </div>
     </div>
   </div>
 
-  <!-- ── FILA 1: MANDATO + GOBERNANZA + PROPUESTA ORGANIZATIVA ── -->
+  <!-- ── ROW 1: MANDATE + GOVERNANCE + ORG. VALUE ── -->
   <div class="canvas-section">
     <div class="phase-row">
 
-      <!-- B1 MANDATO EJECUTIVO -->
+      <!-- B1 EXECUTIVE MANDATE -->
       <article class="block" data-block="b1" aria-labelledby="b1-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B1 · Mandato</p>
+        <p class="block-num">B1 · Mandate</p>
         <h2 class="block-title" id="b1-title">Executive Mandate</h2>
-        <p class="block-sub">¿Quién patrocina el programa desde arriba? Sin mandato claro desde dirección, el programa no escala.</p>
+        <p class="block-sub">Who sponsors the program from above? Without a clear mandate from leadership, the program will not scale.</p>
         <div class="field-group">
-          <label class="field-label" for="b1_sponsor">Sponsor ejecutivo (nombre y cargo)</label>
-          <input class="field-input" type="text" id="b1_sponsor" name="b1_sponsor" placeholder="Ej. CDO / CTO / CEO…">
+          <label class="field-label" for="b1_sponsor">Executive sponsor (name and role)</label>
+          <input class="field-input" type="text" id="b1_sponsor" name="b1_sponsor" placeholder="E.g. CDO / CTO / CEO…">
         </div>
         <div class="field-group">
-          <label class="field-label" for="b1_mandato">Mandato formal</label>
-          <textarea class="field-input" id="b1_mandato" name="b1_mandato" rows="2" placeholder="¿Qué ha aprobado dirección? ¿Hay OKR vinculado?"></textarea>
+          <label class="field-label" for="b1_mandato">Formal mandate</label>
+          <textarea class="field-input" id="b1_mandato" name="b1_mandato" rows="2" placeholder="What has leadership approved? Is there a linked OKR?"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label">Nivel de apoyo ejecutivo</label>
-          <div class="chip-group" role="radiogroup" aria-label="Nivel de apoyo" id="b1_apoyo">
+          <label class="field-label">Executive support level</label>
+          <div class="chip-group" role="radiogroup" aria-label="Support level" id="b1_apoyo">
             <button class="chip" role="radio" aria-checked="false" data-val="bajo">Low</button>
             <button class="chip" role="radio" aria-checked="false" data-val="medio">Medium</button>
             <button class="chip" role="radio" aria-checked="false" data-val="alto">High</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="muy-alto">Muy alto</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="muy-alto">Very high</button>
           </div>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b1_autoridad">¿Qué puede desbloquear este sponsor?</label>
-          <textarea class="field-input" id="b1_autoridad" name="b1_autoridad" rows="2" placeholder="Presupuesto, headcount, acceso a datos, excepciones de seguridad…"></textarea>
+          <label class="field-label" for="b1_autoridad">What can this sponsor unblock?</label>
+          <textarea class="field-input" id="b1_autoridad" name="b1_autoridad" rows="2" placeholder="Budget, headcount, data access, security exceptions…"></textarea>
         </div>
       </article>
 
-      <!-- B2 MODELO DE GOBERNANZA -->
+      <!-- B2 GOVERNANCE MODEL -->
       <article class="block" data-block="b2" aria-labelledby="b2-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B2 · Gobernanza</p>
+        <p class="block-num">B2 · Governance</p>
         <h2 class="block-title" id="b2-title">Governance Model</h2>
-        <p class="block-sub">¿Quién decide qué? La gobernanza evita que la IA sea un proyecto de IT sin impacto en negocio.</p>
+        <p class="block-sub">Who decides what? Governance prevents AI from becoming an IT project with no business impact.</p>
         <div class="field-group">
-          <label class="field-label">Estructura de gobernanza</label>
-          <div class="chip-group" role="radiogroup" aria-label="Estructura" id="b2_estructura">
+          <label class="field-label">Governance structure</label>
+          <div class="chip-group" role="radiogroup" aria-label="Structure" id="b2_estructura">
             <button class="chip" role="radio" aria-checked="false" data-val="ai-office">AI Office</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="coe">Centro de Excelencia</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="comite">Comité AI</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="distribuido">Distribuido</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="coe">Center of Excellence</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="comite">AI Committee</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="distribuido">Distributed</button>
           </div>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b2_decide">¿Quién aprueba qué agentes se construyen?</label>
-          <textarea class="field-input" id="b2_decide" name="b2_decide" rows="2" placeholder="Role o comité responsable de la cartera de agentes…"></textarea>
+          <label class="field-label" for="b2_decide">Who approves which agents are built?</label>
+          <textarea class="field-input" id="b2_decide" name="b2_decide" rows="2" placeholder="Role or committee responsible for the agent portfolio…"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b2_para">¿Quién puede pausar o detener un despliegue?</label>
-          <input class="field-input" type="text" id="b2_para" name="b2_para" placeholder="CISO / Legal / Comité de ética…">
+          <label class="field-label" for="b2_para">Who can pause or stop a deployment?</label>
+          <input class="field-input" type="text" id="b2_para" name="b2_para" placeholder="CISO / Legal / Ethics Committee…">
         </div>
         <div class="field-group">
-          <label class="field-label">Funciones en gobernanza</label>
+          <label class="field-label">Governance functions</label>
           <div class="check-grid">
             <label class="check-item"><input type="checkbox" name="b2_legal" value="1"> Legal / Compliance</label>
-            <label class="check-item"><input type="checkbox" name="b2_rrhh" value="1"> RRHH</label>
-            <label class="check-item"><input type="checkbox" name="b2_ciso" value="1"> CISO / Seguridad</label>
-            <label class="check-item"><input type="checkbox" name="b2_negocio" value="1"> Negocio</label>
-            <label class="check-item"><input type="checkbox" name="b2_etica" value="1"> Ética / Responsable IA</label>
+            <label class="check-item"><input type="checkbox" name="b2_rrhh" value="1"> HR</label>
+            <label class="check-item"><input type="checkbox" name="b2_ciso" value="1"> CISO / Security</label>
+            <label class="check-item"><input type="checkbox" name="b2_negocio" value="1"> Business</label>
+            <label class="check-item"><input type="checkbox" name="b2_etica" value="1"> Ethics / AI Responsible</label>
             <label class="check-item"><input type="checkbox" name="b2_data" value="1"> Data / IT</label>
           </div>
         </div>
       </article>
 
-      <!-- B3 PROPUESTA DE VALOR ORGANIZATIVA -->
+      <!-- B3 ORGANIZATIONAL VALUE PROPOSITION -->
       <article class="block" data-block="b3" aria-labelledby="b3-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B3 · Valor Org.</p>
-        <h2 class="block-title" id="b3-title">Propuesta de Valor Organizativa</h2>
-        <p class="block-sub">No el valor del agente — el valor para el negocio. ¿Qué capacidades nuevas tendrá la organización?</p>
+        <p class="block-num">B3 · Org. Value</p>
+        <h2 class="block-title" id="b3-title">Organizational Value Proposition</h2>
+        <p class="block-sub">Not the agent's value — the value to the business. What new capabilities will the organization gain?</p>
         <div class="field-group">
-          <label class="field-label" for="b3_capacidad">Nueva capacidad organizativa</label>
-          <textarea class="field-input" id="b3_capacidad" name="b3_capacidad" rows="2" placeholder="¿Qué podrá hacer la organización que hoy no puede?"></textarea>
+          <label class="field-label" for="b3_capacidad">New organizational capability</label>
+          <textarea class="field-input" id="b3_capacidad" name="b3_capacidad" rows="2" placeholder="What will the organization be able to do that it can't today?"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b3_deja">¿Qué deja de hacer el equipo humano?</label>
-          <textarea class="field-input" id="b3_deja" name="b3_deja" rows="2" placeholder="Tareas que se automatizan o eliminan…"></textarea>
+          <label class="field-label" for="b3_deja">What does the human team stop doing?</label>
+          <textarea class="field-input" id="b3_deja" name="b3_deja" rows="2" placeholder="Tasks that are automated or eliminated…"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b3_diferencial">Ventaja competitiva esperada</label>
-          <textarea class="field-input" id="b3_diferencial" name="b3_diferencial" rows="2" placeholder="¿Qué diferenciador de mercado genera este programa?"></textarea>
+          <label class="field-label" for="b3_diferencial">Expected competitive advantage</label>
+          <textarea class="field-input" id="b3_diferencial" name="b3_diferencial" rows="2" placeholder="What market differentiator does this program create?"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label">Horizonte de impacto</label>
+          <label class="field-label">Impact horizon</label>
           <div class="chip-group" role="radiogroup" id="b3_horizonte">
-            <button class="chip" role="radio" aria-checked="false" data-val="3m">3 meses</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="6m">6 meses</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="1y">1 año</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="2y">2+ años</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="3m">3 months</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="6m">6 months</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="1y">1 year</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="2y">2+ years</button>
           </div>
         </div>
       </article>
@@ -404,314 +404,314 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
     </div>
   </div>
 
-  <!-- ── FILA 2: STAKEHOLDERS + URGENCIA COMPETITIVA ── -->
+  <!-- ── ROW 2: STAKEHOLDERS + COMPETITIVE URGENCY ── -->
   <div class="canvas-section">
     <div class="phase-row-2">
 
-      <!-- B4 STAKEHOLDERS IMPACTADOS -->
+      <!-- B4 IMPACTED STAKEHOLDERS -->
       <article class="block" data-block="b4" aria-labelledby="b4-title">
         <div class="block-accent" aria-hidden="true"></div>
         <p class="block-num">B4 · Stakeholders</p>
-        <h2 class="block-title" id="b4-title">Stakeholders Impactados</h2>
-        <p class="block-sub">Más allá del usuario final. ¿Quién pierde poder? ¿Quién gana? El mapa de aliados y resistencias es crítico.</p>
+        <h2 class="block-title" id="b4-title">Impacted Stakeholders</h2>
+        <p class="block-sub">Beyond the end user. Who loses power? Who gains? The map of allies and resistances is critical.</p>
         <div class="stakeholder-list" id="stakeholderList">
           <div class="stakeholder-card">
             <div>
               <div class="stakeholder-label">Departamento / Role</div>
-              <input class="field-input" type="text" name="sh1_rol" placeholder="Ej. RRHH / Legal…" style="margin-top:.2rem">
+              <input class="field-input" type="text" name="sh1_rol" placeholder="E.g. HR / Legal…" style="margin-top:.2rem">
             </div>
             <div>
-              <div class="stakeholder-label">Posición</div>
+              <div class="stakeholder-label">Position</div>
               <select class="field-input" name="sh1_pos" style="margin-top:.2rem">
                 <option value="">—</option>
-                <option value="aliado">🟢 Ally activo</option>
-                <option value="neutro">🟡 Neutro</option>
+                <option value="aliado">🟢 Active ally</option>
+                <option value="neutro">🟡 Neutral</option>
                 <option value="resistencia">🔴 Resistance</option>
                 <option value="bloqueador">⛔ Blocker</option>
               </select>
             </div>
             <div style="grid-column:1/-1">
-              <input class="field-input" type="text" name="sh1_accion" placeholder="Acción: cómo gestionar…">
+              <input class="field-input" type="text" name="sh1_accion" placeholder="Action: how to manage…">
             </div>
           </div>
           <div class="stakeholder-card">
             <div>
               <div class="stakeholder-label">Departamento / Role</div>
-              <input class="field-input" type="text" name="sh2_rol" placeholder="Ej. Operaciones…" style="margin-top:.2rem">
+              <input class="field-input" type="text" name="sh2_rol" placeholder="E.g. Operations…" style="margin-top:.2rem">
             </div>
             <div>
-              <div class="stakeholder-label">Posición</div>
+              <div class="stakeholder-label">Position</div>
               <select class="field-input" name="sh2_pos" style="margin-top:.2rem">
                 <option value="">—</option>
-                <option value="aliado">🟢 Ally activo</option>
-                <option value="neutro">🟡 Neutro</option>
+                <option value="aliado">🟢 Active ally</option>
+                <option value="neutro">🟡 Neutral</option>
                 <option value="resistencia">🔴 Resistance</option>
                 <option value="bloqueador">⛔ Blocker</option>
               </select>
             </div>
             <div style="grid-column:1/-1">
-              <input class="field-input" type="text" name="sh2_accion" placeholder="Acción: cómo gestionar…">
+              <input class="field-input" type="text" name="sh2_accion" placeholder="Action: how to manage…">
             </div>
           </div>
           <div class="stakeholder-card">
             <div>
               <div class="stakeholder-label">Departamento / Role</div>
-              <input class="field-input" type="text" name="sh3_rol" placeholder="Ej. Compliance…" style="margin-top:.2rem">
+              <input class="field-input" type="text" name="sh3_rol" placeholder="E.g. Compliance…" style="margin-top:.2rem">
             </div>
             <div>
-              <div class="stakeholder-label">Posición</div>
+              <div class="stakeholder-label">Position</div>
               <select class="field-input" name="sh3_pos" style="margin-top:.2rem">
                 <option value="">—</option>
-                <option value="aliado">🟢 Ally activo</option>
-                <option value="neutro">🟡 Neutro</option>
+                <option value="aliado">🟢 Active ally</option>
+                <option value="neutro">🟡 Neutral</option>
                 <option value="resistencia">🔴 Resistance</option>
                 <option value="bloqueador">⛔ Blocker</option>
               </select>
             </div>
             <div style="grid-column:1/-1">
-              <input class="field-input" type="text" name="sh3_accion" placeholder="Acción: cómo gestionar…">
+              <input class="field-input" type="text" name="sh3_accion" placeholder="Action: how to manage…">
             </div>
           </div>
         </div>
       </article>
 
-      <!-- B5 URGENCIA COMPETITIVA -->
+      <!-- B5 COMPETITIVE URGENCY -->
       <article class="block" data-block="b5" aria-labelledby="b5-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B5 · Urgencia</p>
+        <p class="block-num">B5 · Urgency</p>
         <h2 class="block-title" id="b5-title">Competitive Urgency</h2>
-        <p class="block-sub">Un competidor espabilado puede desplazarte de un nicho en meses. Calibra la ventana de oportunidad.</p>
+        <p class="block-sub">A nimble competitor can displace you from a niche in months. Calibrate the opportunity window.</p>
         <div class="field-group">
-          <label class="field-label" for="b5_ventana">Ventana de oportunidad estimada</label>
+          <label class="field-label" for="b5_ventana">Estimated opportunity window</label>
           <div class="chip-group" role="radiogroup" id="b5_ventana_chips">
-            <button class="chip" role="radio" aria-checked="false" data-val="3m">&lt;3 meses</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="6m">3-6 meses</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="12m">6-12 meses</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="3m">&lt;3 months</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="6m">3–6 months</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="12m">6–12 months</button>
             <button class="chip" role="radio" aria-checked="false" data-val="mas">&gt;1 año</button>
           </div>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b5_competencia">¿Qué está haciendo la competencia?</label>
-          <textarea class="field-input" id="b5_competencia" name="b5_competencia" rows="2" placeholder="Señales de mercado, noticias, movimientos observados…"></textarea>
+          <label class="field-label" for="b5_competencia">What is the competition doing?</label>
+          <textarea class="field-input" id="b5_competencia" name="b5_competencia" rows="2" placeholder="Market signals, news, observed movements…"></textarea>
         </div>
         <div class="divider"></div>
         <div class="field-group">
-          <label class="field-label">Nivel de urgencia vs. riesgo de cambio precipitado</label>
+          <label class="field-label">Urgency level vs. risk of rushed change</label>
           <div class="urgency-wrap">
             <div class="urgency-row">
-              <span class="urgency-lbl">Urgencia</span>
+              <span class="urgency-lbl">Urgency</span>
               <div class="urgency-track" id="urgencyTrack1">
                 <div class="urgency-fill" id="urgencyFill1" style="width:50%"></div>
               </div>
               <span class="urgency-val" id="urgencyVal1">5</span>
-              <input type="range" name="b5_urgencia" id="b5_urgencia" min="1" max="10" value="5" class="sr-only" aria-label="Urgencia 1-10">
+              <input type="range" name="b5_urgencia" id="b5_urgencia" min="1" max="10" value="5" class="sr-only" aria-label="Urgency 1–10">
             </div>
             <div class="urgency-row">
-              <span class="urgency-lbl">Capacidad de cambio</span>
+              <span class="urgency-lbl">Change capacity</span>
               <div class="urgency-track" id="urgencyTrack2">
                 <div class="urgency-fill" id="urgencyFill2" style="width:50%"></div>
               </div>
               <span class="urgency-val" id="urgencyVal2">5</span>
-              <input type="range" name="b5_capacidad" id="b5_capacidad" min="1" max="10" value="5" class="sr-only" aria-label="Capacidad 1-10">
+              <input type="range" name="b5_capacidad" id="b5_capacidad" min="1" max="10" value="5" class="sr-only" aria-label="Capacity 1–10">
             </div>
           </div>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b5_riesgo_inaccion">Riesgo de no actuar</label>
-          <textarea class="field-input" id="b5_riesgo_inaccion" name="b5_riesgo_inaccion" rows="2" placeholder="¿Qué ocurre si no hacemos nada en 6 meses?"></textarea>
+          <label class="field-label" for="b5_riesgo_inaccion">Risk of inaction</label>
+          <textarea class="field-input" id="b5_riesgo_inaccion" name="b5_riesgo_inaccion" rows="2" placeholder="What happens if we do nothing in 6 months?"></textarea>
         </div>
       </article>
 
     </div>
   </div>
 
-  <!-- ── FILA 3: HOJA DE RUTA + GESTIÓN DEL CAMBIO + HABILITACIÓN ── -->
+  <!-- ── ROW 3: ROADMAP + CHANGE MANAGEMENT + ENABLEMENT ── -->
   <div class="canvas-section">
     <div class="phase-row">
 
-      <!-- B6 HOJA DE RUTA DE ADOPCIÓN -->
+      <!-- B6 ADOPTION ROADMAP -->
       <article class="block" data-block="b6" aria-labelledby="b6-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B6 · Hoja de Ruta</p>
+        <p class="block-num">B6 · Roadmap</p>
         <h2 class="block-title" id="b6-title">Adoption Roadmap</h2>
-        <p class="block-sub">Fases del despliegue. El cambio es de gran magnitud — gradual, no inmediato. Define hitos y gates de decisión.</p>
+        <p class="block-sub">Deployment phases. The change is significant — gradual, not immediate. Define milestones and decision gates.</p>
         <div class="roadmap">
           <div class="roadmap-phase">
             <div class="roadmap-dot">1</div>
             <div>
               <div class="roadmap-title">Pilot</div>
-              <input class="field-input" type="text" name="b6_piloto" placeholder="Alcance, duración, criterio de éxito…" style="margin-top:.3rem">
+              <input class="field-input" type="text" name="b6_piloto" placeholder="Scope, duration, success criteria…" style="margin-top:.3rem">
             </div>
           </div>
           <div class="roadmap-phase">
             <div class="roadmap-dot">2</div>
             <div>
               <div class="roadmap-title">Expansion</div>
-              <input class="field-input" type="text" name="b6_expansion" placeholder="Qué departamentos, qué escala…" style="margin-top:.3rem">
+              <input class="field-input" type="text" name="b6_expansion" placeholder="Which departments, what scale…" style="margin-top:.3rem">
             </div>
           </div>
           <div class="roadmap-phase">
             <div class="roadmap-dot">3</div>
             <div>
               <div class="roadmap-title">Scale</div>
-              <input class="field-input" type="text" name="b6_escala" placeholder="Producción completa, integración en procesos core…" style="margin-top:.3rem">
+              <input class="field-input" type="text" name="b6_escala" placeholder="Full production, integration into core processes…" style="margin-top:.3rem">
             </div>
           </div>
         </div>
         <div class="field-group" style="margin-top:.75rem">
-          <label class="field-label" for="b6_gate">Gate de decisión entre fases</label>
-          <textarea class="field-input" id="b6_gate" name="b6_gate" rows="2" placeholder="¿Qué métricas o aprobaciones permiten avanzar de fase?"></textarea>
+          <label class="field-label" for="b6_gate">Decision gate between phases</label>
+          <textarea class="field-input" id="b6_gate" name="b6_gate" rows="2" placeholder="What metrics or approvals allow moving to the next phase?"></textarea>
         </div>
       </article>
 
-      <!-- B7 GESTIÓN DEL CAMBIO -->
+      <!-- B7 CHANGE MANAGEMENT -->
       <article class="block" data-block="b7" aria-labelledby="b7-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B7 · Cambio</p>
+        <p class="block-num">B7 · Change</p>
         <h2 class="block-title" id="b7-title">Change Management</h2>
-        <p class="block-sub">IT no puede liderar solo la adopción. El cambio cultural y organizativo necesita su propio plan.</p>
+        <p class="block-sub">IT cannot lead adoption alone. Cultural and organizational change needs its own plan.</p>
         <div class="field-group">
-          <label class="field-label" for="b7_lider">Responsable de gestión del cambio</label>
-          <input class="field-input" type="text" id="b7_lider" name="b7_lider" placeholder="CHRO / Change Manager / Comunicación interna…">
+          <label class="field-label" for="b7_lider">Change management owner</label>
+          <input class="field-input" type="text" id="b7_lider" name="b7_lider" placeholder="CHRO / Change Manager / Internal Communications…">
         </div>
         <div class="field-group">
-          <label class="field-label" for="b7_resistencias">Principales resistencias identificadas</label>
-          <textarea class="field-input" id="b7_resistencias" name="b7_resistencias" rows="2" placeholder="Miedo a sustitución, falta de confianza en IA, carga adicional…"></textarea>
+          <label class="field-label" for="b7_resistencias">Key identified resistances</label>
+          <textarea class="field-input" id="b7_resistencias" name="b7_resistencias" rows="2" placeholder="Fear of replacement, lack of trust in AI, additional workload…"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b7_plan_com">Plan de comunicación interna</label>
-          <textarea class="field-input" id="b7_plan_com" name="b7_plan_com" rows="2" placeholder="Mensajes clave, canales, frecuencia, quién comunica…"></textarea>
+          <label class="field-label" for="b7_plan_com">Internal communication plan</label>
+          <textarea class="field-input" id="b7_plan_com" name="b7_plan_com" rows="2" placeholder="Key messages, channels, frequency, who communicates…"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label">Palancas de cambio activadas</label>
+          <label class="field-label">Change levers activated</label>
           <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="b7_incentivos" value="1"> Incentivos ligados a adopción</label>
-            <label class="check-item"><input type="checkbox" name="b7_embajadores" value="1"> Red de embajadores internos</label>
+            <label class="check-item"><input type="checkbox" name="b7_incentivos" value="1"> Incentives tied to adoption</label>
+            <label class="check-item"><input type="checkbox" name="b7_embajadores" value="1"> Internal ambassador network</label>
             <label class="check-item"><input type="checkbox" name="b7_early" value="1"> Early adopters identificados</label>
-            <label class="check-item"><input type="checkbox" name="b7_casos" value="1"> Casos de éxito comunicados</label>
-            <label class="check-item"><input type="checkbox" name="b7_feedback" value="1"> Canal de feedback abierto</label>
-            <label class="check-item"><input type="checkbox" name="b7_liderazgo" value="1"> Liderazgo da ejemplo</label>
+            <label class="check-item"><input type="checkbox" name="b7_casos" value="1"> Success stories shared</label>
+            <label class="check-item"><input type="checkbox" name="b7_feedback" value="1"> Open feedback channel</label>
+            <label class="check-item"><input type="checkbox" name="b7_liderazgo" value="1"> Leadership leads by example</label>
           </div>
         </div>
       </article>
 
-      <!-- B8 HABILITACIÓN -->
+      <!-- B8 ENABLEMENT -->
       <article class="block" data-block="b8" aria-labelledby="b8-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B8 · Habilitación</p>
-        <h2 class="block-title" id="b8-title">Habilitación y Cultura</h2>
-        <p class="block-sub">La tecnología sola no basta. Formación, cultura de experimentación y comunidades internas determinan la velocidad real.</p>
+        <p class="block-num">B8 · Enablement</p>
+        <h2 class="block-title" id="b8-title">Enablement & Culture</h2>
+        <p class="block-sub">Technology alone is not enough. Training, experimentation culture, and internal communities determine the real pace.</p>
         <div class="field-group">
-          <label class="field-label" for="b8_formacion">Plan de formación por perfil</label>
-          <textarea class="field-input" id="b8_formacion" name="b8_formacion" rows="2" placeholder="Usuarios finales: prompting básico / IT: APIs y seguridad / Directivos: casos de uso y ROI…"></textarea>
+          <label class="field-label" for="b8_formacion">Training plan by profile</label>
+          <textarea class="field-input" id="b8_formacion" name="b8_formacion" rows="2" placeholder="End users: basic prompting / IT: APIs and security / Executives: use cases and ROI…"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label">Infraestructura de habilitación</label>
+          <label class="field-label">Enablement infrastructure</label>
           <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="b8_sandbox" value="1"> Sandbox de experimentación</label>
-            <label class="check-item"><input type="checkbox" name="b8_comunidad" value="1"> Comunidad de práctica</label>
-            <label class="check-item"><input type="checkbox" name="b8_biblioteca" value="1"> Biblioteca de prompts / casos</label>
-            <label class="check-item"><input type="checkbox" name="b8_soporte" value="1"> Soporte interno (help desk IA)</label>
+            <label class="check-item"><input type="checkbox" name="b8_sandbox" value="1"> Experimentation sandbox</label>
+            <label class="check-item"><input type="checkbox" name="b8_comunidad" value="1"> Community of practice</label>
+            <label class="check-item"><input type="checkbox" name="b8_biblioteca" value="1"> Prompt / use case library</label>
+            <label class="check-item"><input type="checkbox" name="b8_soporte" value="1"> Internal support (AI help desk)</label>
             <label class="check-item"><input type="checkbox" name="b8_hackathon" value="1"> Hackathon / Innovation days</label>
-            <label class="check-item"><input type="checkbox" name="b8_kpi_form" value="1"> KPI de formación completada</label>
+            <label class="check-item"><input type="checkbox" name="b8_kpi_form" value="1"> Training completion KPI</label>
           </div>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b8_cultura">Acciones de cultura IA</label>
-          <textarea class="field-input" id="b8_cultura" name="b8_cultura" rows="2" placeholder="Newsletter IA, demos semanales, reconocimiento de innovadores…"></textarea>
+          <label class="field-label" for="b8_cultura">AI culture actions</label>
+          <textarea class="field-input" id="b8_cultura" name="b8_cultura" rows="2" placeholder="AI newsletter, weekly demos, innovator recognition…"></textarea>
         </div>
       </article>
 
     </div>
   </div>
 
-  <!-- ── FILA 4: MÉTRICAS + REVISIÓN ── -->
+  <!-- ── ROW 4: METRICS + REVIEW ── -->
   <div class="canvas-section">
     <div class="phase-row-2">
 
-      <!-- B9 MÉTRICAS DE ADOPCIÓN -->
+      <!-- B9 ADOPTION METRICS -->
       <article class="block" data-block="b9" aria-labelledby="b9-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B9 · Métricas</p>
-        <h2 class="block-title" id="b9-title">Adoption Metrics Organizativa</h2>
-        <p class="block-sub">No las métricas del agente — las métricas de que el cambio está ocurriendo en la organización.</p>
+        <p class="block-num">B9 · Metrics</p>
+        <h2 class="block-title" id="b9-title">Organizational Adoption Metrics</h2>
+        <p class="block-sub">Not the agent's metrics — the metrics showing change is happening in the organization.</p>
         <div class="kpi-list">
           <div>
             <div class="kpi-head">
-              <span class="kpi-lbl"><input class="field-input" type="text" name="b9_kpi1_name" value="% usuarios activos" style="padding:.2rem .4rem;font-size:.76rem;width:180px"></span>
+              <span class="kpi-lbl"><input class="field-input" type="text" name="b9_kpi1_name" value="% active users" style="padding:.2rem .4rem;font-size:.76rem;width:180px"></span>
               <span class="kpi-pct" id="kpi1pct">0%</span>
             </div>
             <div class="kpi-bar-bg"><div class="kpi-bar" id="kpi1bar" style="width:0%"></div></div>
             <input type="range" name="b9_kpi1" id="b9_kpi1" min="0" max="100" value="0" aria-label="KPI 1" style="width:100%;margin-top:.3rem;accent-color:var(--ac)">
-            <input class="field-input" type="text" name="b9_kpi1_target" placeholder="Objetivo: ej. 60% en 6 meses" style="margin-top:.3rem;font-size:.73rem">
+            <input class="field-input" type="text" name="b9_kpi1_target" placeholder="Target: e.g. 60% in 6 months" style="margin-top:.3rem;font-size:.73rem">
           </div>
           <div class="divider"></div>
           <div>
             <div class="kpi-head">
-              <span class="kpi-lbl"><input class="field-input" type="text" name="b9_kpi2_name" value="NPS interno" style="padding:.2rem .4rem;font-size:.76rem;width:180px"></span>
+              <span class="kpi-lbl"><input class="field-input" type="text" name="b9_kpi2_name" value="Internal NPS" style="padding:.2rem .4rem;font-size:.76rem;width:180px"></span>
               <span class="kpi-pct" id="kpi2pct">0%</span>
             </div>
             <div class="kpi-bar-bg"><div class="kpi-bar" id="kpi2bar" style="width:0%"></div></div>
             <input type="range" name="b9_kpi2" id="b9_kpi2" min="0" max="100" value="0" aria-label="KPI 2" style="width:100%;margin-top:.3rem;accent-color:var(--ac)">
-            <input class="field-input" type="text" name="b9_kpi2_target" placeholder="Objetivo: ej. +30 puntos NPS" style="margin-top:.3rem;font-size:.73rem">
+            <input class="field-input" type="text" name="b9_kpi2_target" placeholder="Target: e.g. +30 NPS points" style="margin-top:.3rem;font-size:.73rem">
           </div>
           <div class="divider"></div>
           <div>
             <div class="kpi-head">
-              <span class="kpi-lbl"><input class="field-input" type="text" name="b9_kpi3_name" value="Tiempo ahorrado (h/semana)" style="padding:.2rem .4rem;font-size:.76rem;width:200px"></span>
+              <span class="kpi-lbl"><input class="field-input" type="text" name="b9_kpi3_name" value="Time saved (h/week)" style="padding:.2rem .4rem;font-size:.76rem;width:200px"></span>
               <span class="kpi-pct" id="kpi3pct">0%</span>
             </div>
             <div class="kpi-bar-bg"><div class="kpi-bar" id="kpi3bar" style="width:0%"></div></div>
             <input type="range" name="b9_kpi3" id="b9_kpi3" min="0" max="100" value="0" aria-label="KPI 3" style="width:100%;margin-top:.3rem;accent-color:var(--ac)">
-            <input class="field-input" type="text" name="b9_kpi3_target" placeholder="Objetivo: ej. 500h/semana en Q3" style="margin-top:.3rem;font-size:.73rem">
+            <input class="field-input" type="text" name="b9_kpi3_target" placeholder="Target: e.g. 500h/week in Q3" style="margin-top:.3rem;font-size:.73rem">
           </div>
         </div>
         <div class="field-group" style="margin-top:.75rem">
-          <label class="field-label" for="b9_cadencia_met">Cadencia de medición</label>
+          <label class="field-label" for="b9_cadencia_met">Measurement cadence</label>
           <div class="chip-group" role="radiogroup" id="b9_cadencia_chips">
-            <button class="chip" role="radio" aria-checked="false" data-val="semanal">Semanal</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="mensual">Mensual</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="trimestral">Trimestral</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="semanal">Weekly</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="mensual">Monthly</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="trimestral">Quarterly</button>
           </div>
         </div>
       </article>
 
-      <!-- B10 CADENCIA DE REVISIÓN -->
+      <!-- B10 REVIEW CADENCE -->
       <article class="block" data-block="b10" aria-labelledby="b10-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B10 · Revisión</p>
-        <h2 class="block-title" id="b10-title">Review Cadence del Programa</h2>
-        <p class="block-sub">El equilibrio entre pedal de aceleración y freno. ¿Quién revisa el programa, cuándo, y qué puede pararlo?</p>
+        <p class="block-num">B10 · Review</p>
+        <h2 class="block-title" id="b10-title">Program Review Cadence</h2>
+        <p class="block-sub">The balance between accelerator and brake. Who reviews the program, when, and what can stop it?</p>
         <div class="field-group">
-          <label class="field-label" for="b10_quien">¿Quién revisa el portfolio de agentes?</label>
-          <input class="field-input" type="text" id="b10_quien" name="b10_quien" placeholder="Comité AI, AI Office, Steering Committee…">
+          <label class="field-label" for="b10_quien">Who reviews the agent portfolio?</label>
+          <input class="field-input" type="text" id="b10_quien" name="b10_quien" placeholder="AI Committee, AI Office, Steering Committee…">
         </div>
         <div class="field-group">
-          <label class="field-label">Frecuencia de revisión ejecutiva</label>
+          <label class="field-label">Executive review frequency</label>
           <div class="chip-group" role="radiogroup" id="b10_freq">
-            <button class="chip" role="radio" aria-checked="false" data-val="mensual">Mensual</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="trimestral">Trimestral</button>
-            <button class="chip" role="radio" aria-checked="false" data-val="semestral">Semestral</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="mensual">Monthly</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="trimestral">Quarterly</button>
+            <button class="chip" role="radio" aria-checked="false" data-val="semestral">Biannual</button>
           </div>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b10_para">¿Qué puede pausar o detener el programa?</label>
-          <textarea class="field-input" id="b10_para" name="b10_para" rows="2" placeholder="Incidente de seguridad, regulación nueva, resultado piloto negativo, cambio estratégico…"></textarea>
+          <label class="field-label" for="b10_para">What can pause or stop the program?</label>
+          <textarea class="field-input" id="b10_para" name="b10_para" rows="2" placeholder="Security incident, new regulation, negative pilot result, strategic change…"></textarea>
         </div>
         <div class="field-group">
-          <label class="field-label" for="b10_feedback">Mecanismo de feedback continuo</label>
-          <textarea class="field-input" id="b10_feedback" name="b10_feedback" rows="2" placeholder="Encuesta mensual, sesiones de escucha, canal de Slack, comité de usuarios…"></textarea>
+          <label class="field-label" for="b10_feedback">Continuous feedback mechanism</label>
+          <textarea class="field-input" id="b10_feedback" name="b10_feedback" rows="2" placeholder="Monthly survey, listening sessions, Slack channel, user committee…"></textarea>
         </div>
         <div class="divider"></div>
         <div class="field-group">
           <label class="field-label">Program Guardrails</label>
           <div class="check-grid">
-            <label class="check-item"><input type="checkbox" name="b10_gdpr" value="1"> GDPR / Privacidad</label>
+            <label class="check-item"><input type="checkbox" name="b10_gdpr" value="1"> GDPR / Privacy</label>
             <label class="check-item"><input type="checkbox" name="b10_aiact" value="1"> EU AI Act</label>
-            <label class="check-item"><input type="checkbox" name="b10_bias" value="1"> Revisión de sesgos</label>
-            <label class="check-item"><input type="checkbox" name="b10_audit" value="1"> Auditoría externa</label>
+            <label class="check-item"><input type="checkbox" name="b10_bias" value="1"> Bias review</label>
+            <label class="check-item"><input type="checkbox" name="b10_audit" value="1"> External audit</label>
             <label class="check-item"><input type="checkbox" name="b10_rollback" value="1"> Plan de rollback</label>
-            <label class="check-item"><input type="checkbox" name="b10_humano" value="1"> Human-in-the-loop definido</label>
+            <label class="check-item"><input type="checkbox" name="b10_humano" value="1"> Human-in-the-loop defined</label>
           </div>
         </div>
       </article>
@@ -720,7 +720,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
   </div>
 
   <!-- ── EXPORT PANEL ── -->
-  <div id="exportPanel" class="export-panel" role="region" aria-label="Opciones de exportación">
+  <div id="exportPanel" class="export-panel" role="region" aria-label="Export options">
     <div>
       <p class="export-pre">Export canvas</p>
       <p class="export-title">Enterprise AI Adoption Canvas</p>
@@ -731,7 +731,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <button id="btnImportJson" class="btn-ghost">↑ Import JSON</button>
       <button id="btnExportWord" class="btn-primary">↓ Word (PRD)</button>
     </div>
-    <input type="file" id="jsonFileInput" accept=".json" class="sr-only" aria-label="Importar JSON">
+    <input type="file" id="jsonFileInput" accept=".json" class="sr-only" aria-label="Import JSON">
   </div>
 
 </div><!-- /canvas-wrap -->
@@ -742,7 +742,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
   <div class="modal-box">
     <h2 class="modal-title" id="shareModalTitle">Share canvas</h2>
     <p class="modal-sub">Copy this link. The full canvas state is encoded in the URL.</p>
-    <textarea id="shareUrl" class="modal-url" readonly aria-label="URL de compartir"></textarea>
+    <textarea id="shareUrl" class="modal-url" readonly aria-label="Share URL"></textarea>
     <div class="modal-actions">
       <button id="btnCopyUrl" class="btn-primary">Copy link</button>
       <button id="btnCloseModal" class="btn-ghost">Close</button>
@@ -923,14 +923,14 @@ document.getElementById('btnImportJson').addEventListener('click', () => documen
 document.getElementById('jsonFileInput').addEventListener('change', e => {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = ev => { try { applyState(JSON.parse(ev.target.result)); saveState(); } catch(err) { alert('JSON inválido'); } };
+  reader.onload = ev => { try { applyState(JSON.parse(ev.target.result)); saveState(); } catch(err) { alert('Invalid JSON'); } };
   reader.readAsText(file); e.target.value = '';
 });
 
 // ── WORD EXPORT ──
 document.getElementById('btnExportWord').addEventListener('click', () => {
   const s = collectState();
-  const date = new Date().toLocaleDateString('es-ES', {year:'numeric',month:'long',day:'numeric'});
+  const date = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
   const esc = t => (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const h2 = t => `<h2 style="color:#B45309;font-size:14pt;margin-top:20pt;border-bottom:2px solid #F59E0B;padding-bottom:4pt">${esc(t)}</h2>`;
   const h3 = t => `<h3 style="color:#78350F;font-size:11pt;margin-top:12pt">${esc(t)}</h3>`;
@@ -943,40 +943,40 @@ document.getElementById('btnExportWord').addEventListener('click', () => {
 h1{font-size:20pt;color:#92400E;border-bottom:3px solid #F59E0B;padding-bottom:8pt}
 </style></head><body>
 <h1>Enterprise AI Adoption Canvas</h1>
-<p style="color:#6B7280;font-size:9pt">Project: ${esc(s.name||'Sin nombre')} · ${esc(date)} · QMetrika Labs</p>
+<p style="color:#6B7280;font-size:9pt">Project: ${esc(s.name||'Unnamed')} · ${esc(date)} · QMetrika Labs</p>
 ${h2('B1. Executive Mandate')}
-${f('Sponsor ejecutivo','b1_sponsor')}${f('Mandato formal','b1_mandato')}${f('Puede desbloquear','b1_autoridad')}
+${f('Executive sponsor','b1_sponsor')}${f('Formal mandate','b1_mandato')}${f('Can unlock','b1_autoridad')}
 ${h2('B2. Governance Model')}
-${f('Quién decide qué agentes','b2_decide')}${f('Quién puede parar un despliegue','b2_para')}
-${h2('B3. Propuesta de Valor Organizativa')}
-${f('Nueva capacidad organizativa','b3_capacidad')}${f('Qué deja de hacer el equipo','b3_deja')}${f('Ventaja competitiva','b3_diferencial')}
-${h2('B4. Stakeholders Impactados')}
+${f('Who approves which agents','b2_decide')}${f('Who can stop a deployment','b2_para')}
+${h2('B3. Organizational Value Proposition')}
+${f('New organizational capability','b3_capacidad')}${f('What the team stops doing','b3_deja')}${f('Competitive advantage','b3_diferencial')}
+${h2('B4. Impacted Stakeholders')}
 ${['sh1','sh2','sh3'].map(sh => { const r=s.fields[sh+'_rol']||''; const a=s.fields[sh+'_accion']||''; return r ? p(r + (a?' — '+a:'')) : ''; }).join('')}
 ${h2('B5. Competitive Urgency')}
-${f('¿Qué está haciendo la competencia?','b5_competencia')}${f('Riesgo de inacción','b5_riesgo_inaccion')}
-<p style="margin:4pt 0;font-size:10pt"><strong>Urgencia:</strong> ${esc(s.sliders['b5_urgencia']||'—')}/10 · <strong>Capacidad de cambio:</strong> ${esc(s.sliders['b5_capacidad']||'—')}/10</p>
+${f('What is the competition doing?','b5_competencia')}${f('Risk of inaction','b5_riesgo_inaccion')}
+<p style="margin:4pt 0;font-size:10pt"><strong>Urgency:</strong> ${esc(s.sliders['b5_urgencia']||'—')}/10 · <strong>Change capacity:</strong> ${esc(s.sliders['b5_capacidad']||'—')}/10</p>
 ${h2('B6. Adoption Roadmap')}
-${f('Fase 1 — Pilot','b6_piloto')}${f('Fase 2 — Expansion','b6_expansion')}${f('Fase 3 — Scale','b6_escala')}${f('Gate de decisión entre fases','b6_gate')}
+${f('Phase 1 — Pilot','b6_piloto')}${f('Phase 2 — Expansion','b6_expansion')}${f('Phase 3 — Scale','b6_escala')}${f('Decision gate between phases','b6_gate')}
 ${h2('B7. Change Management')}
-${f('Responsable de gestión del cambio','b7_lider')}${f('Principales resistencias','b7_resistencias')}${f('Plan de comunicación','b7_plan_com')}
-${h2('B8. Habilitación y Cultura')}
-${f('Plan de formación','b8_formacion')}${f('Acciones de cultura IA','b8_cultura')}
+${f('Change management owner','b7_lider')}${f('Main resistances','b7_resistencias')}${f('Communication plan','b7_plan_com')}
+${h2('B8. Enablement & Culture')}
+${f('Training plan','b8_formacion')}${f('AI culture actions','b8_cultura')}
 ${h2('B9. Adoption Metrics')}
 ${['b9_kpi1_name','b9_kpi2_name','b9_kpi3_name'].map((n,i) => {
   const name = s.fields[n]||('KPI '+(i+1));
   const val  = s.sliders['b9_kpi'+(i+1)]||'0';
   const tgt  = s.fields['b9_kpi'+(i+1)+'_target']||'';
-  return `<p style="margin:4pt 0;font-size:10pt"><strong>${esc(name)}:</strong> ${esc(val)}% ${tgt ? '· Objetivo: '+esc(tgt) : ''}</p>`;
+  return `<p style="margin:4pt 0;font-size:10pt"><strong>${esc(name)}:</strong> ${esc(val)}% ${tgt ? '· Target: '+esc(tgt) : ''}</p>`;
 }).join('')}
 ${h2('B10. Review Cadence')}
-${f('¿Quién revisa el portfolio?','b10_quien')}${f('¿Qué puede pausar el programa?','b10_para')}${f('Mecanismo de feedback','b10_feedback')}
+${f('Who reviews the portfolio?','b10_quien')}${f('What can pause the program?','b10_para')}${f('Feedback mechanism','b10_feedback')}
 <hr style="border:none;border-top:1px solid #E7E5E4;margin:20pt 0">
-<p style="color:#9CA3AF;font-size:9pt">Generado desde Enterprise AI Adoption Canvas · ${esc(date)}</p>
+<p style="color:#9CA3AF;font-size:9pt">Generated from Enterprise AI Adoption Canvas · ${esc(date)}</p>
 </body></html>`;
 
   const blob = new Blob(['﻿' + wordHtml], {type:'application/msword'});
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = (s.name||'enterprise-canvas') + '-adopcion-IA.doc'; a.click();
+  a.download = (s.name||'enterprise-canvas') + '-AI-adoption.doc'; a.click();
 });
 
 // ── SHARE / URL HASH ──
