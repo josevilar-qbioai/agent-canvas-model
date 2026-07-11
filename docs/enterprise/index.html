@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enterprise AI Adoption Canvas — QMetrika Labs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ════════════════════════════════════════════════════════
    AGENT CANVAS MODEL — UNIFIED DESIGN SYSTEM
@@ -13,26 +13,26 @@
 ════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; line-height: 1.5; }
+body { font-family: 'Space Grotesk', system-ui, sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; line-height: 1.5; }
 
 :root {
-  --bg:   #252830;
-  --sf:   #2C2F34;
-  --sf2:  #32363B;
-  --sf3:  #393D42;
-  --bd:   #3C4047;
-  --bd2:  #494E55;
-  --tx:   #F0F2F5;
-  --tx2:  #9BA3AD;
-  --mu:   #5C646E;
+  --bg:   #1B1B18;
+  --sf:   #232320;
+  --sf2:  #2A2A26;
+  --sf3:  #312F2C;
+  --bd:   #3A3730;
+  --bd2:  #4A4640;
+  --tx:   #E9E7E0;
+  --tx2:  #8F8B80;
+  --mu:   #57544B;
   --ac:   #F59E0B;
   --acd:  rgba(245,158,11,.12);
   --acd2: rgba(245,158,11,.22);
   --r:    8px;
   --rs:   5px;
   --sh:   0 1px 3px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'Inter', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Space Grotesk', system-ui, sans-serif;
 }
 
 /* ── SKIP LINK ── */
@@ -338,8 +338,13 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
 
 <header role="banner">
   <div class="header-logo">
-    <div class="q-logo-mark" aria-hidden="true">Q</div>
-    <span class="logo-name">Agent Canvas</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 56 56" aria-hidden="true">
+  <circle cx="28" cy="28" r="18" fill="none" stroke="#E9E7E0" stroke-width="4.5"/>
+  <circle cx="41" cy="41" r="9.6" fill="#1B1B18"/>
+  <circle cx="41" cy="41" r="7.4" fill="#E9E7E0"/>
+  <circle cx="41" cy="41" r="5.4" fill="#A6542E"/>
+</svg>
+    <span class="logo-name" style="font-family:'Space Grotesk',sans-serif">qmetrika</span><span class="logo-sep" style="color:var(--mu);margin:0 .15rem">·</span><span class="logo-sub" style="font-size:.75rem">canvas</span>
     <span class="logo-edition">Enterprise Adoption</span>
   </div>
   <div class="header-actions" role="toolbar" aria-label="Acciones del canvas">

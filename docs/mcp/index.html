@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MCP Architecture Canvas v1 — Agent Canvas Model</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 
 /* ════════════════════════════════════════════════════════
    AGENT CANVAS MODEL — UNIFIED DESIGN SYSTEM
    QMetrika Labs · MCP Canvas · MIT License
 ════════════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   background: var(--bg);
   color: var(--tx);
   min-height: 100vh;
@@ -27,15 +27,15 @@ body {
 :root {
   
   /* ── SHARED TOKENS — QMetrika Labs ── */
-  --bg:   #252830;
-  --sf:   #2C2F34;
-  --sf2:  #32363B;
-  --sf3:  #393D42;
-  --bd:   #3C4047;
-  --bd2:  #494E55;
-  --tx:   #F0F2F5;
-  --tx2:  #9BA3AD;
-  --mu:   #5C646E;
+  --bg:   #1B1B18;
+  --sf:   #232320;
+  --sf2:  #2A2A26;
+  --sf3:  #312F2C;
+  --bd:   #3A3730;
+  --bd2:  #4A4640;
+  --tx:   #E9E7E0;
+  --tx2:  #8F8B80;
+  --mu:   #57544B;
   --r:    8px;
   --rs:   5px;
   --sh:   0 1px 3px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
@@ -75,11 +75,11 @@ body {
   --red-dim:       rgba(248,113,113,.12);
   --surface:       var(--sf);
   --surface2:      var(--sf2);
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'Inter', system-ui, sans-serif;
-  --font-d: 'Inter', system-ui, sans-serif;
-  --font-b: 'Inter', system-ui, sans-serif;
-  --font-m: 'JetBrains Mono', monospace;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-d: 'Space Grotesk', system-ui, sans-serif;
+  --font-b: 'Space Grotesk', system-ui, sans-serif;
+  --font-m: 'IBM Plex Mono', monospace;
   --shadow: var(--sh);
   --shadow-h: var(--sh);
   --r: 8px;
@@ -297,7 +297,7 @@ body::before { display: none !important; }
 .b2 .block-title, .b1 .block-title { color: var(--tx); }
 .block-sub { font-size: .78rem; color: var(--tx2); margin-bottom: .75rem; line-height: 1.55; }
 .block-expand-hint { font-size: .68rem; color: var(--ac); opacity: .5; }
-.block[data-collapsible="true"] .block-body { display: none; }
+.block[data-collapsible=&display=swap"true"] .block-body { display: none; }
 .block[data-collapsible="true"].active .block-body { display: block; }
 .block[data-collapsible="true"].active .block-expand-hint { display: none; }
 .block[data-collapsible="true"] { cursor: pointer; }
@@ -524,18 +524,13 @@ footer {
 
 <header role="banner">
   <div class="header-logo">
-    <svg class="q-logo-svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <defs>
-    <linearGradient id="qgrad" x1="4" y1="4" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#D8DDE6"/>
-      <stop offset="50%" stop-color="#A8B4BF"/>
-      <stop offset="100%" stop-color="#6E7880"/>
-    </linearGradient>
-  </defs>
-  <circle cx="13" cy="12" r="8.5" stroke="url(#qgrad)" stroke-width="2.2" fill="none"/>
-  <line x1="18.5" y1="18" x2="24" y2="24" stroke="url(#qgrad)" stroke-width="2.2" stroke-linecap="round"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 56 56" aria-hidden="true">
+  <circle cx="28" cy="28" r="18" fill="none" stroke="#E9E7E0" stroke-width="4.5"/>
+  <circle cx="41" cy="41" r="9.6" fill="#1B1B18"/>
+  <circle cx="41" cy="41" r="7.4" fill="#E9E7E0"/>
+  <circle cx="41" cy="41" r="5.4" fill="#A6542E"/>
 </svg>
-    <span class="logo-name">Agent Canvas</span>
+    <span class="logo-name" style="font-family:'Space Grotesk',sans-serif">qmetrika</span><span class="logo-sep" style="color:var(--mu);margin:0 .15rem">·</span><span class="logo-sub" style="font-size:.75rem">canvas</span>
     <span class="logo-edition">MCP Canvas</span>
   </div>
   <div class="header-actions" role="toolbar" aria-label="Acciones">
