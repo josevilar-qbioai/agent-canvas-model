@@ -649,6 +649,65 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
 }
 .help-overlay.open { opacity:1; pointer-events:all; }
 
+
+/* ── AI Assist ─────────────────────────────────────────────────────── */
+.ai-btn {
+  position: absolute; top: .65rem; right: 2.3rem;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: transparent; border: 1.5px solid var(--bd2);
+  color: #a78bfa; font-size: .6rem; cursor: pointer;
+  transition: background .15s, border-color .15s;
+  line-height: 1; display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.ai-btn:hover { background: rgba(167,139,250,.12); border-color: #a78bfa; }
+.block-num:not(:has(.help-btn)) .ai-btn { right: .65rem; }
+
+#aiModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.65); z-index: 400;
+  align-items: center; justify-content: center; padding: 1rem;
+}
+#aiModal.open { display: flex; }
+.ai-box {
+  background: var(--sf); border: 1px solid var(--bd); border-radius: 12px;
+  width: min(560px, 96vw); max-height: 90vh; overflow-y: auto;
+  padding: 1.5rem; display: flex; flex-direction: column; gap: .75rem;
+}
+.ai-title {
+  font-size: .95rem; font-weight: 600; color: var(--tx);
+  font-family: var(--sans, 'Space Grotesk', sans-serif);
+  display: flex; align-items: center; gap: .5rem;
+}
+.ai-step { font-size: .78rem; color: var(--tx2); margin: 0; }
+.ai-prompt-wrap {
+  background: var(--sf2); border: 1px solid var(--bd);
+  border-radius: 8px; padding: .75rem;
+}
+.ai-prompt-pre {
+  font-family: var(--mono, monospace); font-size: .72rem; color: var(--tx2);
+  white-space: pre-wrap; word-break: break-word; margin: 0 0 .5rem;
+  max-height: 160px; overflow-y: auto;
+}
+.ai-copy-btn {
+  background: #a78bfa; color: #fff; border: none; border-radius: 6px;
+  padding: .3rem .75rem; font-size: .75rem; cursor: pointer;
+  font-family: var(--mono, monospace);
+}
+.ai-copy-btn:hover { opacity: .85; }
+.ai-paste-area {
+  width: 100%; min-height: 110px; box-sizing: border-box;
+  background: var(--sf2); border: 1px solid var(--bd2); border-radius: 8px;
+  padding: .65rem; color: var(--tx); font-family: var(--mono, monospace);
+  font-size: .75rem; resize: vertical;
+}
+.ai-error { color: #f87171; font-size: .75rem; display: none; }
+.ai-actions { display: flex; gap: .5rem; justify-content: flex-end; }
+.ai-apply { background: #10b981; color: #fff; border: none; border-radius: 6px; padding: .4rem 1rem; font-size: .8rem; cursor: pointer; font-weight: 600; }
+.ai-apply:hover { opacity: .85; }
+.ai-cancel { background: transparent; border: 1px solid var(--bd2); color: var(--tx2); border-radius: 6px; padding: .4rem .85rem; font-size: .8rem; cursor: pointer; }
+.ai-cancel:hover { border-color: var(--tx2); color: var(--tx); }
+
 </style>
 </head>
 <body>
@@ -847,7 +906,7 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
     <div class="block b7" data-block="b7" data-collapsible="true"
       role="region" aria-labelledby="b7-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b7-title">7 · Key Activities<button class="help-btn" onclick="openHelp('b7', this)" aria-label="Help" title="What goes here?">?</button></div>
+      <div class="block-num" id="b7-title">7 · Key Activities<button class="ai-btn" onclick="openAiModal('b7')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b7', this)" aria-label="Help" title="What goes here?">?</button></div>
       <div class="block-title">⚡ Skills y nivel de agencia</div>
       <div data-stop-toggle>
         <div class="field-group">
@@ -908,7 +967,7 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
     <div class="block b2" data-block="b2" data-collapsible="true"
       role="region" aria-labelledby="b2-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b2-title">★ 2 · Value Proposition — Start here<button class="help-btn" onclick="openHelp('b2', this)" aria-label="Help" title="What goes here?">?</button></div>
+      <div class="block-num" id="b2-title">★ 2 · Value Proposition — Start here<button class="ai-btn" onclick="openAiModal('b2')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b2', this)" aria-label="Help" title="What goes here?">?</button></div>
       <div class="block-title" style="color:var(--blue)">💎 ¿Qué problema resuelve?</div>
       <div data-stop-toggle>
         <div class="field-group">
@@ -961,7 +1020,7 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
     <div class="block b4" data-block="b4" data-collapsible="true"
       role="region" aria-labelledby="b4-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b4-title">4 · Relationship / Personality<button class="help-btn" onclick="openHelp('b4', this)" aria-label="Help" title="What goes here?">?</button></div>
+      <div class="block-num" id="b4-title">4 · Relationship / Personality<button class="ai-btn" onclick="openAiModal('b4')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b4', this)" aria-label="Help" title="What goes here?">?</button></div>
       <div class="block-title">🤝 Experiencia de usuario</div>
       <div data-stop-toggle>
         <div class="field-group">
@@ -997,7 +1056,7 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
     <div class="block b1" data-block="b1" data-collapsible="true"
       role="region" aria-labelledby="b1-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b1-title">★ 1 · User Segment — Start here<button class="help-btn" onclick="openHelp('b1', this)" aria-label="Help" title="What goes here?">?</button></div>
+      <div class="block-num" id="b1-title">★ 1 · User Segment — Start here<button class="ai-btn" onclick="openAiModal('b1')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b1', this)" aria-label="Help" title="What goes here?">?</button></div>
       <div class="block-title" style="color:var(--amber)">👥 ¿Para quién es?</div>
       <div data-stop-toggle>
         <div class="seg-cards" role="list" aria-label="Segmentos de usuarios">
@@ -1203,7 +1262,7 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
     <div class="block b9 cloud-only" data-block="b9"
       role="region" aria-labelledby="b9-title">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b9-title">9 · Costs, Risks &amp; Compliance<span class="block-mode-badge badge-cloud">☁ Cloud</span><button class="help-btn" onclick="openHelp('b9', this)" aria-label="Help" title="What goes here?">?</button></div>
+      <div class="block-num" id="b9-title">9 · Costs, Risks &amp; Compliance<span class="block-mode-badge badge-cloud">☁ Cloud</span><button class="ai-btn" onclick="openAiModal('b9')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b9', this)" aria-label="Help" title="What goes here?">?</button></div>
       <div class="block-title">💸 Cloud cost structure and risks</div>
       <div class="risk-row">
         <div class="risk-card">
@@ -1275,7 +1334,7 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
     <div class="block b5" data-block="b5"
       role="region" aria-labelledby="b5-title">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b5-title">5 · Value Sources (KPIs)<button class="help-btn" onclick="openHelp('b5', this)" aria-label="Help" title="What goes here?">?</button></div>
+      <div class="block-num" id="b5-title">5 · Value Sources (KPIs)<button class="ai-btn" onclick="openAiModal('b5')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b5', this)" aria-label="Help" title="What goes here?">?</button></div>
       <div class="block-title">📈 ¿Cómo medimos el éxito?</div>
       <div class="kpi-row">
         <div class="kpi-item">
@@ -1365,7 +1424,7 @@ body[data-deploy="onprem"] .mode-onprem-indicator { display:inline; }
     <div class="block b10" data-block="b10"
       role="region" aria-labelledby="b10-title">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b10-title">10 · Guardrails — Security, Quality, Ethical &amp; Operational<button class="help-btn" onclick="openHelp('b10', this)" aria-label="Help" title="What goes here?">?</button></div>
+      <div class="block-num" id="b10-title">10 · Guardrails — Security, Quality, Ethical &amp; Operational<button class="ai-btn" onclick="openAiModal('b10')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b10', this)" aria-label="Help" title="What goes here?">?</button></div>
       <div class="block-title" style="color:var(--red)">🛡️ ¿Qué controles garantizan operación segura?</div>
       <div class="guard-row">
         <div class="guard-card" role="group" aria-label="Guardarraíles de Seguridad">
@@ -1957,6 +2016,25 @@ ${Object.keys(b10t).length?kvTable(b10t):''}
     <div class="help-section">
       <span class="help-section-label">✅ Validation questions</span>
       <ul class="help-checks" id="helpChecks"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- AI Assist Modal -->
+<div id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiModalTitle">
+  <div class="ai-box">
+    <div class="ai-title" id="aiModalTitle">✨ AI Suggest &mdash; <span id="aiBlockLabel" style="color:#a78bfa"></span></div>
+    <p class="ai-step">① Copy this prompt and paste it into <strong>Claude</strong>, ChatGPT, or Ollama:</p>
+    <div class="ai-prompt-wrap">
+      <pre class="ai-prompt-pre" id="aiPromptPre"></pre>
+      <button class="ai-copy-btn" onclick="copyAiPrompt()">📋 Copy prompt</button>
+    </div>
+    <p class="ai-step">② Paste the AI's JSON response here:</p>
+    <textarea class="ai-paste-area" id="aiPasteArea" placeholder='{"field": "value", ...}' spellcheck="false"></textarea>
+    <div class="ai-error" id="aiError">⚠ Invalid JSON — make sure the AI responded with the correct format.</div>
+    <div class="ai-actions">
+      <button class="ai-cancel" onclick="closeAiModal()">Cancel</button>
+      <button class="ai-apply" onclick="applyAiResponse()">✅ Apply to block</button>
     </div>
   </div>
 </div>
@@ -2786,6 +2864,187 @@ function exportMarkdown() {
   a.download = `${canvasName.replace(/\s+/g,'-').toLowerCase() || 'agent-canvas'}.md`;
   a.click();
 }
+
+
+
+const AI_PROMPTS = {
+  b1: {
+    label: 'Segments & Problem',
+    contextFields: [],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Segments & Problem" block of the Deployment Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b1_jobs": "What the main user is trying to do with this agent (1-3 concrete tasks)",
+  "b1_barreras": "What friction or frustration they have today without the agent (1-3 points)"
+}`
+  },
+  b2: {
+    label: 'Value Proposition',
+    contextFields: ['b1_jobs', 'b1_barreras'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Value Proposition" block of the Deployment Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b2_problema": "The specific problem the agent solves (1-2 direct sentences)",
+  "b2_dato_critico": "The most critical data or context the agent needs to work well",
+  "b2_metrica": "How users will know the agent is working (primary metric)",
+  "b2_alternativa": "What users do today without the agent (current workaround)",
+  "b2_ventaja": "Why the agent is better than the current workaround"
+}`
+  },
+  b4: {
+    label: 'Agent Personality',
+    contextFields: ['b1_jobs', 'b2_problema'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Agent Personality" block of the Deployment Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b4_tono": "Description of the agent's tone and personality (e.g., direct and concise, empathetic and patient, technical but accessible)"
+}`
+  },
+  b5: {
+    label: 'Performance KPIs',
+    contextFields: ['b2_metrica', 'b1_jobs'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Performance KPIs" block of the Deployment Canvas with 4 technical metrics.
+
+Reply ONLY with this JSON:
+{
+  "b5_kpi1_name": "KPI 1 with target (e.g., Accuracy > 90%)",
+  "b5_kpi2_name": "KPI 2 with target (e.g., p95 Latency < 2s)",
+  "b5_kpi3_name": "KPI 3 with target (e.g., Escalation rate < 15%)",
+  "b5_kpi4_name": "KPI 4 with target (e.g., User satisfaction > 4/5)"
+}`
+  },
+  b7: {
+    label: 'Agent Skills',
+    contextFields: ['b1_jobs', 'b2_problema'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Agent Skills" block of the Deployment Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b7_skill_informativa": "Informational skills: what it can look up or answer (search, summaries, FAQs)",
+  "b7_skill_transaccional": "Transactional skills: what actions it can execute (create, update, send)",
+  "b7_skill_administrativa": "Administrative skills: what it can manage (schedule, remind, classify)"
+}`
+  },
+  b9: {
+    label: 'Costs & ROI',
+    contextFields: ['b2_metrica', 'b5_kpi1_name'],
+    prompt: (n) => `I'm designing an AI agent called "${n}" in Cloud mode.
+Fill in the "Costs & ROI" block of the Deployment Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b9_costes": "Estimated monthly cost breakdown (API tokens, hosting, tools)",
+  "b9_breakeven": "When the investment is recovered and under what assumption"
+}`
+  },
+  b10: {
+    label: 'Risks & Compliance',
+    contextFields: ['b2_problema'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Risks & Compliance" block of the Deployment Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b10_sla": "Target availability SLA and contingency plan if the agent fails",
+  "b10_alucin": "Hallucination risk: how they're detected and mitigated (guardrails, human review, RAG with verified sources)",
+  "b10_riesgo_aiact": "EU AI Act classification of the agent and compliance obligations it implies"
+}`
+  }
+};
+
+
+// ── AI ASSIST ─────────────────────────────────────────────────────────────
+let _aiBlock = null;
+
+function openAiModal(blockId) {
+  const info = (typeof AI_PROMPTS !== 'undefined') ? AI_PROMPTS[blockId] : null;
+  if (!info) return;
+  _aiBlock = blockId;
+  const canvasName = document.getElementById('canvasName')?.value?.trim() || 'mi agente';
+
+  // Collect context from already-filled visible inputs
+  const ctx = {};
+  document.querySelectorAll('[name]').forEach(el => {
+    if (el.name && el.name !== 'canvasName' && el.value?.trim()) {
+      ctx[el.name] = el.value.trim();
+    }
+  });
+
+  // Build prompt
+  let prompt = typeof info.prompt === 'function' ? info.prompt(canvasName) : info.prompt;
+  const ctxFields = (info.contextFields || []).filter(f => ctx[f]);
+  if (ctxFields.length) {
+    const ctxLines = ctxFields.map(f => `  ${f}: "${ctx[f]}"`).join('\n');
+    prompt += '\n\nContexto del canvas (ya rellenado):\n' + ctxLines;
+  }
+
+  document.getElementById('aiBlockLabel').textContent = info.label;
+  document.getElementById('aiPromptPre').textContent = prompt;
+  document.getElementById('aiPasteArea').value = '';
+  document.getElementById('aiError').style.display = 'none';
+  document.getElementById('aiModal').classList.add('open');
+  setTimeout(() => document.getElementById('aiPasteArea').focus(), 80);
+}
+
+function closeAiModal() {
+  document.getElementById('aiModal').classList.remove('open');
+  _aiBlock = null;
+}
+
+function copyAiPrompt() {
+  const text = document.getElementById('aiPromptPre').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.ai-copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = orig, 1600);
+  });
+}
+
+function applyAiResponse() {
+  const raw = (document.getElementById('aiPasteArea').value || '').trim();
+  const errEl = document.getElementById('aiError');
+  errEl.style.display = 'none';
+  let data;
+  try {
+    const m = raw.match(/```(?:json)?\s*([\s\S]*?)```/) || raw.match(/(\{[\s\S]*\})/);
+    data = JSON.parse(m ? m[1] : raw);
+  } catch(e) { errEl.style.display = 'block'; return; }
+
+  Object.entries(data).forEach(([k, v]) => {
+    const el = document.querySelector(`[name="${k}"]`);
+    if (!el) return;
+    if (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && el.type === 'text')) {
+      el.value = String(v ?? '');
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    } else if (el.tagName === 'SELECT') {
+      const str = String(v ?? '').toLowerCase();
+      const opt = Array.from(el.options).find(o =>
+        o.value.toLowerCase() === str || o.text.toLowerCase().includes(str));
+      if (opt) { el.value = opt.value; el.dispatchEvent(new Event('change', {bubbles:true})); }
+    }
+  });
+
+  closeAiModal();
+  if (typeof showToast === 'function') showToast('✨ Sugerencias de IA aplicadas');
+  if (typeof scheduleAutoSave === 'function') scheduleAutoSave();
+  if (typeof trackProgress === 'function') trackProgress();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('aiModal')?.classList.contains('open')) closeAiModal();
+});
+document.getElementById('aiModal')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('aiModal')) closeAiModal();
+});
 
 </script>
 

@@ -517,6 +517,65 @@ footer {
 .footer-mono { font-family: var(--font-m); }
 
 .q-logo-svg { display:block; flex-shrink:0; }
+
+/* ── AI Assist ─────────────────────────────────────────────────────── */
+.ai-btn {
+  position: absolute; top: .65rem; right: 2.3rem;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: transparent; border: 1.5px solid var(--bd2);
+  color: #a78bfa; font-size: .6rem; cursor: pointer;
+  transition: background .15s, border-color .15s;
+  line-height: 1; display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.ai-btn:hover { background: rgba(167,139,250,.12); border-color: #a78bfa; }
+.block-num:not(:has(.help-btn)) .ai-btn { right: .65rem; }
+
+#aiModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.65); z-index: 400;
+  align-items: center; justify-content: center; padding: 1rem;
+}
+#aiModal.open { display: flex; }
+.ai-box {
+  background: var(--sf); border: 1px solid var(--bd); border-radius: 12px;
+  width: min(560px, 96vw); max-height: 90vh; overflow-y: auto;
+  padding: 1.5rem; display: flex; flex-direction: column; gap: .75rem;
+}
+.ai-title {
+  font-size: .95rem; font-weight: 600; color: var(--tx);
+  font-family: var(--sans, 'Space Grotesk', sans-serif);
+  display: flex; align-items: center; gap: .5rem;
+}
+.ai-step { font-size: .78rem; color: var(--tx2); margin: 0; }
+.ai-prompt-wrap {
+  background: var(--sf2); border: 1px solid var(--bd);
+  border-radius: 8px; padding: .75rem;
+}
+.ai-prompt-pre {
+  font-family: var(--mono, monospace); font-size: .72rem; color: var(--tx2);
+  white-space: pre-wrap; word-break: break-word; margin: 0 0 .5rem;
+  max-height: 160px; overflow-y: auto;
+}
+.ai-copy-btn {
+  background: #a78bfa; color: #fff; border: none; border-radius: 6px;
+  padding: .3rem .75rem; font-size: .75rem; cursor: pointer;
+  font-family: var(--mono, monospace);
+}
+.ai-copy-btn:hover { opacity: .85; }
+.ai-paste-area {
+  width: 100%; min-height: 110px; box-sizing: border-box;
+  background: var(--sf2); border: 1px solid var(--bd2); border-radius: 8px;
+  padding: .65rem; color: var(--tx); font-family: var(--mono, monospace);
+  font-size: .75rem; resize: vertical;
+}
+.ai-error { color: #f87171; font-size: .75rem; display: none; }
+.ai-actions { display: flex; gap: .5rem; justify-content: flex-end; }
+.ai-apply { background: #10b981; color: #fff; border: none; border-radius: 6px; padding: .4rem 1rem; font-size: .8rem; cursor: pointer; font-weight: 600; }
+.ai-apply:hover { opacity: .85; }
+.ai-cancel { background: transparent; border: 1px solid var(--bd2); color: var(--tx2); border-radius: 6px; padding: .4rem .85rem; font-size: .8rem; cursor: pointer; }
+.ai-cancel:hover { border-color: var(--tx2); color: var(--tx); }
+
 </style>
 </head>
 <body>
@@ -601,7 +660,7 @@ footer {
       <div class="block b1" data-block="b1" data-collapsible="true"
         role="region" aria-labelledby="b1-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
-        <div class="block-num" id="b1-title">★ 1 · Agente Host</div>
+        <div class="block-num" id="b1-title">★ 1 · Agente Host<button class="ai-btn" onclick="openAiModal('b1')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button></div>
         <div class="block-title">🤖 ¿Qué agente consume estos servidores?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
@@ -646,7 +705,7 @@ footer {
       <div class="block b2" data-block="b2" data-collapsible="true"
         role="region" aria-labelledby="b2-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
-        <div class="block-num" id="b2-title">★ 2 · Decisión Arquitectónica</div>
+        <div class="block-num" id="b2-title">★ 2 · Decisión Arquitectónica<button class="ai-btn" onclick="openAiModal('b2')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button></div>
         <div class="block-title" style="color:var(--violet-mid)">🧭 ¿Por qué MCP? ¿Qué granularidad?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
@@ -731,7 +790,7 @@ footer {
       <div class="block b4" data-block="b4" data-collapsible="true"
         role="region" aria-labelledby="b4-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
-        <div class="block-num" id="b4-title">4 · Transporte &amp; Runtime</div>
+        <div class="block-num" id="b4-title">4 · Transporte &amp; Runtime<button class="ai-btn" onclick="openAiModal('b4')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button></div>
         <div class="block-title">🔌 ¿Cómo se conecta el cliente al servidor?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
@@ -782,7 +841,7 @@ footer {
       <div class="block b5" data-block="b5" data-collapsible="true"
         role="region" aria-labelledby="b5-title" aria-expanded="false" tabindex="0">
         <div class="block-accent" aria-hidden="true"></div>
-        <div class="block-num" id="b5-title">5 · Seguridad &amp; Auth</div>
+        <div class="block-num" id="b5-title">5 · Seguridad &amp; Auth<button class="ai-btn" onclick="openAiModal('b5')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button></div>
         <div class="block-title">🔐 ¿Quién puede llamar a qué?</div>
         <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
         <div class="block-body" data-stop-toggle>
@@ -844,7 +903,7 @@ footer {
     <div class="block b6" data-block="b6" data-collapsible="true"
       role="region" aria-labelledby="b6-title" aria-expanded="false" tabindex="0">
       <div class="block-accent" aria-hidden="true"></div>
-      <div class="block-num" id="b6-title">6 · Testing, Despliegue &amp; Observabilidad</div>
+      <div class="block-num" id="b6-title">6 · Testing, Despliegue &amp; Observabilidad<button class="ai-btn" onclick="openAiModal('b6')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button></div>
       <div class="block-title" style="color:var(--red)">🧪 ¿Cómo verificar que los servidores funcionan?</div>
       <div class="block-expand-hint" aria-hidden="true">Clic para expandir →</div>
       <div class="block-body" data-stop-toggle>
@@ -1314,6 +1373,25 @@ function exportWord() {
   
 
 
+
+<!-- AI Assist Modal -->
+<div id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiModalTitle">
+  <div class="ai-box">
+    <div class="ai-title" id="aiModalTitle">✨ Sugerir con IA &mdash; <span id="aiBlockLabel" style="color:#a78bfa"></span></div>
+    <p class="ai-step">① Copia este prompt y pégalo en <strong>Claude</strong>, ChatGPT u Ollama:</p>
+    <div class="ai-prompt-wrap">
+      <pre class="ai-prompt-pre" id="aiPromptPre"></pre>
+      <button class="ai-copy-btn" onclick="copyAiPrompt()">📋 Copiar prompt</button>
+    </div>
+    <p class="ai-step">② Pega la respuesta JSON de la IA aquí:</p>
+    <textarea class="ai-paste-area" id="aiPasteArea" placeholder='{"campo": "valor", ...}' spellcheck="false"></textarea>
+    <div class="ai-error" id="aiError">⚠ JSON inválido — asegúrate de que la IA respondió con el formato correcto.</div>
+    <div class="ai-actions">
+      <button class="ai-cancel" onclick="closeAiModal()">Cancelar</button>
+      <button class="ai-apply" onclick="applyAiResponse()">✅ Aplicar al bloque</button>
+    </div>
+  </div>
+</div>
 </body></html>`;
 
   const blob = new Blob(['﻿', doc], {type:'application/msword'});
@@ -1564,6 +1642,153 @@ function exportMarkdown() {
   a.download = `${canvasName.replace(/\s+/g,'-').toLowerCase() || 'agent-canvas'}.md`;
   a.click();
 }
+
+
+
+const AI_PROMPTS = {
+  b1: {
+    label: 'Agente Host',
+    contextFields: [],
+    prompt: (n) => `Estoy diseñando la arquitectura MCP de un agente de IA llamado "${n}".
+Rellena el bloque "Agente Host" del MCP Canvas.
+
+Responde ÚNICAMENTE con este JSON:
+{
+  "b1_concurrencia": "Cuántas sesiones simultáneas se esperan y cómo afecta al diseño del servidor MCP"
+}`
+  },
+  b2: {
+    label: 'Decisión Arquitectónica',
+    contextFields: ['b1_concurrencia'],
+    prompt: (n) => `Estoy diseñando la arquitectura MCP de un agente llamado "${n}".
+Rellena el bloque "Decisión Arquitectónica" del MCP Canvas.
+
+Responde ÚNICAMENTE con este JSON:
+{
+  "b2_razon_granularidad": "Estrategia de granularidad elegida y por qué: un servidor por dominio vs. servidor monolítico",
+  "b2_terceros": "Servidores MCP de terceros que se integran (nombre, proveedor, qué capacidad aportan)"
+}`
+  },
+  b4: {
+    label: 'Transporte & Runtime',
+    contextFields: ['b1_concurrencia'],
+    prompt: (n) => `Estoy diseñando la arquitectura MCP de un agente llamado "${n}".
+Rellena el bloque "Transporte & Runtime" del MCP Canvas.
+
+Responde ÚNICAMENTE con este JSON:
+{
+  "b4_endpoint": "Endpoint base del servidor MCP (ej: http://localhost:3000/mcp o dominio en producción)"
+}`
+  },
+  b5: {
+    label: 'Seguridad & Auth',
+    contextFields: [],
+    prompt: (n) => `Estoy diseñando la arquitectura MCP de un agente llamado "${n}".
+Rellena el bloque "Seguridad & Auth" del MCP Canvas.
+
+Responde ÚNICAMENTE con este JSON:
+{
+  "b5_notas_auth": "Notas de implementación de autenticación: cómo se gestiona OAuth/API keys, rotación de secretos, alcance mínimo de permisos"
+}`
+  },
+  b6: {
+    label: 'Métricas & Observabilidad',
+    contextFields: ['b1_concurrencia'],
+    prompt: (n) => `Estoy diseñando la arquitectura MCP de un agente llamado "${n}".
+Rellena el bloque "Métricas & Observabilidad" del MCP Canvas.
+
+Responde ÚNICAMENTE con este JSON:
+{
+  "b6_metricas": "Métricas clave a monitorizar: latencia de herramientas, tasa de error, llamadas por minuto, herramientas más usadas. Incluye el stack de observabilidad propuesto (Prometheus, Datadog, etc.)"
+}`
+  }
+};
+
+
+// ── AI ASSIST ─────────────────────────────────────────────────────────────
+let _aiBlock = null;
+
+function openAiModal(blockId) {
+  const info = (typeof AI_PROMPTS !== 'undefined') ? AI_PROMPTS[blockId] : null;
+  if (!info) return;
+  _aiBlock = blockId;
+  const canvasName = document.getElementById('canvasName')?.value?.trim() || 'mi agente';
+
+  // Collect context from already-filled visible inputs
+  const ctx = {};
+  document.querySelectorAll('[name]').forEach(el => {
+    if (el.name && el.name !== 'canvasName' && el.value?.trim()) {
+      ctx[el.name] = el.value.trim();
+    }
+  });
+
+  // Build prompt
+  let prompt = typeof info.prompt === 'function' ? info.prompt(canvasName) : info.prompt;
+  const ctxFields = (info.contextFields || []).filter(f => ctx[f]);
+  if (ctxFields.length) {
+    const ctxLines = ctxFields.map(f => `  ${f}: "${ctx[f]}"`).join('\n');
+    prompt += '\n\nContexto del canvas (ya rellenado):\n' + ctxLines;
+  }
+
+  document.getElementById('aiBlockLabel').textContent = info.label;
+  document.getElementById('aiPromptPre').textContent = prompt;
+  document.getElementById('aiPasteArea').value = '';
+  document.getElementById('aiError').style.display = 'none';
+  document.getElementById('aiModal').classList.add('open');
+  setTimeout(() => document.getElementById('aiPasteArea').focus(), 80);
+}
+
+function closeAiModal() {
+  document.getElementById('aiModal').classList.remove('open');
+  _aiBlock = null;
+}
+
+function copyAiPrompt() {
+  const text = document.getElementById('aiPromptPre').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.ai-copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = orig, 1600);
+  });
+}
+
+function applyAiResponse() {
+  const raw = (document.getElementById('aiPasteArea').value || '').trim();
+  const errEl = document.getElementById('aiError');
+  errEl.style.display = 'none';
+  let data;
+  try {
+    const m = raw.match(/```(?:json)?\s*([\s\S]*?)```/) || raw.match(/(\{[\s\S]*\})/);
+    data = JSON.parse(m ? m[1] : raw);
+  } catch(e) { errEl.style.display = 'block'; return; }
+
+  Object.entries(data).forEach(([k, v]) => {
+    const el = document.querySelector(`[name="${k}"]`);
+    if (!el) return;
+    if (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && el.type === 'text')) {
+      el.value = String(v ?? '');
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    } else if (el.tagName === 'SELECT') {
+      const str = String(v ?? '').toLowerCase();
+      const opt = Array.from(el.options).find(o =>
+        o.value.toLowerCase() === str || o.text.toLowerCase().includes(str));
+      if (opt) { el.value = opt.value; el.dispatchEvent(new Event('change', {bubbles:true})); }
+    }
+  });
+
+  closeAiModal();
+  if (typeof showToast === 'function') showToast('✨ Sugerencias de IA aplicadas');
+  if (typeof scheduleAutoSave === 'function') scheduleAutoSave();
+  if (typeof trackProgress === 'function') trackProgress();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('aiModal')?.classList.contains('open')) closeAiModal();
+});
+document.getElementById('aiModal')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('aiModal')) closeAiModal();
+});
 
 </script>
 

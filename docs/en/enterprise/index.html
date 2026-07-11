@@ -331,6 +331,65 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
 }
 .help-overlay.open { opacity:1; pointer-events:all; }
 
+
+/* ── AI Assist ─────────────────────────────────────────────────────── */
+.ai-btn {
+  position: absolute; top: .65rem; right: 2.3rem;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: transparent; border: 1.5px solid var(--bd2);
+  color: #a78bfa; font-size: .6rem; cursor: pointer;
+  transition: background .15s, border-color .15s;
+  line-height: 1; display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.ai-btn:hover { background: rgba(167,139,250,.12); border-color: #a78bfa; }
+.block-num:not(:has(.help-btn)) .ai-btn { right: .65rem; }
+
+#aiModal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.65); z-index: 400;
+  align-items: center; justify-content: center; padding: 1rem;
+}
+#aiModal.open { display: flex; }
+.ai-box {
+  background: var(--sf); border: 1px solid var(--bd); border-radius: 12px;
+  width: min(560px, 96vw); max-height: 90vh; overflow-y: auto;
+  padding: 1.5rem; display: flex; flex-direction: column; gap: .75rem;
+}
+.ai-title {
+  font-size: .95rem; font-weight: 600; color: var(--tx);
+  font-family: var(--sans, 'Space Grotesk', sans-serif);
+  display: flex; align-items: center; gap: .5rem;
+}
+.ai-step { font-size: .78rem; color: var(--tx2); margin: 0; }
+.ai-prompt-wrap {
+  background: var(--sf2); border: 1px solid var(--bd);
+  border-radius: 8px; padding: .75rem;
+}
+.ai-prompt-pre {
+  font-family: var(--mono, monospace); font-size: .72rem; color: var(--tx2);
+  white-space: pre-wrap; word-break: break-word; margin: 0 0 .5rem;
+  max-height: 160px; overflow-y: auto;
+}
+.ai-copy-btn {
+  background: #a78bfa; color: #fff; border: none; border-radius: 6px;
+  padding: .3rem .75rem; font-size: .75rem; cursor: pointer;
+  font-family: var(--mono, monospace);
+}
+.ai-copy-btn:hover { opacity: .85; }
+.ai-paste-area {
+  width: 100%; min-height: 110px; box-sizing: border-box;
+  background: var(--sf2); border: 1px solid var(--bd2); border-radius: 8px;
+  padding: .65rem; color: var(--tx); font-family: var(--mono, monospace);
+  font-size: .75rem; resize: vertical;
+}
+.ai-error { color: #f87171; font-size: .75rem; display: none; }
+.ai-actions { display: flex; gap: .5rem; justify-content: flex-end; }
+.ai-apply { background: #10b981; color: #fff; border: none; border-radius: 6px; padding: .4rem 1rem; font-size: .8rem; cursor: pointer; font-weight: 600; }
+.ai-apply:hover { opacity: .85; }
+.ai-cancel { background: transparent; border: 1px solid var(--bd2); color: var(--tx2); border-radius: 6px; padding: .4rem .85rem; font-size: .8rem; cursor: pointer; }
+.ai-cancel:hover { border-color: var(--tx2); color: var(--tx); }
+
 </style>
 </head>
 <body>
@@ -412,7 +471,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B1 EXECUTIVE MANDATE -->
       <article class="block" data-block="b1" aria-labelledby="b1-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B1 · Mandate<button class="help-btn" onclick="openHelp('b1', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B1 · Mandate<button class="ai-btn" onclick="openAiModal('b1')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b1', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b1-title">Executive Mandate</h2>
         <p class="block-sub">Who sponsors the program from above? Without a clear mandate from leadership, the program will not scale.</p>
         <div class="field-group">
@@ -441,7 +500,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B2 GOVERNANCE MODEL -->
       <article class="block" data-block="b2" aria-labelledby="b2-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B2 · Governance<button class="help-btn" onclick="openHelp('b2', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B2 · Governance<button class="ai-btn" onclick="openAiModal('b2')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b2', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b2-title">Governance Model</h2>
         <p class="block-sub">Who decides what? Governance prevents AI from becoming an IT project with no business impact.</p>
         <div class="field-group">
@@ -477,7 +536,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B3 ORGANIZATIONAL VALUE PROPOSITION -->
       <article class="block" data-block="b3" aria-labelledby="b3-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B3 · Org. Value<button class="help-btn" onclick="openHelp('b3', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B3 · Org. Value<button class="ai-btn" onclick="openAiModal('b3')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b3', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b3-title">Organizational Value Proposition</h2>
         <p class="block-sub">Not the agent's value — the value to the business. What new capabilities will the organization gain?</p>
         <div class="field-group">
@@ -513,7 +572,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B4 IMPACTED STAKEHOLDERS -->
       <article class="block" data-block="b4" aria-labelledby="b4-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B4 · Stakeholders<button class="help-btn" onclick="openHelp('b4', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B4 · Stakeholders<button class="ai-btn" onclick="openAiModal('b4')" aria-label="AI Suggest" title="AI Suggest">✨</button><button class="help-btn" onclick="openHelp('b4', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b4-title">Impacted Stakeholders</h2>
         <p class="block-sub">Beyond the end user. Who loses power? Who gains? The map of allies and resistances is critical.</p>
         <div class="stakeholder-list" id="stakeholderList">
@@ -580,7 +639,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B5 COMPETITIVE URGENCY -->
       <article class="block" data-block="b5" aria-labelledby="b5-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B5 · Urgency<button class="help-btn" onclick="openHelp('b5', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B5 · Urgency<button class="ai-btn" onclick="openAiModal('b5')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b5', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b5-title">Competitive Urgency</h2>
         <p class="block-sub">A nimble competitor can displace you from a niche in months. Calibrate the opportunity window.</p>
         <div class="field-group">
@@ -634,7 +693,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B6 ADOPTION ROADMAP -->
       <article class="block" data-block="b6" aria-labelledby="b6-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B6 · Roadmap<button class="help-btn" onclick="openHelp('b6', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B6 · Roadmap<button class="ai-btn" onclick="openAiModal('b6')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b6', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b6-title">Adoption Roadmap</h2>
         <p class="block-sub">Deployment phases. The change is significant — gradual, not immediate. Define milestones and decision gates.</p>
         <div class="roadmap">
@@ -669,7 +728,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B7 CHANGE MANAGEMENT -->
       <article class="block" data-block="b7" aria-labelledby="b7-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B7 · Change<button class="help-btn" onclick="openHelp('b7', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B7 · Change<button class="ai-btn" onclick="openAiModal('b7')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b7', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b7-title">Change Management</h2>
         <p class="block-sub">IT cannot lead adoption alone. Cultural and organizational change needs its own plan.</p>
         <div class="field-group">
@@ -700,7 +759,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B8 ENABLEMENT -->
       <article class="block" data-block="b8" aria-labelledby="b8-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B8 · Enablement<button class="help-btn" onclick="openHelp('b8', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B8 · Enablement<button class="ai-btn" onclick="openAiModal('b8')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b8', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b8-title">Enablement & Culture</h2>
         <p class="block-sub">Technology alone is not enough. Training, experimentation culture, and internal communities determine the real pace.</p>
         <div class="field-group">
@@ -734,7 +793,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B9 ADOPTION METRICS -->
       <article class="block" data-block="b9" aria-labelledby="b9-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B9 · Metrics<button class="help-btn" onclick="openHelp('b9', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B9 · Metrics<button class="ai-btn" onclick="openAiModal('b9')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b9', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b9-title">Organizational Adoption Metrics</h2>
         <p class="block-sub">Not the agent's metrics — the metrics showing change is happening in the organization.</p>
         <div class="kpi-list">
@@ -781,7 +840,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B10 REVIEW CADENCE -->
       <article class="block" data-block="b10" aria-labelledby="b10-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B10 · Review<button class="help-btn" onclick="openHelp('b10', this)" aria-label="Help" title="What goes here?">?</button></p>
+        <p class="block-num">B10 · Review<button class="ai-btn" onclick="openAiModal('b10')" aria-label="Sugerir con IA" title="Sugerir con IA">✨</button><button class="help-btn" onclick="openHelp('b10', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b10-title">Program Review Cadence</h2>
         <p class="block-sub">The balance between accelerator and brake. Who reviews the program, when, and what can stop it?</p>
         <div class="field-group">
@@ -1095,6 +1154,25 @@ ${f('Who reviews the portfolio?','b10_quien')}${f('What can pause the program?',
     <div class="help-section">
       <span class="help-section-label">✅ Validation questions</span>
       <ul class="help-checks" id="helpChecks"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- AI Assist Modal -->
+<div id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiModalTitle">
+  <div class="ai-box">
+    <div class="ai-title" id="aiModalTitle">✨ AI Suggest &mdash; <span id="aiBlockLabel" style="color:#a78bfa"></span></div>
+    <p class="ai-step">① Copy this prompt and paste it into <strong>Claude</strong>, ChatGPT, or Ollama:</p>
+    <div class="ai-prompt-wrap">
+      <pre class="ai-prompt-pre" id="aiPromptPre"></pre>
+      <button class="ai-copy-btn" onclick="copyAiPrompt()">📋 Copy prompt</button>
+    </div>
+    <p class="ai-step">② Paste the AI's JSON response here:</p>
+    <textarea class="ai-paste-area" id="aiPasteArea" placeholder='{"field": "value", ...}' spellcheck="false"></textarea>
+    <div class="ai-error" id="aiError">⚠ Invalid JSON — make sure the AI responded with the correct format.</div>
+    <div class="ai-actions">
+      <button class="ai-cancel" onclick="closeAiModal()">Cancel</button>
+      <button class="ai-apply" onclick="applyAiResponse()">✅ Apply to block</button>
     </div>
   </div>
 </div>
@@ -1488,6 +1566,254 @@ function exportMarkdown() {
   a.download = `${canvasName.replace(/\s+/g,'-').toLowerCase() || 'enterprise-canvas'}.md`;
   a.click();
 }
+
+
+
+const AI_PROMPTS = {
+  b1: {
+    label: 'Sponsor & Mandate',
+    contextFields: [],
+    prompt: (n) => `I'm designing an AI agent called "${n}" for an organization.
+Fill in the "Sponsor & Mandate" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON (no explanation, no extra markdown):
+{
+  "b1_sponsor": "Name and title of the executive sponsor (e.g., Chief Operating Officer)",
+  "b1_mandato": "Concrete business objective with a metric if possible (1-2 sentences)",
+  "b1_autoridad": "What the sponsor can approve: estimated budget, teams involved, scope"
+}`
+  },
+  b2: {
+    label: 'Governance',
+    contextFields: ['b1_mandato'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Governance" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON (text fields only):
+{
+  "b2_decide": "Who approves which agents get built (title/name, approval process)",
+  "b2_para": "Who can pause or stop a deployment (role and under what conditions)"
+}`
+  },
+  b4: {
+    label: 'Impacted Stakeholders',
+    contextFields: ['b1_mandato', 'b2_decide'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Impacted Stakeholders" block of the Enterprise Agent Canvas.
+
+For "sh1_pos", "sh2_pos", "sh3_pos" use EXACTLY one of: "positive", "neutral", "resistant".
+
+Reply ONLY with this JSON:
+{
+  "sh1_rol": "Role or title of the first impacted stakeholder",
+  "sh1_pos": "positive",
+  "sh1_accion": "What action to take with this stakeholder (involve, inform, convince…)",
+  "sh2_rol": "Role of the second stakeholder",
+  "sh2_pos": "neutral",
+  "sh2_accion": "Action with the second stakeholder",
+  "sh3_rol": "Role of the third stakeholder (usually the most critical or skeptical)",
+  "sh3_pos": "resistant",
+  "sh3_accion": "How to manage this stakeholder's resistance"
+}`
+  },
+  b3: {
+    label: 'Strategic Problem',
+    contextFields: ['b1_mandato', 'b1_sponsor'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Strategic Problem" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b3_diferencial": "What competitive advantage this agent provides (1-2 direct sentences)",
+  "b3_capacidad": "What new organizational capability it creates that didn't exist before",
+  "b3_deja": "What the organization stops doing when this agent is deployed (manual process eliminated, cost reduced, etc.)"
+}`
+  },
+  b5: {
+    label: 'Strategic Window',
+    contextFields: ['b1_mandato', 'b3_diferencial'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Strategic Window" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b5_urgencia": "Why there's urgency now: regulatory pressure, competitor already has it, market window, etc.",
+  "b5_competencia": "What competitors are doing in this AI space",
+  "b5_capacidad": "Available internal capabilities: teams, data, existing infrastructure",
+  "b5_riesgo_inaccion": "What happens if no action is taken in the next 6-12 months"
+}`
+  },
+  b6: {
+    label: 'Evolution & Scalability',
+    contextFields: ['b1_mandato', 'b3_diferencial'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Evolution & Scalability" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b6_piloto": "How the pilot would work: who participates, duration, what's validated (4-6 weeks typical)",
+  "b6_gate": "Pilot success criteria to move to production (concrete metrics)",
+  "b6_escala": "Scaling plan: from how many to how many users, in what time",
+  "b6_expansion": "Expansion to other areas, geographies, or use cases in 12-24 months"
+}`
+  },
+  b7: {
+    label: 'Change Management',
+    contextFields: ['b1_mandato', 'b3_deja'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Change Management" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b7_resistencias": "Main expected sources of resistance (job fears, distrust, extra workload)",
+  "b7_liderazgo": "How leadership will reinforce the change (announcements, visible usage, incentives)",
+  "b7_lider": "Name or profile of the internal change champion (who leads adoption in the team)",
+  "b7_embajadores": "Early adopter profile who become ambassadors (selection criteria)",
+  "b7_plan_com": "Communication plan: what channels, how often, key messages",
+  "b7_early": "Early adopter program: incentives, early access, feedback loop",
+  "b7_feedback": "How you collect user feedback during rollout",
+  "b7_incentivos": "Concrete adoption incentives (recognition, time savings, bonus)"
+}`
+  },
+  b8: {
+    label: 'Training & Culture',
+    contextFields: ['b1_mandato'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Training & Culture" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b8_formacion": "Training plan: user level, format (workshops, videos, docs), duration",
+  "b8_sandbox": "Testing environment: how users can practice safely",
+  "b8_comunidad": "Internal community: Slack/Teams channel, AI newsletter, practice group",
+  "b8_cultura": "Desired cultural shift: from what mindset to which (e.g., from manual lookup to asking the agent)",
+  "b8_soporte": "Support channel for agent issues (who responds, response time)"
+}`
+  },
+  b9: {
+    label: 'Business KPIs',
+    contextFields: ['b1_mandato', 'b3_diferencial'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Business KPIs" block of the Enterprise Agent Canvas with 3 measurable metrics.
+
+Reply ONLY with this JSON:
+{
+  "b9_kpi1_name": "Name of the primary KPI (e.g., Resolution Time)",
+  "b9_kpi1": "How it's measured and how the agent impacts it",
+  "b9_kpi1_target": "Concrete target (e.g., -40% in 3 months)",
+  "b9_kpi2_name": "Name of the second KPI",
+  "b9_kpi2": "How it's measured",
+  "b9_kpi2_target": "Concrete target",
+  "b9_kpi3_name": "Name of the third KPI",
+  "b9_kpi3": "How it's measured",
+  "b9_kpi3_target": "Concrete target"
+}`
+  },
+  b10: {
+    label: 'Governance & Ethics',
+    contextFields: ['b1_mandato'],
+    prompt: (n) => `I'm designing an AI agent called "${n}".
+Fill in the "Governance & Ethics" block of the Enterprise Agent Canvas.
+
+Reply ONLY with this JSON:
+{
+  "b10_quien": "Who reviews and approves agent outputs (role or committee)",
+  "b10_para": "Who this agent is accountable to (model owner, legal team, AI committee)",
+  "b10_aiact": "EU AI Act classification: low, limited, or high risk — and why",
+  "b10_audit": "Audit frequency and process (monthly, quarterly, what's reviewed)",
+  "b10_bias": "Identified bias risks and how they're mitigated",
+  "b10_gdpr": "Personal data processed and applicable GDPR legal basis",
+  "b10_humano": "When a human intervenes (Human-in-the-loop): what decisions the agent can't make alone",
+  "b10_rollback": "Rollback plan: how to deactivate the agent if it fails or causes harm"
+}`
+  }
+};
+
+
+// ── AI ASSIST ─────────────────────────────────────────────────────────────
+let _aiBlock = null;
+
+function openAiModal(blockId) {
+  const info = (typeof AI_PROMPTS !== 'undefined') ? AI_PROMPTS[blockId] : null;
+  if (!info) return;
+  _aiBlock = blockId;
+  const canvasName = document.getElementById('canvasName')?.value?.trim() || 'mi agente';
+
+  // Collect context from already-filled visible inputs
+  const ctx = {};
+  document.querySelectorAll('[name]').forEach(el => {
+    if (el.name && el.name !== 'canvasName' && el.value?.trim()) {
+      ctx[el.name] = el.value.trim();
+    }
+  });
+
+  // Build prompt
+  let prompt = typeof info.prompt === 'function' ? info.prompt(canvasName) : info.prompt;
+  const ctxFields = (info.contextFields || []).filter(f => ctx[f]);
+  if (ctxFields.length) {
+    const ctxLines = ctxFields.map(f => `  ${f}: "${ctx[f]}"`).join('\n');
+    prompt += '\n\nContexto del canvas (ya rellenado):\n' + ctxLines;
+  }
+
+  document.getElementById('aiBlockLabel').textContent = info.label;
+  document.getElementById('aiPromptPre').textContent = prompt;
+  document.getElementById('aiPasteArea').value = '';
+  document.getElementById('aiError').style.display = 'none';
+  document.getElementById('aiModal').classList.add('open');
+  setTimeout(() => document.getElementById('aiPasteArea').focus(), 80);
+}
+
+function closeAiModal() {
+  document.getElementById('aiModal').classList.remove('open');
+  _aiBlock = null;
+}
+
+function copyAiPrompt() {
+  const text = document.getElementById('aiPromptPre').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.ai-copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = orig, 1600);
+  });
+}
+
+function applyAiResponse() {
+  const raw = (document.getElementById('aiPasteArea').value || '').trim();
+  const errEl = document.getElementById('aiError');
+  errEl.style.display = 'none';
+  let data;
+  try {
+    const m = raw.match(/```(?:json)?\s*([\s\S]*?)```/) || raw.match(/(\{[\s\S]*\})/);
+    data = JSON.parse(m ? m[1] : raw);
+  } catch(e) { errEl.style.display = 'block'; return; }
+
+  Object.entries(data).forEach(([k, v]) => {
+    const el = document.querySelector(`[name="${k}"]`);
+    if (!el) return;
+    if (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && el.type === 'text')) {
+      el.value = String(v ?? '');
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    } else if (el.tagName === 'SELECT') {
+      const str = String(v ?? '').toLowerCase();
+      const opt = Array.from(el.options).find(o =>
+        o.value.toLowerCase() === str || o.text.toLowerCase().includes(str));
+      if (opt) { el.value = opt.value; el.dispatchEvent(new Event('change', {bubbles:true})); }
+    }
+  });
+
+  closeAiModal();
+  if (typeof showToast === 'function') showToast('✨ Sugerencias de IA aplicadas');
+  if (typeof scheduleAutoSave === 'function') scheduleAutoSave();
+  if (typeof trackProgress === 'function') trackProgress();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('aiModal')?.classList.contains('open')) closeAiModal();
+});
+document.getElementById('aiModal')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('aiModal')) closeAiModal();
+});
 
 </script>
 
