@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!DOC
+    
+TYPE html>
 <html lang="en" translate="no">
 <head>
 <meta charset="UTF-8">
@@ -242,6 +244,93 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
 .footer-sep { opacity:.4; }
 
 @media(max-width:840px) { .phase-row, .phase-row-2 { grid-template-columns:1fr; } }
+/* ── EXAMPLE TEMPLATES ─────────────────────────────────────────────────── */
+.examples-bar {
+  display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+  padding:.5rem 1rem; background:rgba(99,102,241,.05);
+  border:1px solid rgba(99,102,241,.15); border-radius:8px;
+  margin-bottom:.75rem;
+}
+.examples-label {
+  font-family:var(--mono); font-size:.62rem; color:var(--mu);
+  text-transform:uppercase; letter-spacing:.08em; white-space:nowrap;
+}
+.example-btn {
+  background:var(--sf2); border:1px solid var(--bd2); color:var(--tx2);
+  padding:.3rem .7rem; border-radius:5px; font-size:.72rem; font-family:var(--mono);
+  cursor:pointer; transition:all .15s; white-space:nowrap;
+}
+.example-btn:hover { border-color:var(--indigo); color:var(--indigo); background:rgba(99,102,241,.08); }
+.example-btn.active { background:rgba(16,185,129,.15); border-color:var(--emerald); color:var(--emerald); }
+
+
+/* ── CONTEXTUAL HELP ────────────────────────────────────────────────────── */
+.help-btn {
+  position:absolute; top:.65rem; right:.65rem;
+  width:20px; height:20px; border-radius:50%;
+  background:transparent; border:1.5px solid var(--bd2);
+  color:var(--mu); font-size:.65rem; font-weight:700; font-family:var(--mono);
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all .15s; line-height:1; z-index:2;
+}
+.help-btn:hover { border-color:var(--indigo); color:var(--indigo); background:rgba(99,102,241,.1); }
+.help-btn.open  { border-color:var(--indigo); color:#fff; background:var(--indigo); }
+
+.help-panel {
+  position:fixed; right:0; top:54px; height:calc(100vh - 54px);
+  width:min(340px, 92vw); background:var(--sf); border-left:1px solid var(--bd);
+  box-shadow:-4px 0 24px rgba(0,0,0,.45); z-index:200;
+  transform:translateX(100%); transition:transform .25s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.help-panel.open { transform:translateX(0); }
+
+.help-panel-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.75rem 1rem; border-bottom:1px solid var(--bd);
+  background:var(--sf2); flex-shrink:0;
+}
+.help-panel-title { font-size:.8rem; font-weight:700; color:var(--tx); }
+.help-panel-close {
+  background:none; border:none; color:var(--mu); cursor:pointer;
+  font-size:1rem; padding:.2rem .4rem; border-radius:4px; transition:all .15s;
+}
+.help-panel-close:hover { color:var(--tx); background:var(--sf3); }
+
+.help-panel-body { overflow-y:auto; padding:1rem; flex:1; }
+
+.help-section { margin-bottom:1.25rem; }
+.help-section-label {
+  font-family:var(--mono); font-size:.58rem; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--mu); margin-bottom:.5rem; display:block;
+}
+.help-what {
+  font-size:.8rem; color:var(--tx2); line-height:1.65;
+  background:rgba(99,102,241,.07); border:1px solid rgba(99,102,241,.2);
+  border-radius:6px; padding:.65rem .8rem;
+}
+.help-examples { list-style:none; display:flex; flex-direction:column; gap:.4rem; }
+.help-examples li {
+  font-size:.76rem; color:var(--tx2); padding:.45rem .7rem;
+  background:var(--sf2); border-radius:5px; border-left:2px solid var(--indigo);
+  line-height:1.55;
+}
+.help-checks { list-style:none; display:flex; flex-direction:column; gap:.35rem; }
+.help-checks li {
+  font-size:.76rem; color:var(--tx2); display:flex; gap:.5rem; align-items:flex-start;
+  line-height:1.5;
+}
+.help-checks li::before { content:'?'; font-family:var(--mono); font-size:.6rem;
+  font-weight:700; color:var(--amber); background:rgba(245,158,11,.15);
+  border:1px solid rgba(245,158,11,.3); border-radius:3px;
+  padding:.08rem .3rem; flex-shrink:0; margin-top:.15rem; }
+
+.help-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:199;
+  opacity:0; pointer-events:none; transition:opacity .25s;
+}
+.help-overlay.open { opacity:1; pointer-events:all; }
+
 </style>
 </head>
 <body>
@@ -304,6 +393,13 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
     </div>
   </div>
 
+    <div class="examples-bar" role="region" aria-label="Example templates">
+      <span class="examples-label">Load example:</span>
+      <button class="example-btn" data-key="soporte-it" onclick="loadExample('soporte-it')">🎧 IT Support</button>
+      <button class="example-btn" data-key="transformacion-digital" onclick="loadExample('transformacion-digital')">🏭 Manufacturing 4.0</button>
+    </div>
+
+
   <!-- ── ROW 1: MANDATE + GOVERNANCE + ORG. VALUE ── -->
   <div class="canvas-section">
     <div class="phase-row">
@@ -311,7 +407,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B1 EXECUTIVE MANDATE -->
       <article class="block" data-block="b1" aria-labelledby="b1-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B1 · Mandate</p>
+        <p class="block-num">B1 · Mandate<button class="help-btn" onclick="openHelp('b1', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b1-title">Executive Mandate</h2>
         <p class="block-sub">Who sponsors the program from above? Without a clear mandate from leadership, the program will not scale.</p>
         <div class="field-group">
@@ -340,7 +436,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B2 GOVERNANCE MODEL -->
       <article class="block" data-block="b2" aria-labelledby="b2-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B2 · Governance</p>
+        <p class="block-num">B2 · Governance<button class="help-btn" onclick="openHelp('b2', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b2-title">Governance Model</h2>
         <p class="block-sub">Who decides what? Governance prevents AI from becoming an IT project with no business impact.</p>
         <div class="field-group">
@@ -376,7 +472,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B3 ORGANIZATIONAL VALUE PROPOSITION -->
       <article class="block" data-block="b3" aria-labelledby="b3-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B3 · Org. Value</p>
+        <p class="block-num">B3 · Org. Value<button class="help-btn" onclick="openHelp('b3', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b3-title">Organizational Value Proposition</h2>
         <p class="block-sub">Not the agent's value — the value to the business. What new capabilities will the organization gain?</p>
         <div class="field-group">
@@ -412,7 +508,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B4 IMPACTED STAKEHOLDERS -->
       <article class="block" data-block="b4" aria-labelledby="b4-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B4 · Stakeholders</p>
+        <p class="block-num">B4 · Stakeholders<button class="help-btn" onclick="openHelp('b4', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b4-title">Impacted Stakeholders</h2>
         <p class="block-sub">Beyond the end user. Who loses power? Who gains? The map of allies and resistances is critical.</p>
         <div class="stakeholder-list" id="stakeholderList">
@@ -479,7 +575,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B5 COMPETITIVE URGENCY -->
       <article class="block" data-block="b5" aria-labelledby="b5-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B5 · Urgency</p>
+        <p class="block-num">B5 · Urgency<button class="help-btn" onclick="openHelp('b5', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b5-title">Competitive Urgency</h2>
         <p class="block-sub">A nimble competitor can displace you from a niche in months. Calibrate the opportunity window.</p>
         <div class="field-group">
@@ -533,7 +629,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B6 ADOPTION ROADMAP -->
       <article class="block" data-block="b6" aria-labelledby="b6-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B6 · Roadmap</p>
+        <p class="block-num">B6 · Roadmap<button class="help-btn" onclick="openHelp('b6', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b6-title">Adoption Roadmap</h2>
         <p class="block-sub">Deployment phases. The change is significant — gradual, not immediate. Define milestones and decision gates.</p>
         <div class="roadmap">
@@ -568,7 +664,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B7 CHANGE MANAGEMENT -->
       <article class="block" data-block="b7" aria-labelledby="b7-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B7 · Change</p>
+        <p class="block-num">B7 · Change<button class="help-btn" onclick="openHelp('b7', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b7-title">Change Management</h2>
         <p class="block-sub">IT cannot lead adoption alone. Cultural and organizational change needs its own plan.</p>
         <div class="field-group">
@@ -599,7 +695,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B8 ENABLEMENT -->
       <article class="block" data-block="b8" aria-labelledby="b8-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B8 · Enablement</p>
+        <p class="block-num">B8 · Enablement<button class="help-btn" onclick="openHelp('b8', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b8-title">Enablement & Culture</h2>
         <p class="block-sub">Technology alone is not enough. Training, experimentation culture, and internal communities determine the real pace.</p>
         <div class="field-group">
@@ -633,7 +729,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B9 ADOPTION METRICS -->
       <article class="block" data-block="b9" aria-labelledby="b9-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B9 · Metrics</p>
+        <p class="block-num">B9 · Metrics<button class="help-btn" onclick="openHelp('b9', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b9-title">Organizational Adoption Metrics</h2>
         <p class="block-sub">Not the agent's metrics — the metrics showing change is happening in the organization.</p>
         <div class="kpi-list">
@@ -680,7 +776,7 @@ footer { background:var(--sf); border-top:1px solid var(--bd); padding:1.1rem 1.
       <!-- B10 REVIEW CADENCE -->
       <article class="block" data-block="b10" aria-labelledby="b10-title">
         <div class="block-accent" aria-hidden="true"></div>
-        <p class="block-num">B10 · Review</p>
+        <p class="block-num">B10 · Review<button class="help-btn" onclick="openHelp('b10', this)" aria-label="Help" title="What goes here?">?</button></p>
         <h2 class="block-title" id="b10-title">Program Review Cadence</h2>
         <p class="block-sub">The balance between accelerator and brake. Who reviews the program, when, and what can stop it?</p>
         <div class="field-group">
@@ -975,6 +1071,28 @@ ${h2('B10. Review Cadence')}
 ${f('Who reviews the portfolio?','b10_quien')}${f('What can pause the program?','b10_para')}${f('Feedback mechanism','b10_feedback')}
 <hr style="border:none;border-top:1px solid #E7E5E4;margin:20pt 0">
 <p style="color:#9CA3AF;font-size:9pt">Generated from Enterprise AI Adoption Canvas · ${esc(date)}</p>
+
+<div class="help-overlay" id="helpOverlay" onclick="closeHelp()" aria-hidden="true"></div>
+<div class="help-panel" id="helpPanel" role="complementary" aria-label="Block help">
+  <div class="help-panel-header">
+    <span class="help-panel-title" id="helpPanelTitle">Help</span>
+    <button class="help-panel-close" onclick="closeHelp()" aria-label="Close help">✕</button>
+  </div>
+  <div class="help-panel-body">
+    <div class="help-section">
+      <span class="help-section-label">📌 What goes here</span>
+      <div class="help-what" id="helpWhat"></div>
+    </div>
+    <div class="help-section">
+      <span class="help-section-label">💡 Concrete examples</span>
+      <ul class="help-examples" id="helpExamples"></ul>
+    </div>
+    <div class="help-section">
+      <span class="help-section-label">✅ Validation questions</span>
+      <ul class="help-checks" id="helpChecks"></ul>
+    </div>
+  </div>
+</div>
 </body></html>`;
 
   const blob = new Blob(['﻿' + wordHtml], {type:'application/msword'});
@@ -1010,6 +1128,239 @@ document.getElementById('shareModal').addEventListener('click', e => { if (e.tar
   loadState();
 })();
 trackProgress();
+
+const CANVAS_EXAMPLES = {
+  'soporte-it': {
+    label: '🎧 IT Support',
+    data: {
+      meta: { name: 'AI Adoption — IT Support Agent' },
+      blocks: {
+        b1: {
+          inputs: {
+            b1_sponsor: 'CIO + Director de Operaciones IT',
+            b1_mandato: 'Reducir coste operativo del helpdesk en un 40% y mejorar la experiencia del empleado con resolución inmediata de incidencias nivel 1',
+            b1_autoridad: 'Comité de Dirección aprobó presupuesto de €80.000 para piloto de 6 meses. CIO como sponsor ejecutivo.'
+          }, checks: ['1', '1', '1']
+        },
+        b2: {
+          inputs: {
+            b2_decide: 'CIO firma el contrato · Director IT valida la arquitectura · CISO aprueba el acceso a datos',
+            b2_para: 'Empleados internos: 200 usuarios en 5 departamentos. Técnicos IT nivel 1 que quieren reducir carga repetitiva.',
+            b2_legal: 'DPA con proveedor cloud revisado. Ningún dato personal sale del perímetro EU.',
+            b2_rrhh: 'Plan de comunicación: los técnicos IT pasan a supervisar y mejorar el agente, no son reemplazados.',
+            b2_ciso: 'Acceso restringido a KB interna. Sin acceso a datos de nóminas ni RRHH. Logs auditables.',
+            b2_negocio: 'ROI proyectado: −€7.500/mes en coste de tickets. Payback en 11 meses.',
+            b2_etica: 'El agente siempre indica que es IA. Escala a humano en menos de 30 segundos si el usuario lo solicita.',
+            b2_data: 'Fuente de verdad: Confluence IT (450 artículos). Actualización mensual del índice RAG.'
+          }, checks: []
+        },
+        b3: {
+          inputs: {
+            b3_capacidad: 'Equipo: 1 AI Engineer (contratado), 2 técnicos IT (formados en supervisión del agente), 1 Project Manager',
+            b3_deja: 'Los técnicos IT dejan de responder tickets nivel 1 (reset contraseña, VPN, impresoras) y se enfocan en incidencias complejas',
+            b3_diferencial: 'Integración nativa con ServiceNow (ya licenciado) y Teams (canal donde los empleados ya trabajan)'
+          }, checks: []
+        },
+        b5: { inputs: { b5_competencia: 'Zendesk AI: más caro y no integra con nuestro ServiceNow. Copilot Studio: opción evaluada, descartada por coste de licencias adicionales.', b5_urgencia: 'Volumen de tickets creció un 35% YoY. El equipo IT actual no puede escalar más sin ampliar plantilla.', b5_capacidad: 'Azure OpenAI disponible en suscripción Enterprise. Confluence ya indexable vía API.', b5_riesgo_inaccion: 'Sin el agente: contratar 2 técnicos IT adicionales = €120.000/año vs. €30.000/año del agente.' }, checks: [] },
+        b6: { inputs: { b6_piloto: 'Piloto 8 semanas en departamento de Finanzas (40 usuarios). KPI de éxito: > 60% tickets resueltos sin humano y NPS > 7.' }, checks: [] }
+      }
+    }
+  },
+  'transformacion-digital': {
+    label: '🏭 Manufacturing 4.0',
+    data: {
+      meta: { name: 'AI Adoption — Manufacturing 4.0' },
+      blocks: {
+        b1: {
+          inputs: {
+            b1_sponsor: 'CEO + Director de Planta + CTO',
+            b1_mandato: 'Implementar IA en la cadena de producción para reducir tiempo de parada no planificada en un 30% y optimizar el mantenimiento predictivo',
+            b1_autoridad: 'Junta Directiva aprobó inversión de €250.000 en transformación digital de planta. Deadline: Q4 de este año.'
+          }, checks: ['1', '1', '1', '1']
+        },
+        b2: {
+          inputs: {
+            b2_decide: 'CEO aprueba estrategia · CTO valida arquitectura técnica · Director de Planta aprueba implantación en producción',
+            b2_para: 'Operarios de planta (150 personas) + Ingenieros de mantenimiento (12 personas) + Supervisores de turno (8 personas)',
+            b2_legal: 'Datos de sensores de maquinaria: sin datos personales. Datos de producción: confidenciales, on-premise obligatorio.',
+            b2_rrhh: 'Programa de upskilling para operarios: 40h de formación en trabajo con IA. Sin reducción de plantilla.',
+            b2_ciso: 'Arquitectura on-premise: datos de sensores nunca salen de la planta. Acceso VPN solo para mantenimiento remoto.',
+            b2_negocio: 'Una hora de parada no planificada = €15.000. Objetivo: reducir 4 paradas/mes → ahorro €60.000/mes.',
+            b2_etica: 'Los operarios siempre pueden anular la recomendación del agente. El agente no actúa en sistemas críticos sin confirmación humana.',
+            b2_data: 'Datos de sensores IoT: 2TB/mes. Historial de mantenimiento: 5 años. Manuales de maquinaria: 800 documentos.'
+          }, checks: []
+        },
+        b3: {
+          inputs: {
+            b3_capacidad: 'Partner industrial especializado en IA + equipo interno de 2 ingenieros de datos + 1 integrador de sistemas OT/IT',
+            b3_deja: 'Ingenieros de mantenimiento dejan de hacer revisiones de rutina manual y se enfocan en mantenimiento estratégico y mejora continua',
+            b3_diferencial: 'Acceso a datos históricos de 5 años de maquinaria · Integración con SCADA existente · Conocimiento del proceso productivo'
+          }, checks: []
+        },
+        b5: { inputs: { b5_urgencia: '3 paradas no planificadas el último trimestre con coste total de €180.000. La competencia ya tiene mantenimiento predictivo implantado.', b5_riesgo_inaccion: 'Perder contratos de cliente si no se garantiza SLA de disponibilidad del 99.5%.' }, checks: [] },
+        b6: { inputs: { b6_piloto: 'Piloto en línea de producción B (menos crítica): 12 semanas. KPI: detectar el 80% de fallos con 48h de anticipación.' }, checks: [] }
+      }
+    }
+  }
+};
+
+function loadExample(key) {
+  const ex = CANVAS_EXAMPLES[key];
+  if (!ex) return;
+  const state = collectState();
+  const hasData = Object.values(state.blocks).some(b =>
+    Object.values(b.inputs||{}).some(v => v.trim()) || (b.checks||[]).length
+  );
+  if (hasData && !confirm('Load example "' + ex.label + '"? This will overwrite current data.')) return;
+  applyState(ex.data);
+  saveCanvas();
+  updateProgress();
+  document.querySelectorAll('.example-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.example-btn[data-key="${key}"]`);
+  if (btn) { btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 2000); }
+}
+
+
+
+const BLOCK_HELP = {
+  'b1': {
+    title: "Mandato Ejecutivo",
+    what: "El punto de partida. Sin un sponsor ejecutivo con firma y presupuesto formal, el proyecto no existe. Define qui\u00e9n toma la decisi\u00f3n final.",
+    examples: [
+      "CIO como sponsor: presupuesto \u20ac80k aprobado en Q2, deadline piloto Q4",
+      "CEO mandate: IA en todos los procesos de atenci\u00f3n al cliente antes de fin de a\u00f1o",
+      "Comit\u00e9 de Direcci\u00f3n aprob\u00f3 inversi\u00f3n de \u20ac250k con revisi\u00f3n trimestral"
+    ],
+    checks: [
+      "\u00bfHay un sponsor ejecutivo con firma y presupuesto formalmente aprobado?",
+      "\u00bfEl mandate tiene un objetivo de negocio medible (no solo 'adoptar IA')?",
+      "\u00bfExiste un deadline real con consecuencias si no se cumple?"
+    ]
+  },
+  'b2': {
+    title: "Modelo de Gobernanza",
+    what: "Qui\u00e9n decide qu\u00e9, qui\u00e9n valida qu\u00e9 y qui\u00e9n puede bloquear. Sin governance claro, los proyectos de IA mueren en comit\u00e9s.",
+    examples: [
+      "CIO firma contratos \u00b7 CISO aprueba arquitectura \u00b7 Legal revisa datos \u00b7 Negocio define KPIs",
+      "Comit\u00e9 mensual de revisi\u00f3n con CTO, CISO y responsable de negocio",
+      "DPA firmado con proveedor LLM \u00b7 Ning\u00fan dato personal fuera de EU"
+    ],
+    checks: [
+      "\u00bfEst\u00e1 claro qui\u00e9n puede decir 'no' al proyecto y bajo qu\u00e9 condiciones?",
+      "\u00bfEl CISO ha revisado la arquitectura de seguridad de los datos?",
+      "\u00bfTienes un DPA o acuerdo equivalente con todos los proveedores cloud?"
+    ]
+  },
+  'b3': {
+    title: "Propuesta de Valor Organizativa",
+    what: "Qu\u00e9 capacidad nueva adquiere la organizaci\u00f3n. No el beneficio individual del agente, sino el impacto a nivel empresa.",
+    examples: [
+      "El equipo IT pasa de 500 tickets/mes a gestionar solo los cr\u00edticos (ahorro \u20ac90k/a\u00f1o)",
+      "Reducci\u00f3n de 3 FTE en tareas administrativas + reasignaci\u00f3n a proyectos de mayor valor",
+      "Nueva capacidad: an\u00e1lisis de contratos en 1h vs. 3 d\u00edas \u2192 win rate +15%"
+    ],
+    checks: [
+      "\u00bfEl valor est\u00e1 cuantificado en euros o en FTEs liberados?",
+      "\u00bfHay un proceso claro para reasignar el trabajo liberado (no solo eliminarlo)?",
+      "\u00bfEl board puede ver este valor en el P&L dentro de 12 meses?"
+    ]
+  },
+  'b4': {
+    title: "Stakeholders Impactados",
+    what: "Todas las personas afectadas y su posici\u00f3n inicial. Los aliados aceleran, los bloqueadores pueden parar el proyecto. Necesitas una estrategia para cada grupo.",
+    examples: [
+      "Legal: \ud83d\udfe2 Aliado (ya pidieron IA para contratos) \u00b7 CISO: \ud83d\udfe1 Neutro \u00b7 RRHH: \ud83d\udd34 Resistencia",
+      "Director IT: \ud83d\udfe2 Aliado (es el sponsor) \u00b7 T\u00e9cnicos IT: \ud83d\udd34 Miedo a reemplazo",
+      "CEO: \ud83d\udfe2 Champion \u00b7 CFO: \ud83d\udfe1 Espera ver ROI en piloto"
+    ],
+    checks: [
+      "\u00bfTienes al menos un aliado activo con influencia real en la organizaci\u00f3n?",
+      "\u00bfSabes exactamente qui\u00e9nes son los bloqueadores y cu\u00e1l es su objeci\u00f3n?",
+      "\u00bfTienes una estrategia de comunicaci\u00f3n diferente para cada grupo?"
+    ]
+  },
+  'b5': {
+    title: "Urgencia Competitiva",
+    what: "Por qu\u00e9 ahora y no en 6 meses. Necesitas un 'burning platform' que justifique la urgencia del proyecto.",
+    examples: [
+      "La competencia lanz\u00f3 un asistente IA en Q1: si no respondemos perdemos diferencial en Q3",
+      "El equipo IT no puede escalar m\u00e1s sin +2 t\u00e9cnicos \u2192 coste de inacci\u00f3n: \u20ac120k/a\u00f1o",
+      "Nuevo reglamento EU AI Act obliga a tener governance IA antes de enero"
+    ],
+    checks: [
+      "\u00bfEl coste de no hacer nada est\u00e1 cuantificado y es cre\u00edble para el CFO?",
+      "\u00bfLa urgencia es real o autopercibida? (busca evidencia externa)",
+      "\u00bfTienes referencia de alg\u00fan competidor que ya lo ha implantado?"
+    ]
+  },
+  'b6': {
+    title: "Hoja de Ruta de Adopci\u00f3n",
+    what: "El plan de piloto a escala. El piloto debe ser en un \u00e1rea peque\u00f1a pero representativa, con KPIs de \u00e9xito definidos antes de empezar.",
+    examples: [
+      "Piloto 8 semanas en Finanzas (40 usuarios) \u00b7 KPI: &gt;60% tickets sin humano \u00b7 Decisi\u00f3n escala: semana 9",
+      "Fase 1: FAQ solo lectura (0 riesgo) \u2192 Fase 2: acciones simples \u2192 Fase 3: autonom\u00eda supervisada",
+      "Go/No-go en semana 6: NPS &gt; 7 Y tasa alucinaci\u00f3n &lt; 2% \u2192 escala a 200 usuarios"
+    ],
+    checks: [
+      "\u00bfEl piloto tiene criterios de \u00e9xito definidos antes de empezar?",
+      "\u00bfHay una decisi\u00f3n expl\u00edcita de Go/No-go con fecha y responsable?",
+      "\u00bfEl \u00e1rea piloto es representativa del caso de uso real pero de bajo riesgo?"
+    ]
+  },
+  'b7': {
+    title: "Gesti\u00f3n del Cambio",
+    what: "C\u00f3mo gestionas el miedo y la resistencia. El mayor bloqueador de adopci\u00f3n IA no es la tecnolog\u00eda, es la cultura.",
+    examples: [
+      "Los t\u00e9cnicos IT no son reemplazados: pasan a supervisar y mejorar el agente",
+      "Formaci\u00f3n 4h para todos los usuarios antes del lanzamiento + soporte 2 semanas post-lanzamiento",
+      "Comunicaci\u00f3n mensual de CEO sobre los resultados del agente y el plan de evoluci\u00f3n"
+    ],
+    checks: [
+      "\u00bfTienes un mensaje claro sobre qu\u00e9 pasa con los empleados afectados?",
+      "\u00bfHay un plan de formaci\u00f3n con horas espec\u00edficas asignadas?",
+      "\u00bfEl sponsor ejecutivo ha comunicado p\u00fablicamente su apoyo al proyecto?"
+    ]
+  },
+  'b8': {
+    title: "Habilitaci\u00f3n y Cultura",
+    what: "Qu\u00e9 capacidades internas construyes para que la organizaci\u00f3n sea aut\u00f3noma con IA a largo plazo.",
+    examples: [
+      "AI Champions: 1 persona por departamento formada en prompt engineering y supervisi\u00f3n",
+      "AI Guild mensual para compartir casos de uso y aprendizajes entre equipos",
+      "Programa 'AI Literacy' de 8h para todos los managers antes de Q3"
+    ],
+    checks: [
+      "\u00bfTienes al menos una persona interna que puede mantener el agente sin el proveedor?",
+      "\u00bfHay un plan de formaci\u00f3n continua, no solo formaci\u00f3n inicial?",
+      "\u00bfLa cultura de la empresa premia el aprendizaje y la experimentaci\u00f3n con IA?"
+    ]
+  },
+  'b9': {
+    title: "M\u00e9tricas de Adopci\u00f3n",
+    what: "No solo si el agente funciona t\u00e9cnicamente, sino si la organizaci\u00f3n lo est\u00e1 adoptando de verdad.",
+    examples: [
+      "DAU/MAU: usuarios activos diarios/mensuales (objetivo: &gt;70% de usuarios potenciales)",
+      "Time-to-value: tiempo desde acceso hasta primera tarea completada con el agente",
+      "Adoption rate por departamento: detecta los rezagados para acci\u00f3n proactiva"
+    ],
+    checks: [
+      "\u00bfMides la adopci\u00f3n real (uso) adem\u00e1s de los resultados de negocio?",
+      "\u00bfTienes dashboards de adopci\u00f3n que el sponsor ejecutivo revisa?",
+      "\u00bfHay un plan de acci\u00f3n cuando la adopci\u00f3n est\u00e1 por debajo del objetivo?"
+    ]
+  },
+  'b10': {
+    title: "Cadencia de Revisi\u00f3n",
+    what: "El ritmo de gobierno del programa. Sin revisiones peri\u00f3dicas con datos reales, los proyectos IA se quedan obsoletos o derivan.",
+    examples: [
+      "Semanal: equipo t\u00e9cnico revisa alucinaciones y KPIs operativos",
+      "Mensual: sponsor + business owner revisan adopci\u00f3n y ROI",
+      "Trimestral: Comit\u00e9 de Direcci\u00f3n decide expansi\u00f3n, pivote o cierre"
+    ],
+    checks: [
+      "\u00bfHay reuniones de revisi\u00f3n en el calendario con asistencia obligatoria?",
+      "\u00bfLos datos para las revisiones se generan autom\u00e1ticamente (no manualmente)?",
+      "\u00bfTienes criterios claros de cu\u00e1ndo escalar un
 </script>
 
 </body>
