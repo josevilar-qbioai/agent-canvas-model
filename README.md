@@ -1,5 +1,8 @@
 # Agent Canvas Model
 
+> **Agent Canvas Model** is part of QMetrika Labs' methodological portfolio — a dedicated line of work for structuring and deploying AI agent initiatives in organizations.
+
+
 **🌐 Language / Idioma:** &nbsp; **English** &nbsp;|&nbsp; [Español](README_ES.md)
 
 **AI Agent Design Framework** — An adaptation of the Business Model Canvas for planning, designing, and deploying AI agents in production.
