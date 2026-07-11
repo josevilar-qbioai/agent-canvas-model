@@ -1376,6 +1376,129 @@ function closeHelp() {
   if (_helpOpenBtn) { _helpOpenBtn.classList.remove('open'); _helpOpenBtn = null; }
 }
 
+
+
+function exportMarkdown() {
+  function getCheck(sel) {
+    const r = [];
+    document.querySelectorAll(sel + ' input[type=checkbox]:checked').forEach(c =>
+      r.push(c.parentElement.textContent.trim()));
+    return r;
+  }
+  function getTextInputs(sel) {
+    const r = {};
+    document.querySelectorAll(sel).forEach(el => {
+      const v = el.tagName==='SELECT'
+        ? el.options[el.selectedIndex]?.text
+        : el.value?.trim();
+      if (!v || v==='-- seleccionar --') return;
+      const fg = el.closest('.field-group');
+      const lbl = fg?.querySelector('.field-label')?.textContent?.trim()
+               || el.getAttribute('aria-label')
+               || el.placeholder?.substring(0,45) || 'Campo';
+      r[lbl] = v;
+    });
+    return r;
+  }
+  function getSel(sel) {
+    const r = [];
+    document.querySelectorAll(sel).forEach(el => r.push(el.textContent.trim()));
+    return r;
+  }
+
+  const h1 = t => `# ${t}\n\n`;
+  const h2 = t => `## ${t}\n\n`;
+  const h3 = t => `### ${t}\n\n`;
+  const ul = items => items?.length ? items.map(i => `- ${i}`).join('\n') + '\n\n' : '_Sin datos_\n\n';
+  const kv = obj => {
+    const e = Object.entries(obj||{}).filter(([,v]) => v);
+    return e.length ? e.map(([k,v]) => `**${k}:** ${v}`).join('\n\n') + '\n\n' : '_Sin datos_\n\n';
+  };
+  const hr = () => '---\n\n';
+
+  const date = new Date().toLocaleDateString('es-ES', {day:'2-digit', month:'long', year:'numeric'});
+  const canvasName = document.getElementById('canvasName')?.value?.trim() || 'Enterprise Adoption Canvas';
+
+  // Collect data by block
+  function blockData(bid) {
+    return {
+      checks: getCheck(`.${bid}`),
+      inputs: getTextInputs(`.${bid} input[type=text],.${bid} textarea,.${bid} select`),
+      selected: getSel(`.${bid} .chip.active,.${bid} [aria-checked="true"]`)
+    };
+  }
+
+  const b = {};
+  ['b1','b2','b3','b4','b5','b6','b7','b8','b9','b10'].forEach(id => b[id] = blockData(id));
+
+  // Stakeholder rows
+  const shRows = [];
+  document.querySelectorAll('.sh-row').forEach(row => {
+    const rol = row.querySelector('input[name*="rol"]')?.value?.trim();
+    const pos = row.querySelector('select[name*="pos"]');
+    const posText = pos ? pos.options[pos.selectedIndex]?.text?.trim() : '';
+    const acc = row.querySelector('input[name*="accion"]')?.value?.trim();
+    if (rol) shRows.push({ rol, pos: posText, acc });
+  });
+
+  let md = '';
+  md += h1(canvasName);
+  md += `> **Enterprise AI Adoption Canvas** · QMetrika Labs  \n`;
+  md += `> Exportado: ${date}\n\n`;
+  md += hr();
+
+  md += h2('B1 · Mandato Ejecutivo');
+  md += kv(b.b1.inputs);
+  if (b.b1.checks.length) { md += h3('Áreas involucradas'); md += ul(b.b1.checks); }
+
+  md += h2('B2 · Modelo de Gobernanza');
+  md += kv(b.b2.inputs);
+  if (b.b2.checks.length) { md += h3('Aprobaciones obtenidas'); md += ul(b.b2.checks); }
+
+  md += h2('B3 · Propuesta de Valor Organizativa');
+  md += kv(b.b3.inputs);
+
+  md += h2('B4 · Stakeholders Impactados');
+  if (shRows.length) {
+    md += '| Rol | Posición | Acción |\n|---|---|---|\n';
+    shRows.forEach(r => { md += `| ${r.rol} | ${r.pos} | ${r.acc||'—'} |\n`; });
+    md += '\n';
+  }
+  if (b.b4.checks.length) { md += h3('Áreas impactadas'); md += ul(b.b4.checks); }
+
+  md += h2('B5 · Urgencia Competitiva');
+  md += kv(b.b5.inputs);
+
+  md += h2('B6 · Hoja de Ruta de Adopción');
+  md += kv(b.b6.inputs);
+  if (b.b6.checks.length) { md += h3('Checkpoints superados'); md += ul(b.b6.checks); }
+
+  md += h2('B7 · Gestión del Cambio');
+  md += kv(b.b7.inputs);
+  if (b.b7.checks.length) { md += h3('Iniciativas activas'); md += ul(b.b7.checks); }
+
+  md += h2('B8 · Habilitación y Cultura');
+  md += kv(b.b8.inputs);
+  if (b.b8.checks.length) { md += h3('Programas activos'); md += ul(b.b8.checks); }
+
+  md += h2('B9 · Métricas de Adopción');
+  md += kv(b.b9.inputs);
+  if (b.b9.checks.length) { md += h3('KPIs de adopción activos'); md += ul(b.b9.checks); }
+
+  md += h2('B10 · Cadencia de Revisión');
+  md += kv(b.b10.inputs);
+  if (b.b10.checks.length) { md += h3('Cadencia establecida'); md += ul(b.b10.checks); }
+
+  md += hr();
+  md += `_Generado con [Agent Canvas Model](https://github.com/josevilar-qbioai/agent-canvas-model) · QMetrika Labs_\n`;
+
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${canvasName.replace(/\s+/g,'-').toLowerCase() || 'enterprise-canvas'}.md`;
+  a.click();
+}
+
 </script>
 
 </body>

@@ -1619,6 +1619,180 @@ document.addEventListener('DOMContentLoaded', () => {
     if (restored) trackProgress();
   }
 });
+
+
+function exportMarkdown() {
+  function getCheck(sel) {
+    const r = [];
+    document.querySelectorAll(sel + ' input[type=checkbox]:checked').forEach(c =>
+      r.push(c.parentElement.textContent.trim()));
+    return r;
+  }
+  function getTextInputs(sel) {
+    const r = {};
+    document.querySelectorAll(sel).forEach(el => {
+      const v = el.tagName==='SELECT'
+        ? el.options[el.selectedIndex]?.text
+        : el.value?.trim();
+      if (!v || v==='-- seleccionar --') return;
+      const fg = el.closest('.field-group');
+      const lbl = fg?.querySelector('.field-label')?.textContent?.trim()
+               || el.placeholder?.substring(0,45) || 'Campo';
+      r[lbl] = v;
+    });
+    return r;
+  }
+  function getSel(sel) {
+    const r = [];
+    document.querySelectorAll(sel).forEach(el => r.push(el.textContent.trim()));
+    return r;
+  }
+
+  // MD helpers
+  const h1 = t => `# ${t}\n\n`;
+  const h2 = t => `## ${t}\n\n`;
+  const h3 = t => `### ${t}\n\n`;
+  const ul = items => items?.length ? items.map(i => `- ${i}`).join('\n') + '\n\n' : '_Sin datos_\n\n';
+  const kv = obj => {
+    const e = Object.entries(obj||{}).filter(([,v]) => v);
+    return e.length ? e.map(([k,v]) => `**${k}:** ${v}`).join('\n\n') + '\n\n' : '_Sin datos_\n\n';
+  };
+  const hr = () => '---\n\n';
+  const badge = t => `> **${t}**\n\n`;
+
+  const date = new Date().toLocaleDateString('es-ES', {day:'2-digit', month:'long', year:'numeric'});
+  const canvasName = document.getElementById('canvasName')?.value?.trim() || 'Agente sin nombre';
+  const deployMode = document.body.getAttribute('data-deploy') || 'cloud';
+
+  // Collect data — same as exportWord
+  const sc  = document.querySelectorAll('.b1 .seg-card');
+  const s1n = sc[0]?.querySelector('.seg-name')?.textContent?.trim() || 'Segmento primario';
+  const s1d = sc[0]?.querySelector('.seg-desc')?.textContent?.trim() || '';
+  const s2n = sc[1]?.querySelector('.seg-name')?.textContent?.trim() || 'Segmento secundario';
+  const s2d = sc[1]?.querySelector('.seg-desc')?.textContent?.trim() || '';
+
+  const b1c = getCheck('.b1'), b1t = getTextInputs('.b1 input[type=text],.b1 textarea');
+  const b2c = getCheck('.b2'), b2t = getTextInputs('.b2 input[type=text],.b2 textarea');
+  const b3c = getCheck('.b3');
+  const b4c = getCheck('.b4'), b4t = getTextInputs('.b4 input[type=text]');
+  const b5t = getTextInputs('.b5 input[type=text]');
+
+  const b6c = [...getCheck('.b6'),...getCheck('.b6a'),...getCheck('.b6b')];
+  const b6t = Object.assign({},
+    getTextInputs('.b6 input[type=text],.b6 textarea'),
+    getTextInputs('.b6a input[type=text],.b6a textarea'),
+    getTextInputs('.b6b input[type=text],.b6b textarea'));
+
+  const b7c = getCheck('.b7'), b7t = getTextInputs('.b7 textarea');
+  const b8c = getCheck('.b8'), b8t = getTextInputs('.b8 input[type=text]');
+  const b9c = getCheck('.b9'), b9t = getTextInputs('.b9 input[type=text],.b9 textarea');
+
+  const gc   = document.querySelectorAll('.b10 .guard-card');
+  const b10g = Array.from(gc).map(g=>({
+    title: g.querySelector('.guard-card-title,.guard-title')?.textContent?.trim()||'Control',
+    checks: Array.from(g.querySelectorAll('input[type=checkbox]:checked'))
+                 .map(c=>c.parentElement.textContent.trim())
+  }));
+  const b10t = getTextInputs('.b10 input[type=text],.b10 select');
+
+  const agLvl  = getSel('.b7 .ag-btn.sel').join(', ')||'—';
+  const gpuSel = getSel('.b6a .gpu-chip.sel').join(', ')||'—';
+  const mdlEl  = document.querySelector('.b6a .model-card.sel');
+  const mdlSel = mdlEl ? (mdlEl.querySelector('.model-name')?.textContent||'')+' '+(mdlEl.querySelector('.model-meta')?.textContent||'') : '—';
+  const qSel   = getSel('.q-btn.sel').join(', ')||'—';
+
+  const flowPat = b7c.filter(c=>/Secuencial|Enrutador|Router|ReAct|Multi-agente/i.test(c));
+  const agType  = b7c.filter(c=>/RAG|Tool-use|Summ|Full|retriev/i.test(c));
+  const benefits= b2c.filter(c=>/↓|⚡|✓|📈|💰|Esfuerzo|Inmediatez|Reducc|Product|Ahorro/i.test(c));
+  const onpremR = b2c.filter(c=>/Normativa|cloud|prem|Coste|Soberan|Latencia|Privac/i.test(c));
+  const llmPlat = b8c.filter(c=>/Azure|OpenAI|Google|AWS|Vertex|Bedrock|Ollama/i.test(c));
+  const fworks  = b8c.filter(c=>/LangChain|LlamaIndex|Copilot|Semantic|AutoGen|CrewAI|MCP/i.test(c));
+  const dataSrc = b8c.filter(c=>/SharePoint|Confluence|Zendesk|Power|APIs|NAS|BBDD|SQL/i.test(c));
+  const obsrv   = b8c.filter(c=>/LangSmith|Foundry|Prometheus|Grafana/i.test(c));
+  const risks   = b9c.filter(c=>/Alucinac|Vendor|Escal|Disponib|Obsolesc|SPOF|lock/i.test(c));
+  const regs    = b9c.filter(c=>/GDPR|AI Act|ENS|ISO|RGPD/i.test(c));
+
+  // ── Build Markdown ──────────────────────────────────────────────────────
+  let md = '';
+  md += h1(`${canvasName}`);
+  md += `> **Agent Canvas Model** · QMetrika Labs  \n`;
+  md += `> Modo: **${deployMode === 'onprem' ? '🏢 On-Premise' : '☁ Cloud'}** · Exportado: ${date}\n\n`;
+  md += hr();
+
+  // PARTE I — MODELO DE NEGOCIO
+  md += h2('PARTE I — Modelo de Negocio del Agente');
+
+  md += h2('1. Segmento de Usuarios');
+  md += `**${s1n}**\n${s1d ? `> ${s1d}` : ''}\n\n`;
+  md += `**${s2n}**\n${s2d ? `> ${s2d}` : ''}\n\n`;
+  if (b1c.length) { md += h3('Selecciones'); md += ul(b1c); }
+  if (Object.keys(b1t).length) md += kv(b1t);
+
+  md += h2('2. Propuesta de Valor');
+  md += kv(b2t);
+  if (benefits.length) { md += h3('Beneficios clave'); md += ul(benefits); }
+  if (onpremR.length)  { md += h3('Justificación On-Prem'); md += ul(onpremR); }
+
+  md += h2('3. Canales de Entrega');
+  md += ul(b3c);
+
+  md += h2('4. Personalidad y Experiencia de Usuario');
+  md += kv(b4t);
+  if (b4c.length) { md += h3('Controles de experiencia'); md += ul(b4c); }
+
+  md += h2('5. KPIs y Métricas de Éxito');
+  md += kv(b5t);
+
+  md += hr();
+
+  // PARTE II — ADR
+  md += h2('PARTE II — ADR: Architecture Decision Record');
+
+  md += h2('6. Recursos e Infraestructura');
+  if (deployMode === 'onprem') {
+    if (gpuSel !== '—') md += `**GPU seleccionada:** ${gpuSel}\n\n`;
+    if (mdlSel !== '—') md += `**Modelo LLM:** ${mdlSel.trim()}\n\n`;
+    if (qSel !== '—')   md += `**Cuantización:** ${qSel}\n\n`;
+  }
+  if (b6c.length)              { md += h3('Tecnologías y datos'); md += ul(b6c); }
+  if (Object.keys(b6t).length) md += kv(b6t);
+
+  md += h2('7. Skills & Flujo de Control');
+  md += `**Nivel de agencia:** ${agLvl}\n\n`;
+  if (flowPat.length)          { md += h3('Patrón de flujo de control'); md += ul(flowPat); }
+  if (agType.length)           { md += h3('Contexto / Ventana'); md += ul(agType); }
+  if (Object.keys(b7t).length) { md += h3('Skills definidas'); md += kv(b7t); }
+
+  md += h2('8. Integraciones');
+  if (llmPlat.length)          { md += h3('Plataforma LLM'); md += ul(llmPlat); }
+  if (fworks.length)           { md += h3('Orquestación / Framework'); md += ul(fworks); }
+  if (dataSrc.length)          { md += h3('Fuentes de datos'); md += ul(dataSrc); }
+  if (obsrv.length)            { md += h3('Observabilidad'); md += ul(obsrv); }
+  if (Object.keys(b8t).length) md += kv(b8t);
+
+  md += h2('9. Costes, Riesgos y Cumplimiento');
+  md += kv(b9t);
+  if (risks.length) { md += h3('Riesgos identificados'); md += ul(risks); }
+  if (regs.length)  { md += h3('Normativa aplicable'); md += ul(regs); }
+
+  md += h2('10. Guardarraíles');
+  b10g.filter(g => g.checks.length).forEach(g => {
+    md += h3(g.title);
+    md += ul(g.checks);
+  });
+  if (Object.keys(b10t).length) md += kv(b10t);
+
+  md += hr();
+  md += `_Generado con [Agent Canvas Model](https://github.com/josevilar-qbioai/agent-canvas-model) · QMetrika Labs_\n`;
+
+  // Download
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${canvasName.replace(/\s+/g,'-').toLowerCase() || 'agent-canvas'}.md`;
+  a.click();
+}
+
 </script>
 
 <footer role="contentinfo">
